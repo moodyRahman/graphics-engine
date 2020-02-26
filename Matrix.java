@@ -173,7 +173,7 @@ public static Matrix multiply (Matrix a, Matrix b) throws MatrixDimensionError {
  * @return new Image with the drawn matrix
  */
 public Image flushToImage(){
-        Image out = new LineAlgorithm(20, 20, new Pixel(200, 200, 200));
+        Image out = new Image(20, 20, new Pixel(200, 200, 200));
 
         Pixel c = new Pixel(0, 0, 0);
 
