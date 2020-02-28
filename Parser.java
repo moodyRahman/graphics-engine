@@ -43,8 +43,8 @@ public String getParameters(){
 
 
 
-private Matrix edge= new Matrix();
-private Matrix transform = Matrix.identity();
+private DoubleMatrix edge= new DoubleMatrix();
+private DoubleMatrix transform = DoubleMatrix.identity();
 ArrayList<Command> tokens = new ArrayList<Command>();
 
 
@@ -62,7 +62,7 @@ public Parser(String fname) throws FileNotFoundException {
 
                 }
         }
-        // System.out.println(stokens);
+        // // System.out.println(stokens);
 
         for (int x = 0; x < stokens.size(); x++) {
                 String command = stokens.get(x);
@@ -76,7 +76,7 @@ public Parser(String fname) throws FileNotFoundException {
                 }
         }
 
-        // System.out.println(tokens);
+        // // System.out.println(tokens);
 
 }
 
@@ -86,7 +86,12 @@ public int[] argstoarray(String args){
         String[] arr = args.split(" ");
         int[] out = new int[arr.length];
         for (int x = 0; x < arr.length; x++) {
-                out[x] = Integer.parseInt(arr[x]);
+                if (arr[x].charAt(0) == 'z' || arr[x].charAt(0) == 'x' || arr[x].charAt(0) == 'y'){
+                        out[x] = (arr[x].charAt(0));
+                }
+                else{
+                        out[x] = Integer.parseInt(arr[x]);
+                }
         }
 
         return out;
@@ -98,42 +103,58 @@ public void parse(){
         for (int x = 0; x < tokens.size(); x++) {
                 Command currtoken = tokens.get(x);
                 String c = currtoken.getCommand();
+                int[] params;
                 switch (c) {
                 case "line":
-                        System.out.println("line");
-                        int[] params = argstoarray(currtoken.getParameters());
+                        // System.out.println("line");
+                        params = argstoarray(currtoken.getParameters());
                         edge.addedge(params[0], params[1], params[2]);
                         edge.addedge(params[3], params[4], params[5]);
                         break;
                 case "ident":
-                        System.out.println("ident");
-                        this.transform = Matrix.identity();
+                        // System.out.println("ident");
+                        // this.transform = DoubleMatrix.identity();
                         break;
                 case "scale":
-                        System.out.println("scale");
-                        int[] params = argstoarray(currtoken.getParameters());
-                        Matrix scale = new Matrix();
-                        
+                        // System.out.println("scale");
+                        // System.out.println(this.transform);
+                        params = argstoarray(currtoken.getParameters());
+                        DoubleMatrix scale = DoubleMatrix.scale(params[0], params[1], params[2]);
+                        this.transform = DoubleMatrix.multiply(scale, this.transform);
+                        this.edge = DoubleMatrix.multiply(this.transform, this.edge);
+                        // System.out.println(this.transform);
                         break;
                 case "move":
-                        System.out.println("move");
+                        // System.out.println("move");
+                        params = argstoarray(currtoken.getParameters());
+                        DoubleMatrix move = DoubleMatrix.translate(params[0], params[1], params[2]);
+                        this.transform = DoubleMatrix.multiply(move, this.transform);
+                        this.edge = DoubleMatrix.multiply(this.transform, this.edge);
                         break;
                 case "rotate":
-                        System.out.println("rotate");
+                        // System.out.println("rotate");
+                        params = argstoarray(currtoken.getParameters());
+                        DoubleMatrix rotate = DoubleMatrix.rotate((char)params[0], params[1]);
+                        this.transform = DoubleMatrix.multiply(rotate, this.transform);
+                        this.edge = DoubleMatrix.multiply(this.transform, this.edge);
                         break;
                 case "apply":
-                        System.out.println("apply");
+                        // System.out.println("apply");
+                        // this.edge = DoubleMatrix.multiply(this.transform, this.edge);
+                        // System.out.println(this.edge);
                         break;
                 case "display":
-                        System.out.println("display");
+                        // System.out.println("display");
                         break;
                 case "save":
-                        System.out.println("save");
+                        // System.out.println("save");
                         break;
                 }
         }
 
-        System.out.println(this.edge);
+        // System.out.println(this.transform);
+        Image i = this.edge.flushToImage(100, 100, new Pixel(200, 200, 200));
+        i.flushToFile("d.ppm");
 }
 
 
@@ -142,8 +163,6 @@ public void parse(){
 
 public static void main(String[] args) throws FileNotFoundException {
         Parser p = new Parser("script.txt");
-
-        p.argstoarray("4 5 6 3");
 
         p.parse();
 
