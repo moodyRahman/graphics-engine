@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import java.lang.Math;
 
 /**
  * Stores a Matrix
@@ -112,8 +112,7 @@ public static Matrix scale(int sx, int sy, int sz){
         int[][] out = { {sx, 0, 0, 0},
                         {0, sy, 0, 0},
                         {0, 0, sz, 0},
-                        {0, 0, 0,  1}
-                };
+                        {0, 0, 0,  1}};
 
         return new Matrix(out);
 }
@@ -122,9 +121,21 @@ public static Matrix translate(int dx, int dy, int dz){
         int[][] out = { {1, 0, 0, 0},
                         {0, 1, 0, 0},
                         {0, 0, 1, 0},
-                        {dx, dy, dz,  1}
-                };
+                        {dx, dy, dz,  1}};
         return new Matrix(out);
+}
+
+public static Matrix rotate(char axis, int theta){
+        switch (axis) {
+        case 'x':
+                int[][] out = { {1, 0, 0, 0},
+                                {0, 1, 0, 0},
+                                {0, 0, 1, 0},
+                                {0, 0, 0,  1}};
+                return new Matrix(out);
+        }
+
+        return new Matrix();
 }
 
 /**
@@ -153,7 +164,7 @@ public static Matrix multiply (Matrix a, Matrix b) throws MatrixDimensionError {
         int[][] out = new int[b.getcols()][a.getrows()];
         int[][] ar = a.getarray();
         int[][] br = b.getarray();
-        if (a.getcols() != b.getrows()){
+        if (a.getcols() != b.getrows()) {
                 throw new MatrixDimensionError("mooos");
         }
         for (int x = 0; x < b.getcols(); x++) {
@@ -217,13 +228,13 @@ public static void main(String[] args) {
 
 }
 
-class MatrixDimensionError extends RuntimeException{
-        private static final long serialVersionUID = 1L;
-        /**
-         * Matrix Dimensions Error
-         * @param error error message
-         */
-        public MatrixDimensionError(String error){
-                super(error);
-        }
+class MatrixDimensionError extends RuntimeException {
+private static final long serialVersionUID = 1L;
+/**
+ * Matrix Dimensions Error
+ * @param error error message
+ */
+public MatrixDimensionError(String error){
+        super(error);
+}
 }
