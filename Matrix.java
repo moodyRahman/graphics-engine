@@ -107,6 +107,17 @@ public static Matrix identity(){
         return new Matrix(out);
 }
 
+
+public static Matrix scale(int sx, int sy, int sz){
+        int[][] out = { {sx, 0, 0, 0},
+                        {0, sy, 0, 0},
+                        {0, 0, sz, 0},
+                        {0, 0, 0,  1}
+                };
+
+        return new Matrix(out);
+}
+
 /**
  * converts the internal array for the matrix into an int[][]
  * @return the internal array as an int[][]
@@ -189,45 +200,9 @@ public Image flushToImage(){
 
 
 public static void main(String[] args) {
-        Matrix i = Matrix.identity();
 
-        Matrix a = new Matrix();
-        a.addedge(5, 6, 7);
-        a.addedge(7, 8, 9);
-        a.addedge(1, 2, 3);
-        a.addedge(4, 6, 9);
-
-        Matrix b = new Matrix();
-        b.addedge(5, 6, 7);
-        b.addedge(8, 2, 9);
-        b.addedge(0, 4, 6);
-        b.addedge(3, 3, 3);
-
-
-        System.out.println("\n----------------\nenter, the moodtrix\n----------------\n\n");
-        System.out.println("here be matrix a\n" + a);
-        System.out.println("here be matrix b\n" + b);
-        System.out.println("here be thy identity matrix\n" + i);
-        System.out.println();
-        System.out.println("multiply a and b gives us:\n" + Matrix.multiply(a, b));
-        System.out.println("expected result:\n78 67 38 43\n98 88 50 54\n119 110 63 66\n19 20 11 10\n");
-        System.out.println();
-        System.out.println("multiply a and identity gives us:\n" + Matrix.multiply(a, i));
-        System.out.println("expected result:\n5, 7, 1, 4,\n6, 8, 2, 6,\n7, 9, 3, 9,\n1, 1, 1, 1,");
-
-
-        System.out.println("let's test the drawing functionality");
-        
-        //
-        // Image m = new Image(250, 250, new Pixel(200, 200, 200));
-        // Matrix mx = new Matrix();
-        // mx.addedge(1, 1, 0);
-        // mx.addedge(25, 25, 0);
-        // mx.addedge(25, 50, 0);
-        // m.matrixLine(mx, new Pixel(0, 0, 0));
-        //
-        // m.flushToFile("d.ppm");
-        // System.out.println(m);
+        Matrix s = Matrix.scale(5, 6, 7);
+        System.out.println(s);
 
 }
 
