@@ -197,6 +197,29 @@ public void line(int px1, int py1, int px2, int py2, Pixel c){
 	}
 }
 
+public void line(double px1, double py1, double px2, double py2, Pixel c){
+	int px1i = (int)px1;
+	int py1i = (int)py1;
+	int px2i = (int)px2;
+	int py2i = (int)py2;
+	if (Math.abs(py2i - py1i) <= Math.abs(px2i - px1i)){
+		if (px1i > px2i){
+			drawLineLow(px2i, py2i, px1i, py1i, c);
+		}
+		else {
+			drawLineLow(px1i, py1i, px2i, py2i, c);
+		}
+	}
+	else {
+		if (py1i > py2i){
+			drawLineHigh(px2i, py2i, px1i, py1i, c);
+		}
+		else {
+			drawLineHigh(px1i, py1i, px2i, py2i, c);
+		}
+	}
+}
+
 /**
  * draws lines on the image according to a matrix
  * @param m Matrix to draw
