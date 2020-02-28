@@ -118,6 +118,15 @@ public static Matrix scale(int sx, int sy, int sz){
         return new Matrix(out);
 }
 
+public static Matrix translate(int dx, int dy, int dz){
+        int[][] out = { {1, 0, 0, 0},
+                        {0, 1, 0, 0},
+                        {0, 0, 1, 0},
+                        {dx, dy, dz,  1}
+                };
+        return new Matrix(out);
+}
+
 /**
  * converts the internal array for the matrix into an int[][]
  * @return the internal array as an int[][]
@@ -201,7 +210,7 @@ public Image flushToImage(){
 
 public static void main(String[] args) {
 
-        Matrix s = Matrix.scale(5, 6, 7);
+        Matrix s = Matrix.translate(5, 6, 7);
         System.out.println(s);
 
 }
