@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.lang.Math;
 
 /**
@@ -62,7 +61,7 @@ public int getrows(){
  * @param y y coordinate
  * @param z z coordinate
  */
-public void addedge(double x, double y, double z){
+public void addpoint(double x, double y, double z){
         Double[] toadd = new Double[4];
         toadd[0] = x;
         toadd[1] = y;
@@ -125,7 +124,9 @@ public static DoubleMatrix translate(double dx, double dy, double dz){
         return new DoubleMatrix(out);
 }
 
-public static DoubleMatrix rotate(char axis, double theta){
+public static DoubleMatrix rotate(char axis, double thetadeg){
+
+        double theta = thetadeg *0.01745329252;
 
         switch (axis) {
         case 'z':
@@ -228,9 +229,12 @@ public Image flushToImage(int width, int height, Pixel init){
 
         Pixel c = new Pixel(0, 0, 0);
 
-        for (int x = 1; x < matrix.size(); x++) {
+        // System.out.println("HERE");
+        System.out.println(matrix.size());
+        for (int x = 0; x < matrix.size(); x+=2) {
+                // System.out.println(x);
                 Double[] p1 = matrix.get(x);
-                Double[] p2 = matrix.get(x-1);
+                Double[] p2 = matrix.get(x+1);
 
                 out.line(p1[0], p1[1], p2[0], p2[1], c);
         }
@@ -240,33 +244,7 @@ public Image flushToImage(int width, int height, Pixel init){
 
 
 public static void main(String[] args) {
-        Matrix i = Matrix.identity();
-        Matrix a = new Matrix();
-        a.addedge(5, 6, 7);
-        a.addedge(7, 8, 9);
-        a.addedge(1, 2, 3);
-        a.addedge(4, 6, 9);
 
-        Matrix b = new Matrix();
-        b.addedge(5, 6, 7);
-        b.addedge(8, 2, 9);
-        b.addedge(0, 4, 6);
-        b.addedge(3, 3, 3);
-
-
-        System.out.println("\n----------------\nenter, the moodtrix\n----------------\n\n");
-        System.out.println("here be matrix a\n" + a);
-        System.out.println("here be matrix b\n" + b);
-        System.out.println("here be thy identity matrix\n" + i);
-        System.out.println();
-        System.out.println("multiply a and b gives us:\n" + Matrix.multiply(a, b));
-        System.out.println("expected result:\n78 67 38 43\n98 88 50 54\n119 110 63 66\n19 20 11 10\n");
-        System.out.println();
-        System.out.println("multiply a and identity gives us:\n" + Matrix.multiply(a, i));
-        System.out.println("expected result:\n5, 7, 1, 4,\n6, 8, 2, 6,\n7, 9, 3, 9,\n1, 1, 1, 1,");
-
-
-        System.out.println("let's test the drawing functionality");
 
 }
 
