@@ -1,7 +1,8 @@
 
 all:
 	javac *.java
-	display -filter point -resize 300% d.ppm
+	java Parser
+	display -filter point -resize 300% animatespheres.gif
 
 
 clean:
@@ -10,4 +11,5 @@ clean:
 
 
 run:
-	java Matrix
+	javac *.java
+	java Parser
