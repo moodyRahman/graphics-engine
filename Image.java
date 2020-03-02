@@ -1,14 +1,12 @@
 import java.io.File;
-import java.io.FileWriter;
 import java.lang.Math;
-import java.util.Random;
+import java.io.FileWriter;
 
 public class Image{
 
 private int width;
 private int height;
 private Pixel[][] pixelarray;
-private Random rand = new Random();
 public final String HEADER;
 public static final Pixel BLACK = new Pixel(0, 0, 0);
 public static final Pixel BEIGE = new Pixel(0, 0, 0);
@@ -68,12 +66,12 @@ public void flushToFile(String fname){
 	}
 
 	try {
-		// FileWriter towrite = new FileWriter(fname);
-		System.out.print(this.HEADER);
-		System.out.print(this.toString());
-		// towrite.write(this.HEADER);
-		// towrite.write(this.toString());
-		// towrite.close();
+		FileWriter towrite = new FileWriter(fname);
+		// System.out.print(this.HEADER);
+		// System.out.print(this.toString());
+		towrite.write(this.HEADER);
+		towrite.write(this.toString());
+		towrite.close();
 	} catch(Exception e) {
 
 	}
@@ -97,7 +95,7 @@ public void plot(int x, int y, Pixel color){
  * @param py2 [description]
  */
 @Deprecated
-private void drawLine(int px1, int py1, int px2, int py2){
+protected void drawLine(int px1, int py1, int px2, int py2){
 	int x = px1;
 	int y = py1;
 
