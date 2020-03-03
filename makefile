@@ -2,7 +2,8 @@
 all:
 	javac *.java
 	java Parser
-	display -filter point -resize 300% d.ppm
+	convert -delay 30 -loop 0 *.ppm  sksk.gif
+	animate sksk.gif 
 
 
 clean:
