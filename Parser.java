@@ -88,14 +88,14 @@ public class Parser {
 	 * @param args String of int parameters
 	 * @return int[] of parameters
 	 */
-	public int[] argstoarray(String args) {
+	public double[] argstoarray(String args) {
 		String[] arr = args.split(" ");
-		int[] out = new int[arr.length];
+		double[] out = new double[arr.length];
 		for (int x = 0; x < arr.length; x++) {
 			if (arr[x].charAt(0) == 'z' || arr[x].charAt(0) == 'x' || arr[x].charAt(0) == 'y') {
 				out[x] = (arr[x].charAt(0));
 			} else {
-				out[x] = Integer.parseInt(arr[x]);
+				out[x] = Double.parseDouble(arr[x]);
 			}
 		}
 
@@ -111,7 +111,7 @@ public class Parser {
 		for (int x = 0; x < tokens.size(); x++) {
 			Command currtoken = tokens.get(x);
 			String c = currtoken.getCommand();
-			int[] params;
+			double[] params;
 			switch (c) {
 				case "line":
 					// System.out.println("line");
@@ -185,6 +185,7 @@ public class Parser {
 		// System.out.println(this.edge);
 		// Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
 		// i.flushToFile("d.ppm");
+		Process process = Runtime.getRuntime().exec("rm d.ppm");
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
