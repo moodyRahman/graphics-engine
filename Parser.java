@@ -163,6 +163,13 @@ public class Parser {
 				case "display":
 					Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
 					i.flushToFile("d.ppm");
+					Process process = Runtime.getRuntime().exec("convert d.ppm d.png");
+					try {
+						Thread.sleep(500);
+					} catch (Exception e) {
+					}
+					Picture p = new Picture("d.png");
+					p.show();
 					System.out.println("DONE");
 					break;
 				case "save":
