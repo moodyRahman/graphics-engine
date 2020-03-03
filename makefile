@@ -3,7 +3,7 @@ all:
 	javac *.java
 	java Parser
 	convert -delay 30 -loop 0 *.ppm  sksk.gif
-	animate sksk.gif 
+	animate -resize 300% -filter point sksk.gif
 
 
 clean:
