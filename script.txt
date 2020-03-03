@@ -22,14 +22,5 @@ line
 25 25 0 25 25 25
 line
 25 0 0 25 0 25
-rotate
-z 20
-rotate
-x 20
-rotate
-y 350
-move
-60 60 0
-apply
 save
-350.ppm
+0.ppm
