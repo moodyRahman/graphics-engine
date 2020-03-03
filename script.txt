@@ -5,7 +5,7 @@ line
 line
 25 25 0 0 25 0
 line
-0 25 0 0 0 0
+0 25 0 0 0 0 
 line
 0 0 25 25 0 25
 line
@@ -22,5 +22,266 @@ line
 25 25 0 25 25 25
 line
 25 0 0 25 0 25
+line
+25 0 5 25 25 5
+line
+25 0 10 25 25 10
+line
+25 0 15 25 25 15
+line
+25 0 20 25 25 20
 save
-0.ppm
+00.ppm
+move
+4 4 0
+apply
+ident
+save
+01.ppm
+move
+4 4 0
+apply
+ident
+save
+02.ppm
+move
+4 4 0
+apply
+ident
+save
+03.ppm
+move
+4 4 0
+apply
+ident
+save
+04.ppm
+move
+4 4 0
+apply
+ident
+save
+05.ppm
+move
+4 4 0
+apply
+ident
+save
+06.ppm
+move
+4 4 0
+apply
+ident
+save
+07.ppm
+move
+4 4 0
+apply
+ident
+save
+08.ppm
+move
+4 4 0
+apply
+ident
+save
+09.ppm
+move
+4 4 0
+apply
+ident
+save
+10.ppm
+move
+4 4 0
+apply
+ident
+save
+11.ppm
+move
+4 4 0
+apply
+ident
+save
+12.ppm
+ident
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+13.ppm
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+14.ppm
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+15.ppm
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+16.ppm
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+17.ppm
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+18.ppm
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+19.ppm
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+20.ppm
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+21.ppm
+rotate
+x 5
+rotate
+y 5
+rotate
+z 5
+apply
+ident
+save
+22.ppm
+ident
+move
+5 -2 0
+apply
+ident
+save
+23.ppm
+move
+5 -2 0
+apply
+ident
+save
+24.ppm
+move
+5 -2 0
+apply
+ident
+save
+25.ppm
+move
+5 -2 0
+apply
+ident
+save
+26.ppm
+move
+5 -2 0
+apply
+ident
+save
+27.ppm
+move
+5 -2 0
+apply
+ident
+save
+28.ppm
+move
+5 -2 0
+apply
+ident
+save
+29.ppm
+ident
+scale
+1.1 1.1 1.1
+apply
+ident
+save
+30.ppm
+scale
+1.1 1.1 1.1
+apply
+ident
+save
+31.ppm
+scale
+1.1 1.1 1.1
+apply
+ident
+save
+32.ppm
+scale
+1.1 1.1 1.1
+apply
+ident
+save
+33.ppm
+scale
+1.1 1.1 1.1
+apply
+ident
+save
+34.ppm
+scale
+1.1 1.1 1.1
+apply
+ident
+save
+35.ppm
