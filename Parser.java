@@ -47,8 +47,9 @@ public class Parser {
 
 	/**
 	 * makes a new Parser
+	 * 
 	 * @param fname the name of the file to parse
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
 	public Parser(String fname) throws FileNotFoundException {
 		File f = new File(fname);
@@ -70,7 +71,8 @@ public class Parser {
 		for (int x = 0; x < stokens.size(); x++) {
 			String command = stokens.get(x);
 			if (command.equals("line") || command.equals("rotate") || command.equals("scale")
-					|| command.equals("move") || command.equals("save")) {
+					|| command.equals("move") || command.equals("save") || command.equals("cirlce")
+					|| command.equals("hermite") || command.equals("bezier")) {
 				x++;
 				String arg = stokens.get(x);
 				tokens.add(new Command(command, arg));
@@ -83,8 +85,7 @@ public class Parser {
 
 	}
 
-	
-	/** 
+	/**
 	 * @param args String of int parameters
 	 * @return int[] of parameters
 	 */
@@ -99,12 +100,12 @@ public class Parser {
 			}
 		}
 
-		return out;		
+		return out;
 	}
 
-	
-	/** 
+	/**
 	 * processes the tokens in the input script executes the commands
+	 * 
 	 * @throws IOException
 	 */
 	public void parse() throws IOException {
@@ -163,7 +164,7 @@ public class Parser {
 				case "display":
 					Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
 					i.flushToFile("d.ppm");
-					Process process = Runtime.getRuntime().exec("convert d.ppm d.png");
+					Runtime.getRuntime().exec("convert d.ppm d.png");
 					try {
 						Thread.sleep(500);
 					} catch (Exception e) {
@@ -178,6 +179,17 @@ public class Parser {
 					i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
 					i.flushToFile(outfile);
 					break;
+				case "circle":
+					params = argstoarray(currtoken.getParameters());
+
+					break;
+				case "hermite":
+					params = argstoarray(currtoken.getParameters());
+					break;
+				case "bezier":
+					params = argstoarray(currtoken.getParameters());
+
+					break;
 			}
 		}
 
@@ -185,7 +197,7 @@ public class Parser {
 		// System.out.println(this.edge);
 		// Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
 		// i.flushToFile("d.ppm");
-		Process process = Runtime.getRuntime().exec("rm d.ppm");
+		Runtime.getRuntime().exec("rm d.ppm");
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
