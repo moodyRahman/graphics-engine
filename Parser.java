@@ -71,7 +71,7 @@ public class Parser {
 		for (int x = 0; x < stokens.size(); x++) {
 			String command = stokens.get(x);
 			if (command.equals("line") || command.equals("rotate") || command.equals("scale")
-					|| command.equals("move") || command.equals("save") || command.equals("cirlce")
+					|| command.equals("move") || command.equals("save") || command.equals("circle")
 					|| command.equals("hermite") || command.equals("bezier")) {
 				x++;
 				String arg = stokens.get(x);
@@ -115,51 +115,30 @@ public class Parser {
 			double[] params;
 			switch (c) {
 				case "line":
-					// System.out.println("line");
 					params = argstoarray(currtoken.getParameters());
 					edge.addpoint(params[0], params[1], params[2]);
 					edge.addpoint(params[3], params[4], params[5]);
 					break;
 				case "ident":
-					// System.out.println("ident");
 					this.transform = DoubleMatrix.identity();
 					break;
 				case "scale":
-					// System.out.println("scale");
-					// System.out.println(this.transform);
 					params = argstoarray(currtoken.getParameters());
 					DoubleMatrix scale = DoubleMatrix.scale(params[0], params[1], params[2]);
 					this.transform = DoubleMatrix.multiply(scale, this.transform);
-					// this.edge = DoubleMatrix.multiply(this.transform, this.edge);
-					// System.out.println(this.transform);
 					break;
 				case "move":
-					// System.out.println("move");
 					params = argstoarray(currtoken.getParameters());
 					DoubleMatrix move = DoubleMatrix.translate(params[0], params[1], params[2]);
 					this.transform = DoubleMatrix.multiply(move, this.transform);
-					// this.edge = DoubleMatrix.multiply(this.transform, this.edge);
 					break;
 				case "rotate":
-					// System.out.println("rotate");
 					params = argstoarray(currtoken.getParameters());
 					DoubleMatrix rotate = DoubleMatrix.rotate((char) params[0], params[1]);
-
-					// System.out.println(rotate);
-
 					this.transform = DoubleMatrix.multiply(rotate, this.transform);
-
-					// System.out.println(this.transform);
-					// System.out.println();
-					// System.out.println(this.edge);
-					// this.edge = DoubleMatrix.multiply(this.transform, this.edge);
-					// System.out.println(this.edge);
-
 					break;
 				case "apply":
-					// System.out.println("apply");
 					this.edge = DoubleMatrix.multiply(this.transform, this.edge);
-					// System.out.println(this.edge);
 					break;
 				case "display":
 					Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
@@ -180,15 +159,17 @@ public class Parser {
 					i.flushToFile(outfile);
 					break;
 				case "circle":
+					System.out.println("circle");
 					params = argstoarray(currtoken.getParameters());
-
+					for(double d = 0; d <= 1; d+=.02){
+						
+					}
 					break;
 				case "hermite":
 					params = argstoarray(currtoken.getParameters());
 					break;
 				case "bezier":
 					params = argstoarray(currtoken.getParameters());
-
 					break;
 			}
 		}
@@ -197,7 +178,7 @@ public class Parser {
 		// System.out.println(this.edge);
 		// Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
 		// i.flushToFile("d.ppm");
-		Runtime.getRuntime().exec("rm d.ppm");
+		// Runtime.getRuntime().exec("rm d.ppm");
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
