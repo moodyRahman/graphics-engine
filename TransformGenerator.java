@@ -1,4 +1,6 @@
 import java.lang.Math;
+
+
 public class TransformGenerator{
 
 
@@ -39,7 +41,7 @@ public static DoubleMatrix translate(double dx, double dy, double dz){
 
 public static DoubleMatrix rotate(char axis, double thetadeg){
 
-        double theta = thetadeg *0.01745329252;
+        double theta = thetadeg *0.0174;
 
         switch (axis) {
         case 'z':
