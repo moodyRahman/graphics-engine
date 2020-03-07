@@ -179,14 +179,14 @@ public class Parser {
 
 					// double oldcx = cx + radius, oldcy = cy;
 
-					for (int deg = 0; deg < 360; deg += 5) {
+					for (int deg = 0; deg < 360; deg += 3) {
 						double rad = deg * 0.0174;
 						edge.addpoint((radius * Math.cos(rad)) + cx,
 								(radius * Math.sin(rad)) + cy, cz);
 						edge.addpoint((radius * Math.cos(rad + 0.174)) + cx,
 								(radius * Math.sin(rad + 0.174)) + cy, cz);
 					}
-					System.out.println(this.edge);
+					// System.out.println(this.edge);
 
 					break;
 				case "hermite":
