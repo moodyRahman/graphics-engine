@@ -88,7 +88,7 @@ public void plot(int x, int y, Pixel color){
 }
 
 /**
- * old draw line algorithm
+ * @deprecated old draw line algorithm
  * @param px1 [description]
  * @param py1 [description]
  * @param px2 [description]
@@ -222,15 +222,17 @@ public void line(double px1, double py1, double px2, double py2, Pixel c){
 }
 
 /**
- * draws lines on the image according to a matrix
+ * @deprecated lines on the image according to a matrix
+ * recommended to use Matrix.flushtofile()
  * @param m Matrix to draw
  * @param c Color to make the lines
  */
-public void matrixLine(Matrix m, Pixel c){
-	int[][] array = m.getarray();
+@Deprecated
+public void matrixLine(DoubleMatrix m, Pixel c){
+	double[][] array = m.getarray();
 	for (int x = 1; x < array.length; x++) {
-                int[] p1 = array[x];
-                int[] p2 = array[x-1];
+                double[] p1 = array[x];
+                double[] p2 = array[x-1];
 
                 line(p1[0], p1[1], p2[0], p2[1], c);
         }
