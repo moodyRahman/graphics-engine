@@ -1,12 +1,4 @@
 circle
-10 10 10
-circle
-10 10 10
-circle
-10 10 10
-circle
-10 10 10
-circle
-10 10 10
-circle
-10 10 10
+50 50 50 10
+save-convert
+x.ppm
