@@ -41,8 +41,8 @@ public class Parser {
 	}
 
 	private DoubleMatrix edge = new DoubleMatrix();
-	private DoubleMatrix transform = DoubleMatrix.identity();
-	ArrayList<Command> tokens = new ArrayList<Command>();
+	private DoubleMatrix transform = TransformGenerator.identity();
+	private ArrayList<Command> tokens = new ArrayList<Command>();
 	ProcessBuilder processBuilder = new ProcessBuilder();
 
 	/**
@@ -70,9 +70,14 @@ public class Parser {
 
 		for (int x = 0; x < stokens.size(); x++) {
 			String command = stokens.get(x);
-			if (command.equals("line") || command.equals("rotate") || command.equals("scale")
-					|| command.equals("move") || command.equals("save") || command.equals("circle")
-					|| command.equals("hermite") || command.equals("bezier")) {
+			if (command.equals("line") 
+			|| command.equals("rotate") 
+			|| command.equals("scale")
+			|| command.equals("move") 
+			|| command.equals("save") 
+			|| command.equals("circle")
+			|| command.equals("hermite") 
+			|| command.equals("bezier")) {
 				x++;
 				String arg = stokens.get(x);
 				tokens.add(new Command(command, arg));
@@ -120,21 +125,21 @@ public class Parser {
 					edge.addpoint(params[3], params[4], params[5]);
 					break;
 				case "ident":
-					this.transform = DoubleMatrix.identity();
+					this.transform = TransformGenerator.identity();
 					break;
 				case "scale":
 					params = argstoarray(currtoken.getParameters());
-					DoubleMatrix scale = DoubleMatrix.scale(params[0], params[1], params[2]);
+					DoubleMatrix scale = TransformGenerator.scale(params[0], params[1], params[2]);
 					this.transform = DoubleMatrix.multiply(scale, this.transform);
 					break;
 				case "move":
 					params = argstoarray(currtoken.getParameters());
-					DoubleMatrix move = DoubleMatrix.translate(params[0], params[1], params[2]);
+					DoubleMatrix move = TransformGenerator.translate(params[0], params[1], params[2]);
 					this.transform = DoubleMatrix.multiply(move, this.transform);
 					break;
 				case "rotate":
 					params = argstoarray(currtoken.getParameters());
-					DoubleMatrix rotate = DoubleMatrix.rotate((char) params[0], params[1]);
+					DoubleMatrix rotate = TransformGenerator.rotate((char) params[0], params[1]);
 					this.transform = DoubleMatrix.multiply(rotate, this.transform);
 					break;
 				case "apply":
