@@ -196,6 +196,7 @@ public void line(int px1, int py1, int px2, int py2, Pixel c){
 }
 
 public void line(double px1, double py1, double px2, double py2, Pixel c){
+	// 
 	int px1i = (int)px1;
 	int py1i = (int)py1;
 	int px2i = (int)px2;
