@@ -1,4 +1,3 @@
-circle
-50 50 50 10
-save-convert
-x.ppm
+hermite
+77 492 73 455 3 32 -6 25
+display
