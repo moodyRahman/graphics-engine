@@ -179,8 +179,8 @@ public class Parser {
 
 					// double oldcx = cx + radius, oldcy = cy;
 
-					for (int deg = 0; deg < 360; deg += 3) {
-						double rad = deg * 0.0174;
+					for (double deg = 0; deg < 1; deg += .02) {
+						double rad = deg * 6.2831;
 						edge.addpoint((radius * Math.cos(rad)) + cx,
 								(radius * Math.sin(rad)) + cy, cz);
 						edge.addpoint((radius * Math.cos(rad + 0.174)) + cx,
@@ -191,6 +191,9 @@ public class Parser {
 					break;
 				case "hermite":
 					params = argstoarray(currtoken.getParameters());
+					// x0, y0, x1, y1, rx0, ry0, rx1, ry1
+					// 0    1   2   3   4    5    6    7
+
 					break;
 				case "bezier":
 					params = argstoarray(currtoken.getParameters());
