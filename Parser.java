@@ -115,6 +115,7 @@ public class Parser {
 			Command currtoken = tokens.get(x);
 			String c = currtoken.getCommand();
 			double[] params;
+			double plotx, ploty, newplotx, newploty, dt;
 			switch (c) {
 				case "line":
 					params = argstoarray(currtoken.getParameters());
@@ -148,7 +149,7 @@ public class Parser {
 					this.edge = DoubleMatrix.multiply(this.transform, this.edge);
 					break;
 				case "display":
-					Image i = this.edge.flushToImage(500, 500, new Pixel(200, 200, 200));
+					Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
 					i.flushToFile("d.ppm");
 					Runtime.getRuntime().exec("convert d.ppm d.png");
 					try {
@@ -206,13 +207,13 @@ public class Parser {
 					double yc = hry0;
 					double yd = hy0;
 
-					double plotx, ploty, newplotx, newploty, dt;
+					
 
 					for(double t = 0; t < 1; t+=.02){
 						plotx = xa*t*t*t + xb*t*t + xc*t + xd;
 						ploty = ya*t*t*t + yb*t*t + yc*t + yd;
 
-						dt = t += .02;
+						dt = t + .02;
 
 						newplotx = xa*dt*dt*dt + xb*dt*dt + xc*dt + xd;
 						newploty = ya*dt*dt*dt + yb*dt*dt + yc*dt + yd;
@@ -224,7 +225,36 @@ public class Parser {
 
 					break;
 				case "bezier":
+					
 					params = argstoarray(currtoken.getParameters());
+					// x0, y0, x1, y1, x2, y2, x3, y3
+					// 0    1   2   3   4   5   6   7
+					double bx0 = params[0], bx1 = params[2], bx2 = params[4], bx3 = params[6];
+					double by0 = params[1], by1 = params[3], by2 = params[5], by3 = params[7];
+
+					double bxa = -bx0 + 3*bx1 - 3*bx2 + bx3;
+					double bxb = 3*bx0 - 6*bx1 + 3*bx2;
+					double bxc = -3*bx0 + 3*bx1;
+					double bxd = bx0;
+
+					double bya = -by0 + 3*by1 - 3*by2 + by3;
+					double byb = 3*by0 - 6*by1 + 3*by2;
+					double byc = -3*by0 + 3*by1;
+					double byd = by0;
+
+					for(double t = 0; t < 1; t+=.02){
+						plotx = bxa*t*t*t + bxb*t*t + bxc*t + bxd;
+						ploty = bya*t*t*t + byb*t*t + byc*t + byd;
+						
+						dt = t + .02;
+						
+						newplotx = bxa*dt*dt*dt + bxb*dt*dt + bxc*dt + bxd;
+						newploty = bya*dt*dt*dt + byb*dt*dt + byc*dt + byd;
+
+						edge.addpoint(plotx, ploty, 1);
+						edge.addpoint(newplotx, newploty, 1);
+					}
+
 					break;
 			}
 		}
