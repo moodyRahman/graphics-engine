@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class Parser {
 
@@ -70,14 +71,10 @@ public class Parser {
 
 		for (int x = 0; x < stokens.size(); x++) {
 			String command = stokens.get(x);
-			if (command.equals("line") 
-			|| command.equals("rotate") 
-			|| command.equals("scale")
-			|| command.equals("move") 
-			|| command.equals("save") 
-			|| command.equals("circle")
-			|| command.equals("hermite") 
-			|| command.equals("bezier")) {
+			if (command.equals("line") || command.equals("rotate") || command.equals("scale")
+					|| command.equals("move") || command.equals("save") || command.equals("circle")
+					|| command.equals("hermite") || command.equals("bezier")
+					|| command.equals("save-convert")) {
 				x++;
 				String arg = stokens.get(x);
 				tokens.add(new Command(command, arg));
@@ -121,25 +118,30 @@ public class Parser {
 			switch (c) {
 				case "line":
 					params = argstoarray(currtoken.getParameters());
-					edge.addpoint(params[0], params[1], params[2]);
-					edge.addpoint(params[3], params[4], params[5]);
+					double px1 = params[0], py1 = params[1], pz1 = params[2];
+					double px2 = params[3], py2 = params[4], pz2 = params[5];
+					edge.addpoint(px1, py1, pz1);
+					edge.addpoint(px2, py2, pz2);
 					break;
 				case "ident":
 					this.transform = TransformGenerator.identity();
 					break;
 				case "scale":
 					params = argstoarray(currtoken.getParameters());
-					DoubleMatrix scale = TransformGenerator.scale(params[0], params[1], params[2]);
+					double scalex = params[0], scaley = params[1], scalez = params[2];
+					DoubleMatrix scale = TransformGenerator.scale(scalex, scaley, scalez);
 					this.transform = DoubleMatrix.multiply(scale, this.transform);
 					break;
 				case "move":
 					params = argstoarray(currtoken.getParameters());
-					DoubleMatrix move = TransformGenerator.translate(params[0], params[1], params[2]);
+					double movex = params[0], movey = params[1], movez = params[2];
+					DoubleMatrix move = TransformGenerator.translate(movex, movey, movez);
 					this.transform = DoubleMatrix.multiply(move, this.transform);
 					break;
 				case "rotate":
 					params = argstoarray(currtoken.getParameters());
-					DoubleMatrix rotate = TransformGenerator.rotate((char) params[0], params[1]);
+					double axis = params[0], theta = params[1];
+					DoubleMatrix rotate = TransformGenerator.rotate((char) axis, theta);
 					this.transform = DoubleMatrix.multiply(rotate, this.transform);
 					break;
 				case "apply":
@@ -155,20 +157,37 @@ public class Parser {
 					}
 					Picture p = new Picture("d.png");
 					p.show();
-					System.out.println("DONE");
 					break;
 				case "save":
 					String outfile = currtoken.getParameters();
-					System.out.println("SAVE");
 					i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
 					i.flushToFile(outfile);
 					break;
+				case "save-convert":
+					outfile = currtoken.getParameters();
+					i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
+					i.flushToFile(outfile);
+					String outfilepng = outfile.substring(0, outfile.length() - 3) + "png";
+					String convertcommand = "convert " + outfile + " " + outfilepng;
+					System.out.println(convertcommand);
+					Runtime.getRuntime().exec(convertcommand);
+					// System.out.println(outfilepng);
 				case "circle":
-					System.out.println("circle");
 					params = argstoarray(currtoken.getParameters());
-					for(double d = 0; d <= 1; d+=.02){
-						
+
+					double cx = params[0], cy = params[1], cz = params[2], radius = params[3];
+
+					// double oldcx = cx + radius, oldcy = cy;
+
+					for (int deg = 0; deg < 360; deg += 5) {
+						double rad = deg * 0.0174;
+						edge.addpoint((radius * Math.cos(rad)) + cx,
+								(radius * Math.sin(rad)) + cy, cz);
+						edge.addpoint((radius * Math.cos(rad + 0.174)) + cx,
+								(radius * Math.sin(rad + 0.174)) + cy, cz);
 					}
+					System.out.println(this.edge);
+
 					break;
 				case "hermite":
 					params = argstoarray(currtoken.getParameters());
