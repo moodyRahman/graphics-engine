@@ -15,9 +15,6 @@ run:
 	javac *.java
 	java Parser
 
-animate:
-	javac *.java
-	java Parser
 
 animate-clean:
 	rm *.ppm
