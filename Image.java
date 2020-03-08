@@ -201,7 +201,7 @@ public void line(double px1, double py1, double px2, double py2, Pixel c){
 	int px2i = (int)px2;
 	int py2i = (int)py2;
 	if (px1i < 0 || py1i < 0 || px2i < 0 || py2i < 0){
-		return;
+		
 	}
 	if (Math.abs(py2i - py1i) <= Math.abs(px2i - px1i)){
 		if (px1i > px2i){
