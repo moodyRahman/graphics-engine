@@ -70,6 +70,14 @@ public void addpoint(double x, double y, double z){
         this.cols++;
 }
 
+
+
+public void addedge(double x0, double y0, double z0, double x1, double y1, double z1){
+        this.addpoint(x0, y0, z0);
+        this.addpoint(x1, y1, z1);
+}
+
+
 /**
  * Graphical representation of the matrix
  * @return returns a String of the matrix, formatted nicely
@@ -166,7 +174,7 @@ public Image flushToImage(int width, int height, Pixel init){
                 // System.out.println(x);
                 Double[] p1 = matrix.get(x);
                 Double[] p2 = matrix.get(x+1);
-
+                
                 out.line(p1[0], p1[1], p2[0], p2[1], c);
         }
 
