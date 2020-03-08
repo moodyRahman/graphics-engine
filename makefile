@@ -11,12 +11,13 @@ clean:
 	rm *.ppm
 
 
-run:
+run:	
 	javac *.java
 	java Parser
 
 
 animate-clean:
+	rm *.png
 	rm *.ppm
 	javac *.java
 	java Parser
