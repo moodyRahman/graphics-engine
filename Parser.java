@@ -113,6 +113,7 @@ public class Parser {
 	public void parse() throws IOException {
 		for (int x = 0; x < tokens.size(); x++) {
 			Command currtoken = tokens.get(x);
+			System.out.println(currtoken);
 			String c = currtoken.getCommand();
 			double[] params;
 			double plotx, ploty, newplotx, newploty, dt;
@@ -121,8 +122,7 @@ public class Parser {
 					params = argstoarray(currtoken.getParameters());
 					double px1 = params[0], py1 = params[1], pz1 = params[2];
 					double px2 = params[3], py2 = params[4], pz2 = params[5];
-					edge.addpoint(px1, py1, pz1);
-					edge.addpoint(px2, py2, pz2);
+					edge.addedge(px1, py1, pz1, px2, py2, pz2);
 					break;
 				case "ident":
 					this.transform = TransformGenerator.identity();
@@ -149,7 +149,7 @@ public class Parser {
 					this.edge = DoubleMatrix.multiply(this.transform, this.edge);
 					break;
 				case "display":
-					Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
+					Image i = this.edge.flushToImage(500, 500, new Pixel(200, 200, 200));
 					i.flushToFile("d.ppm");
 					Runtime.getRuntime().exec("convert d.ppm d.png");
 					try {
@@ -161,19 +161,21 @@ public class Parser {
 					break;
 				case "save":
 					String outfile = currtoken.getParameters();
-					i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
+					i = this.edge.flushToImage(500, 500, new Pixel(200, 200, 200));
 					i.flushToFile(outfile);
 					break;
 				case "save-convert":
-					outfile = currtoken.getParameters();
-					i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
-					i.flushToFile(outfile);
-					String outfilepng = outfile.substring(0, outfile.length() - 3) + "png";
-					String convertcommand = "convert " + outfile + " " + outfilepng;
-					System.out.println(convertcommand);
+					String param = currtoken.getParameters();
+					String[] arr = param.split(" ");
+					i = this.edge.flushToImage(Integer.parseInt(arr[1]), Integer.parseInt(arr[2]),
+							new Pixel(200, 200, 200));
+					i.flushToFile(arr[0]);
+					String outfilepng = arr[0].substring(0, arr[0].length() - 3) + "png";
+					String convertcommand = "convert " + arr[0] + " " + outfilepng;
 					Runtime.getRuntime().exec(convertcommand);
 					// System.out.println(outfilepng);
 				case "circle":
+
 					params = argstoarray(currtoken.getParameters());
 
 					double cx = params[0], cy = params[1], cz = params[2], radius = params[3];
@@ -182,9 +184,9 @@ public class Parser {
 
 					for (double deg = 0; deg < 1; deg += .02) {
 						double rad = deg * 6.2831;
-						edge.addpoint((radius * Math.cos(rad)) + cx,
-								(radius * Math.sin(rad)) + cy, cz);
-						edge.addpoint((radius * Math.cos(rad + 0.174)) + cx,
+						edge.addedge((radius * Math.cos(rad)) + cx,
+								(radius * Math.sin(rad)) + cy, cz,
+								(radius * Math.cos(rad + 0.174)) + cx,
 								(radius * Math.sin(rad + 0.174)) + cy, cz);
 					}
 					// System.out.println(this.edge);
@@ -193,66 +195,61 @@ public class Parser {
 				case "hermite":
 					params = argstoarray(currtoken.getParameters());
 					// x0, y0, x1, y1, rx0, ry0, rx1, ry1
-					// 0    1   2   3   4    5    6    7
-					double hx0 = params[0], hy0=params[1], hx1 = params[2], hy1=params[3];
+					// 0 1 2 3 4 5 6 7
+					double hx0 = params[0], hy0 = params[1], hx1 = params[2], hy1 = params[3];
 					double hrx0 = params[4], hry0 = params[5], hrx1 = params[6], hry1 = params[6];
 
-					double xa = 2*hx0 - 2*hx1 + hrx0 + hrx1;
-					double xb = -3*hx0 + 3*hx1 - 2*hrx0 - hrx1; 
+					double xa = 2 * hx0 - 2 * hx1 + hrx0 + hrx1;
+					double xb = -3 * hx0 + 3 * hx1 - 2 * hrx0 - hrx1;
 					double xc = hrx0;
 					double xd = hx0;
 
-					double ya = 2*hy0 - 2*hy1 + hry0 + hry1;
-					double yb = -3*hy0 + 3*hy1 - 2*hry0 - hry1;
+					double ya = 2 * hy0 - 2 * hy1 + hry0 + hry1;
+					double yb = -3 * hy0 + 3 * hy1 - 2 * hry0 - hry1;
 					double yc = hry0;
 					double yd = hy0;
 
-					
-
-					for(double t = 0; t < 1; t+=.02){
-						plotx = xa*t*t*t + xb*t*t + xc*t + xd;
-						ploty = ya*t*t*t + yb*t*t + yc*t + yd;
+					for (double t = 0; t < 1; t += .02) {
+						plotx = xa * t * t * t + xb * t * t + xc * t + xd;
+						ploty = ya * t * t * t + yb * t * t + yc * t + yd;
 
 						dt = t + .02;
 
-						newplotx = xa*dt*dt*dt + xb*dt*dt + xc*dt + xd;
-						newploty = ya*dt*dt*dt + yb*dt*dt + yc*dt + yd;
+						newplotx = xa * dt * dt * dt + xb * dt * dt + xc * dt + xd;
+						newploty = ya * dt * dt * dt + yb * dt * dt + yc * dt + yd;
 
-						edge.addpoint(plotx, ploty, 1);
-						edge.addpoint(newplotx, newploty, 1);
+						edge.addedge(plotx, ploty, 1, newplotx, newploty, 1);
 
 					}
 
 					break;
 				case "bezier":
-					
 					params = argstoarray(currtoken.getParameters());
 					// x0, y0, x1, y1, x2, y2, x3, y3
-					// 0    1   2   3   4   5   6   7
+					// 0 1 2 3 4 5 6 7
 					double bx0 = params[0], bx1 = params[2], bx2 = params[4], bx3 = params[6];
 					double by0 = params[1], by1 = params[3], by2 = params[5], by3 = params[7];
 
-					double bxa = -bx0 + 3*bx1 - 3*bx2 + bx3;
-					double bxb = 3*bx0 - 6*bx1 + 3*bx2;
-					double bxc = -3*bx0 + 3*bx1;
+					double bxa = -bx0 + 3 * bx1 - 3 * bx2 + bx3;
+					double bxb = 3 * bx0 - 6 * bx1 + 3 * bx2;
+					double bxc = -3 * bx0 + 3 * bx1;
 					double bxd = bx0;
 
-					double bya = -by0 + 3*by1 - 3*by2 + by3;
-					double byb = 3*by0 - 6*by1 + 3*by2;
-					double byc = -3*by0 + 3*by1;
+					double bya = -by0 + 3 * by1 - 3 * by2 + by3;
+					double byb = 3 * by0 - 6 * by1 + 3 * by2;
+					double byc = -3 * by0 + 3 * by1;
 					double byd = by0;
 
-					for(double t = 0; t < 1; t+=.02){
-						plotx = bxa*t*t*t + bxb*t*t + bxc*t + bxd;
-						ploty = bya*t*t*t + byb*t*t + byc*t + byd;
-						
-						dt = t + .02;
-						
-						newplotx = bxa*dt*dt*dt + bxb*dt*dt + bxc*dt + bxd;
-						newploty = bya*dt*dt*dt + byb*dt*dt + byc*dt + byd;
+					for (double t = 0; t < 1; t += .02) {
+						plotx = bxa * t * t * t + bxb * t * t + bxc * t + bxd;
+						ploty = bya * t * t * t + byb * t * t + byc * t + byd;
 
-						edge.addpoint(plotx, ploty, 1);
-						edge.addpoint(newplotx, newploty, 1);
+						dt = t + .02;
+
+						newplotx = bxa * dt * dt * dt + bxb * dt * dt + bxc * dt + bxd;
+						newploty = bya * dt * dt * dt + byb * dt * dt + byc * dt + byd;
+
+						edge.addedge(plotx, ploty, 1, newplotx, newploty, 1);
 					}
 
 					break;
