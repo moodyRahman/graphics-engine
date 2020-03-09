@@ -45,6 +45,8 @@ public class Parser {
 	private DoubleMatrix transform = TransformGenerator.identity();
 	private ArrayList<Command> tokens = new ArrayList<Command>();
 	ProcessBuilder processBuilder = new ProcessBuilder();
+	Pixel linecolor = new Pixel(100, 100, 100);
+	Pixel bgcolor = new Pixel(100, 100, 100);
 
 	/**
 	 * makes a new Parser
@@ -74,7 +76,8 @@ public class Parser {
 			if (command.equals("line") || command.equals("rotate") || command.equals("scale")
 					|| command.equals("move") || command.equals("save") || command.equals("circle")
 					|| command.equals("hermite") || command.equals("bezier")
-					|| command.equals("save-convert")) {
+					|| command.equals("save-convert") || command.equals("pen-color")
+					|| command.equals("bg-color")) {
 				x++;
 				String arg = stokens.get(x);
 				tokens.add(new Command(command, arg));
@@ -148,8 +151,16 @@ public class Parser {
 				case "apply":
 					this.edge = DoubleMatrix.multiply(this.transform, this.edge);
 					break;
+				case "pen-color":
+					params = argstoarray(currtoken.getParameters());
+					linecolor.set(new Pixel((int) params[0], (int) params[1], (int) params[2]));
+					break;
+				case "bg-color":
+					params = argstoarray(currtoken.getParameters());
+					bgcolor.set(new Pixel((int) params[0], (int) params[1], (int) params[2]));
+					break;
 				case "display":
-					Image i = this.edge.flushToImage(500, 500, new Pixel(200, 200, 200));
+					Image i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
 					i.flushToFile("d.ppm");
 					Runtime.getRuntime().exec("convert d.ppm d.png");
 					try {
@@ -161,14 +172,14 @@ public class Parser {
 					break;
 				case "save":
 					String outfile = currtoken.getParameters();
-					i = this.edge.flushToImage(500, 500, new Pixel(200, 200, 200));
+					i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
 					i.flushToFile(outfile);
 					break;
 				case "save-convert":
 					String param = currtoken.getParameters();
 					String[] arr = param.split(" ");
 					i = this.edge.flushToImage(Integer.parseInt(arr[1]), Integer.parseInt(arr[2]),
-							new Pixel(200, 200, 200));
+							bgcolor, linecolor);
 					i.flushToFile(arr[0]);
 					String outfilepng = arr[0].substring(0, arr[0].length() - 3) + "png";
 					String convertcommand = "convert " + arr[0] + " " + outfilepng;
