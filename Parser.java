@@ -45,8 +45,8 @@ public class Parser {
 	private DoubleMatrix transform = TransformGenerator.identity();
 	private ArrayList<Command> tokens = new ArrayList<Command>();
 	ProcessBuilder processBuilder = new ProcessBuilder();
-	Pixel linecolor = new Pixel(100, 100, 100);
-	Pixel bgcolor = new Pixel(100, 100, 100);
+	Pixel linecolor = new Pixel(0, 0, 0);
+	Pixel bgcolor = new Pixel(200, 200, 200);
 
 	/**
 	 * makes a new Parser
