@@ -163,10 +163,10 @@ public static DoubleMatrix multiply (DoubleMatrix a, DoubleMatrix b) throws Doub
  * Flushes the current matrix into an image file
  * @return new Image with the drawn matrix
  */
-public Image flushToImage(int width, int height, Pixel init){
+public Image flushToImage(int width, int height, Pixel init, Pixel linecolor){
         Image out = new Image(width, height, init);
 
-        Pixel c = new Pixel(0, 0, 0);
+        // Pixel c = new Pixel(0, 0, 0);
 
         // System.out.println("HERE");
         System.out.println(matrix.size());
@@ -175,7 +175,7 @@ public Image flushToImage(int width, int height, Pixel init){
                 Double[] p1 = matrix.get(x);
                 Double[] p2 = matrix.get(x+1);
                 
-                out.line(p1[0], p1[1], p2[0], p2[1], c);
+                out.line(p1[0], p1[1], p2[0], p2[1], linecolor);
         }
 
         return out;
