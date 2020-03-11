@@ -30,5 +30,6 @@ hermite
 185 496 179 453 -105 -23 100 23
 hermite
 220 493 204 453 -112 -20 -125 -29
+display
 save-convert
 x.ppm 500 500
