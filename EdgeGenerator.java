@@ -1,5 +1,13 @@
 public class EdgeGenerator {
 
+        /**
+         * adds the edges of a circle to the edge matrix parameter
+         * @param edge edge matrix to add the sdgex to
+         * @param cx center x
+         * @param cy center y
+         * @param cz center z
+         * @param radius radius
+         */
         public static void circle(DoubleMatrix edge, double cx, double cy, double cz, double radius) {
                 for (double deg = 0; deg < 1; deg += .02) {
                         double rad = deg * 6.2831;
@@ -9,6 +17,19 @@ public class EdgeGenerator {
                 }
         }
 
+
+        /**
+         * generates a hermite curve and adds the edges
+         * @param edge edge matrix to add the edges to
+         * @param hx0
+         * @param hy0
+         * @param hx1
+         * @param hy1
+         * @param hrx0
+         * @param hry0
+         * @param hrx1
+         * @param hry1
+         */
         public static void hermite(DoubleMatrix edge, double hx0, double hy0, double hx1, double hy1, double hrx0,
                         double hry0, double hrx1, double hry1) {
                 double xa = 2 * hx0 - 2 * hx1 + hrx0 + hrx1;
@@ -36,6 +57,18 @@ public class EdgeGenerator {
                 }
         }
 
+        /**
+         * generates a bezier curves and adds to edge matrix
+         * @param edge edge matrix to add bezier edges to
+         * @param bx0
+         * @param by0
+         * @param bx1
+         * @param by1
+         * @param bx2
+         * @param by2
+         * @param bx3
+         * @param by3
+         */
         public static void bezier(DoubleMatrix edge, double bx0, double by0, double bx1, double by1, double bx2,
                         double by2, double bx3, double by3) {
                 double bxa = -bx0 + 3 * bx1 - 3 * bx2 + bx3;
