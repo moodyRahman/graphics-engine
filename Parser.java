@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.lang.Math;
 
 public class Parser {
 
@@ -119,7 +118,6 @@ public class Parser {
 			System.out.println(currtoken);
 			String c = currtoken.getCommand();
 			double[] params;
-			double plotx, ploty, newplotx, newploty, dt;
 			switch (c) {
 				case "line":
 					params = argstoarray(currtoken.getParameters());
@@ -193,13 +191,7 @@ public class Parser {
 
 					// double oldcx = cx + radius, oldcy = cy;
 
-					for (double deg = 0; deg < 1; deg += .02) {
-						double rad = deg * 6.2831;
-						edge.addedge((radius * Math.cos(rad)) + cx,
-								(radius * Math.sin(rad)) + cy, cz,
-								(radius * Math.cos(rad + 0.174)) + cx,
-								(radius * Math.sin(rad + 0.174)) + cy, cz);
-					}
+					EdgeGenerator.circle(edge, cx, cy, cz, radius);
 					// System.out.println(this.edge);
 
 					break;
@@ -210,28 +202,7 @@ public class Parser {
 					double hx0 = params[0], hy0 = params[1], hx1 = params[2], hy1 = params[3];
 					double hrx0 = params[4], hry0 = params[5], hrx1 = params[6], hry1 = params[6];
 
-					double xa = 2 * hx0 - 2 * hx1 + hrx0 + hrx1;
-					double xb = -3 * hx0 + 3 * hx1 - 2 * hrx0 - hrx1;
-					double xc = hrx0;
-					double xd = hx0;
-
-					double ya = 2 * hy0 - 2 * hy1 + hry0 + hry1;
-					double yb = -3 * hy0 + 3 * hy1 - 2 * hry0 - hry1;
-					double yc = hry0;
-					double yd = hy0;
-
-					for (double t = 0; t < 1; t += .02) {
-						plotx = xa * t * t * t + xb * t * t + xc * t + xd;
-						ploty = ya * t * t * t + yb * t * t + yc * t + yd;
-
-						dt = t + .02;
-
-						newplotx = xa * dt * dt * dt + xb * dt * dt + xc * dt + xd;
-						newploty = ya * dt * dt * dt + yb * dt * dt + yc * dt + yd;
-
-						edge.addedge(plotx, ploty, 1, newplotx, newploty, 1);
-
-					}
+					EdgeGenerator.hermite(edge, hx0, hy0, hx1, hy1, hrx0, hry0, hrx1, hry1);
 
 					break;
 				case "bezier":
@@ -241,27 +212,7 @@ public class Parser {
 					double bx0 = params[0], bx1 = params[2], bx2 = params[4], bx3 = params[6];
 					double by0 = params[1], by1 = params[3], by2 = params[5], by3 = params[7];
 
-					double bxa = -bx0 + 3 * bx1 - 3 * bx2 + bx3;
-					double bxb = 3 * bx0 - 6 * bx1 + 3 * bx2;
-					double bxc = -3 * bx0 + 3 * bx1;
-					double bxd = bx0;
-
-					double bya = -by0 + 3 * by1 - 3 * by2 + by3;
-					double byb = 3 * by0 - 6 * by1 + 3 * by2;
-					double byc = -3 * by0 + 3 * by1;
-					double byd = by0;
-
-					for (double t = 0; t < 1; t += .02) {
-						plotx = bxa * t * t * t + bxb * t * t + bxc * t + bxd;
-						ploty = bya * t * t * t + byb * t * t + byc * t + byd;
-
-						dt = t + .02;
-
-						newplotx = bxa * dt * dt * dt + bxb * dt * dt + bxc * dt + bxd;
-						newploty = bya * dt * dt * dt + byb * dt * dt + byc * dt + byd;
-
-						edge.addedge(plotx, ploty, 1, newplotx, newploty, 1);
-					}
+					EdgeGenerator.bezier(edge, bx0, by0, bx1, by1, bx2, by2, bx3, by3);
 
 					break;
 			}
