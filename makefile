@@ -7,8 +7,9 @@ all:
 
 
 clean:
-	rm *.class
-	rm *.ppm
+	-rm *.png
+	-rm *.ppm
+	-rm *.class
 
 
 run:	
