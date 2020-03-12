@@ -1,3 +1,6 @@
+/**
+ * Stores the RGB Values of a pixel
+ */
 public class Pixel {
 
 
