@@ -5,8 +5,14 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * Parses an input file, in accordance to either GraphicsScript or it's superset: MoodScript
+ */
 public class Parser {
-
+	
+	/**
+	 * Stores a command and paramaters
+	 */
 	class Command {
 		private String command;
 		private String arg;
@@ -48,7 +54,7 @@ public class Parser {
 	Pixel bgcolor = new Pixel(200, 200, 200);
 
 	/**
-	 * makes a new Parser
+	 * makes a new Parser and processes all of it's tokens
 	 * 
 	 * @param fname the name of the file to parse
 	 * @throws FileNotFoundException
@@ -68,7 +74,6 @@ public class Parser {
 			}
 		}
 		sc.close();
-		// // System.out.println(stokens);
 
 		for (int x = 0; x < stokens.size(); x++) {
 			String command = stokens.get(x);
@@ -84,9 +89,6 @@ public class Parser {
 				tokens.add(new Command(command));
 			}
 		}
-
-		// // System.out.println(tokens);
-
 	}
 
 	/**
