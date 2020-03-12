@@ -234,11 +234,11 @@ public void line(double px1, double py1, double px2, double py2, Pixel c){
 public void matrixLine(DoubleMatrix m, Pixel c){
 	double[][] array = m.getarray();
 	for (int x = 1; x < array.length; x++) {
-                double[] p1 = array[x];
-                double[] p2 = array[x-1];
+		double[] p1 = array[x];
+		double[] p2 = array[x-1];
 
-                line(p1[0], p1[1], p2[0], p2[1], c);
-        }
+		line(p1[0], p1[1], p2[0], p2[1], c);
+	}
 
 }
 
