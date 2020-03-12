@@ -1,11 +1,13 @@
 import java.lang.Math;
 
-
+/**
+ * Stores all the static methods used to generate the transformational matrices
+ */
 public class TransformGenerator{
 
 
 /**
- * generates a 4 by 4 identity DoubleMatrix
+ * generates and returns a 4 by 4 identity DoubleMatrix
  * @return identity matrix
  */
 public static DoubleMatrix identity(){
@@ -22,6 +24,13 @@ public static DoubleMatrix identity(){
 }
 
 
+/**
+ * generates and returns a scaling matrix
+ * @param sx scale x
+ * @param sy scale y
+ * @param sz scale z
+ * @return DoubleMatrix
+ */
 public static DoubleMatrix scale(double sx, double sy, double sz){
         double[][] out = { {sx, 0, 0, 0},
                            {0, sy, 0, 0},
@@ -31,6 +40,13 @@ public static DoubleMatrix scale(double sx, double sy, double sz){
         return new DoubleMatrix(out);
 }
 
+/**
+ * generates and returns a translating matrix
+ * @param dx move by x pixels
+ * @param dy move by y pixels
+ * @param dz move by z pixels
+ * @return DoubleMatrix
+ */
 public static DoubleMatrix translate(double dx, double dy, double dz){
         double[][] out = { {1, 0, 0, 0},
                            {0, 1, 0, 0},
@@ -39,6 +55,12 @@ public static DoubleMatrix translate(double dx, double dy, double dz){
         return new DoubleMatrix(out);
 }
 
+/**
+ * generate and return a rotational matrix
+ * @param axis char of the axis to rotate about, 'x', 'y', 'z'
+ * @param thetadeg degrees to rotate by
+ * @return DoubleMatrix
+ */
 public static DoubleMatrix rotate(char axis, double thetadeg){
 
         double theta = thetadeg *0.0174;
