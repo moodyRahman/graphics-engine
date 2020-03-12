@@ -1,6 +1,8 @@
 import java.io.File;
 import java.lang.Math;
 import java.io.FileWriter;
+import java.util.ArrayDeque;
+import java.util.Iterator;
 
 public class Image{
 
@@ -37,18 +39,17 @@ public Image(int width, int height, Pixel color){
 
 /**
  * PPM'd format of the image
- * @return String with the PPM to be written
+ * @return Iterator with the PPM to be written
  */
-public String toString(){
-	String out = "";
+public Iterator<String> getBody(){
+	ArrayDeque<String> out = new ArrayDeque<String>();
 
 	for (int y = height - 1; y >= 0; y--) {
 		for (int x = 0; x < width; x++) {
-			out = out + this.pixelarray[x][y].toString();
+			out.add(this.pixelarray[x][y].toString());
 		}
-		out += "\n";
 	}
-	return out;
+	return out.iterator();
 }
 
 
@@ -67,10 +68,12 @@ public void flushToFile(String fname){
 
 	try {
 		FileWriter towrite = new FileWriter(fname);
-		// System.out.print(this.HEADER);
-		// System.out.print(this.toString());
 		towrite.write(this.HEADER);
-		towrite.write(this.toString());
+
+		Iterator<String> body = this.getBody();
+		while (body.hasNext()){
+			towrite.write(body.next());
+		}
 		towrite.close();
 	} catch(Exception e) {
 
