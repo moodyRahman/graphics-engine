@@ -125,38 +125,46 @@ public class Parser {
 					double px2 = params[3], py2 = params[4], pz2 = params[5];
 					edge.addedge(px1, py1, pz1, px2, py2, pz2);
 					break;
+
 				case "ident":
 					this.transform = TransformGenerator.identity();
 					break;
+
 				case "scale":
 					params = argstoarray(currtoken.getParameters());
 					double scalex = params[0], scaley = params[1], scalez = params[2];
 					DoubleMatrix scale = TransformGenerator.scale(scalex, scaley, scalez);
 					this.transform = DoubleMatrix.multiply(scale, this.transform);
 					break;
+
 				case "move":
 					params = argstoarray(currtoken.getParameters());
 					double movex = params[0], movey = params[1], movez = params[2];
 					DoubleMatrix move = TransformGenerator.translate(movex, movey, movez);
 					this.transform = DoubleMatrix.multiply(move, this.transform);
 					break;
+
 				case "rotate":
 					params = argstoarray(currtoken.getParameters());
 					double axis = params[0], theta = params[1];
 					DoubleMatrix rotate = TransformGenerator.rotate((char) axis, theta);
 					this.transform = DoubleMatrix.multiply(rotate, this.transform);
 					break;
+
 				case "apply":
 					this.edge = DoubleMatrix.multiply(this.transform, this.edge);
 					break;
+
 				case "pen-color":
 					params = argstoarray(currtoken.getParameters());
 					linecolor.set(new Pixel((int) params[0], (int) params[1], (int) params[2]));
 					break;
+
 				case "bg-color":
 					params = argstoarray(currtoken.getParameters());
 					bgcolor.set(new Pixel((int) params[0], (int) params[1], (int) params[2]));
 					break;
+
 				case "display":
 					Image i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
 					i.flushToFile("d.ppm");
@@ -168,11 +176,13 @@ public class Parser {
 					Picture p = new Picture("d.png");
 					p.show();
 					break;
+
 				case "save":
 					String outfile = currtoken.getParameters();
 					i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
 					i.flushToFile(outfile);
 					break;
+
 				case "save-convert":
 					String param = currtoken.getParameters();
 					String[] arr = param.split(" ");
@@ -182,38 +192,26 @@ public class Parser {
 					String outfilepng = arr[0].substring(0, arr[0].length() - 3) + "png";
 					String convertcommand = "convert " + arr[0] + " " + outfilepng;
 					Runtime.getRuntime().exec(convertcommand);
-					// System.out.println(outfilepng);
-				case "circle":
-
-					params = argstoarray(currtoken.getParameters());
-
-					double cx = params[0], cy = params[1], cz = params[2], radius = params[3];
-
-					// double oldcx = cx + radius, oldcy = cy;
-
-					EdgeGenerator.circle(edge, cx, cy, cz, radius);
-					// System.out.println(this.edge);
-
 					break;
+
+				case "circle":
+					params = argstoarray(currtoken.getParameters());
+					double cx = params[0], cy = params[1], cz = params[2], radius = params[3];
+					EdgeGenerator.circle(edge, cx, cy, cz, radius);
+					break;
+
 				case "hermite":
 					params = argstoarray(currtoken.getParameters());
-					// x0, y0, x1, y1, rx0, ry0, rx1, ry1
-					// 0 1 2 3 4 5 6 7
 					double hx0 = params[0], hy0 = params[1], hx1 = params[2], hy1 = params[3];
 					double hrx0 = params[4], hry0 = params[5], hrx1 = params[6], hry1 = params[6];
-
 					EdgeGenerator.hermite(edge, hx0, hy0, hx1, hy1, hrx0, hry0, hrx1, hry1);
-
 					break;
+
 				case "bezier":
 					params = argstoarray(currtoken.getParameters());
-					// x0, y0, x1, y1, x2, y2, x3, y3
-					// 0 1 2 3 4 5 6 7
 					double bx0 = params[0], bx1 = params[2], bx2 = params[4], bx3 = params[6];
 					double by0 = params[1], by1 = params[3], by2 = params[5], by3 = params[7];
-
 					EdgeGenerator.bezier(edge, bx0, by0, bx1, by1, bx2, by2, bx3, by3);
-
 					break;
 			}
 		}
