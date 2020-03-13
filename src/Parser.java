@@ -170,20 +170,20 @@ public class Parser {
 
 				case "display":
 					Image i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
-					i.flushToFile("d.ppm");
-					Runtime.getRuntime().exec("convert d.ppm d.png");
+					i.flushToFile("./tmp/d.ppm");
+					Runtime.getRuntime().exec("convert ./tmp/d.ppm ./tmp/d.png");
 					try {
 						Thread.sleep(500);
 					} catch (Exception e) {
 					}
-					Picture p = new Picture("d.png");
+					Picture p = new Picture("./tmp/d.png");
 					p.show();
 					break;
 
 				case "save":
 					String outfile = currtoken.getParameters();
 					i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
-					i.flushToFile(outfile);
+					i.flushToFile("./pics/" + outfile);
 					break;
 
 				case "save-convert":
@@ -191,9 +191,9 @@ public class Parser {
 					String[] arr = param.split(" ");
 					i = this.edge.flushToImage(Integer.parseInt(arr[1]), Integer.parseInt(arr[2]),
 							bgcolor, linecolor);
-					i.flushToFile(arr[0]);
+					i.flushToFile("./pics/" + arr[0]);
 					String outfilepng = arr[0].substring(0, arr[0].length() - 3) + "png";
-					String convertcommand = "convert " + arr[0] + " " + outfilepng;
+					String convertcommand = "convert ./pics/" + arr[0] + " ./pics/" + outfilepng;
 					Runtime.getRuntime().exec(convertcommand);
 					break;
 
@@ -223,11 +223,11 @@ public class Parser {
 		// System.out.println(this.edge);
 		// Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
 		// i.flushToFile("d.ppm");
-		// Runtime.getRuntime().exec("rm d.ppm");
+		Runtime.getRuntime().exec("rm -rf ./tmp");
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Parser p = new Parser("script.txt");
+		Parser p = new Parser("./scripts/script.txt");
 
 		try {
 			p.parse();

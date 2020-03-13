@@ -1,10 +1,9 @@
 
 all:	
-	mkdir bin
+	-mkdir bin
+	-mkdir tmp
 	javac src/*.java -d bin
 	java -cp bin src.Parser
-	convert -delay 30 -loop 0 *.ppm  sksk.gif
-	animate -resize 300% -filter point sksk.gif
 
 
 clean:
@@ -12,6 +11,7 @@ clean:
 	-rm *.ppm
 	-rm -rf ./bin
 	-rm ./src/*.class
+	-rm *.gif
 
 
 run:	
