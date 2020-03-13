@@ -17,6 +17,15 @@ clean:
 	-rm ./src/*.class
 	-rm *.gif
 
+
+deepclean:
+	-rm *.png
+	-rm *.ppm
+	-rm -rf ./bin
+	-rm ./src/*.class
+	-rm *.gif
+	-rm -rf ./pics
+
 run: ./bin
 	echo $(script)
 	javac src/*.java -d bin
