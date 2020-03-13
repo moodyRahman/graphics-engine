@@ -205,8 +205,9 @@ public void line(int px1, int py1, int px2, int py2, Pixel c){
 
 public void line(double pxl1, double pyl1, double pxl2, double pyl2, Pixel c){
 
-	// int py2   =       (int)pyl2 < 0       ?     0 :       (int)pyl2 > this.height      ?     this.height : (int)pyl2;
-	//  define py2 as      if py2 less          return 0       elsepy2 greater                      return       else       
+	//  int py2   =       (int)pyl2 < 0       ?     0 :       (int)pyl2 > this.height      ?     this.height : (int)pyl2;
+	//    ||                  ||                    ||               ||                                 ||        ||           
+	//  define py2 as      if py2 less          return 0       else py2 greater                      return       else       
 	//                      then 0                             than this.height?                 this.height    do nothing
 	
 	int px1 = (int)pxl1 < 0 ? 0 : (int)pxl1 >  this.width ? this.width : (int)pxl1;

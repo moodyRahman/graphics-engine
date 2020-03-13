@@ -1,6 +1,6 @@
 package src;
 /**
- * Holds are the methods to add shapes to an image
+ * Holds are the methods to add shapes to an image\
  */
 public class EdgeGenerator {
 

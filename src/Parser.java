@@ -121,6 +121,8 @@ public class Parser {
 			System.out.println(currtoken);
 			String c = currtoken.getCommand();
 			double[] params;
+			Runtime.getRuntime().exec("mkdir tmp");
+			Runtime.getRuntime().exec("mkdir pics");
 			switch (c) {
 				case "line":
 					params = argstoarray(currtoken.getParameters());
@@ -227,7 +229,7 @@ public class Parser {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Parser p = new Parser("./scripts/stuyface.mscript");
+		Parser p = new Parser(args[0]);
 
 		try {
 			p.parse();
