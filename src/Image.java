@@ -203,28 +203,40 @@ public void line(int px1, int py1, int px2, int py2, Pixel c){
 	}
 }
 
-public void line(double px1, double py1, double px2, double py2, Pixel c){
-	int px1i = (int)px1;
-	int py1i = (int)py1;
-	int px2i = (int)px2;
-	int py2i = (int)py2;
-	if (px1i < 0 || py1i < 0 || px2i < 0 || py2i < 0){
-		
+public void line(double pxl1, double pyl1, double pxl2, double pyl2, Pixel c){
+
+	// int py2   =       (int)pyl2 < 0       ?     0 :       (int)pyl2 > this.height      ?     this.height : (int)pyl2;
+	//  define py2 as      if py2 less          return 0       elsepy2 greater                      return       else       
+	//                      then 0                             than this.height?                 this.height    do nothing
+	
+	int px1 = (int)pxl1 < 0 ? 0 : (int)pxl1 >  this.width ? this.width : (int)pxl1;
+	int py1 = (int)pyl1 < 0 ? 0 : (int)pyl1 > this.height ? this.height : (int)pyl1;
+	int px2 = (int)pxl2 < 0 ? 0 : (int)pxl2 >  this.width ? this.width : (int)pxl2;
+	int py2 = (int)pyl2 < 0 ? 0 : (int)pyl2 > this.height ? this.height : (int)pyl2;
+
+	// int px1 = (int)pxl1;
+	// int py1 = (int)pyl1;
+	// int px2 = (int)pxl2;
+	// int py2 = (int)pyl2;
+
+
+	if (px1 < 0 || py1 < 0 || px2 < 0 || py2 < 0){
+		return;
 	}
-	if (Math.abs(py2i - py1i) <= Math.abs(px2i - px1i)){
-		if (px1i > px2i){
-			drawLineLow(px2i, py2i, px1i, py1i, c);
+	if (Math.abs(py2 - py1) <= Math.abs(px2 - px1)){
+		if (px1 > px2){
+			drawLineLow(px2, py2, px1, py1, c);
 		}
 		else {
-			drawLineLow(px1i, py1i, px2i, py2i, c);
+			drawLineLow(px1, py1, px2, py2, c);
 		}
 	}
 	else {
-		if (py1i > py2i){
-			drawLineHigh(px2i, py2i, px1i, py1i, c);
+		if (py1 > py2){
+			drawLineHigh(px2, py2, px1, py1, c);
 		}
 		else {
-			drawLineHigh(px1i, py1i, px2i, py2i, c);
+			drawLineHigh(px1, py1, px2, py2, c);
 		}
 	}
 }
