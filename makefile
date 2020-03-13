@@ -25,6 +25,7 @@ deepclean:
 	-rm ./src/*.class
 	-rm *.gif
 	-rm -rf ./pics
+	-rm -rf ./docs
 
 info:
 	mkdir docs

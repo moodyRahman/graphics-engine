@@ -1,15 +1,30 @@
-# Okuyasu Engine v 0.38
+# OkuyasuEngine v 0.38
 
-#### Introduction
-This is a graphics engine written entirely in Java, for the class MKS66C, Computer Graphics. 
+## Introduction
+This is a graphics engine written entirely in Java, for the class MKS66C, Computer Graphics.  
+
+All images will be saved inside ```./pics```
+
 
 #### To run
-- Clone into this repo
-- run make
-- edit the script/stuyface.mscript to change the output file
+- ```make``` 
+  - compile the source code and execute with ```./scripts/stuyface.mscript```
+- ```make compile```
+  - compile the source code
+- ```make run script=./your_script.mscript```
+  - execute with the specified script
+- ```make info```
+  - generate documentation
+- ```make clean```
+  - delete root directory images and and compiled code
+- ```make deepclean```
+  - delete all makefile generated code
+- ```make jar```
+  - generate OkuyasuEngine.jar
+    - execute via ```java -jar OkuyasuEngine.jar ./your_script.mscript```
 
-#### MoodScript
-The script.txt interprets commands in MoodScript  
+## MoodScript
+The OkuyasuEngine interprets commands in MoodScript  
 ```
 command1  
 command2  
@@ -19,23 +34,24 @@ paramater1 paramater2
 ``` 
 Some commands are followed by parameters while some are not.  
 Here is the commandset (parameters enclosed in parentheses must be one of the enclosed options)
-Anything that is not in the command set is a comment
-| command      | parameters                         | purpose                                                                   |
-|--------------|------------------------------------|---------------------------------------------------------------------------|
-| pen-color    | red green blue                     | sets the color of the edges of the image                                  |
-| bg-color     | red green blue                     | sets the color of the background of the image                             |
-| line         | x0 y0 z0 x1 y1 z1                  | draws a line                                                              |
-| ident        |                 x                  | set the internal transformation matrix to an identity matrix              |
-| scale        | sx sy sz                           | appends a scaling operation to the current image                          |
-| move         | dx dy dz                           | appends a transformation operation to the current image                   |
-| rotate       | (x, y, z) theta                    | appends a rotation operation to the current image                         |
-| apply        |                 x                  | apply all of the pending operations to the current image                  |
-| display      |                 x                  | display the current image in an JFrame                                    |
-| save         | filename.ppm                       | write the current image to a filename.ppm                                 |
-| save-convert | filename.ppm width height          | writes the current image to filename.ppm and converts it to fileimage.png |
-| circle       | cx cy radius                       | draws a circle                                                            |
-| hermite      | x0, y0, x1, y1, rx0, ry0, rx1, ry1 | draws an hermite curve                                                    |
-| bezier       | x0, y0, x1, y1, x2, y2, x3, y3     | draws a bezier curve                                                      |
+Anything that is not in the command set is a comment  
+"-" denotes a command with no parameters
+| command            | parameters                         | purpose                                                                   |
+|--------------------|------------------------------------|---------------------------------------------------------------------------|
+| ```pen-color```    | red green blue                     | sets the color of the edges of the image                                  |
+| ```bg-color```     | red green blue                     | sets the color of the background of the image                             |
+| ```line```         | x0 y0 z0 x1 y1 z1                  | draws a line                                                              |
+| ```ident```        |                 -                  | set the internal transformation matrix to an identity matrix              |
+| ```scale```        | sx sy sz                           | appends a scaling operation to the current image                          |
+| ```move```         | dx dy dz                           | appends a transformation operation to the current image                   |
+| ```rotate```       | (x, y, z) theta                    | appends a rotation operation to the current image                         |
+| ```apply```        |                 -                  | apply all of the pending operations to the current image                  |
+| ```display```      |                 -                  | display the current image in an JFrame                                    |
+| ```save```         | filename.ppm                       | write the current image to a filename.ppm                                 |
+| ```save-convert``` | filename.ppm width height          | writes the current image to filename.ppm and converts it to fileimage.png |
+| ```circle```       | cx cy radius                       | draws a circle                                                            |
+| ```hermite```      | x0, y0, x1, y1, rx0, ry0, rx1, ry1 | draws an hermite curve                                                    |
+| ```bezier```       | x0, y0, x1, y1, x2, y2, x3, y3     | draws a bezier curve                                                      |
 
 #### Example script
 ```
@@ -77,5 +93,4 @@ x.ppm 500 500
 ```
 
 #### Future Plans
-- implement multiple user defined scripts inside ./scripts
 - pass this class
