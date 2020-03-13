@@ -23,5 +23,4 @@ run: ./bin
 
 jar: ./bin
 	cp MANIFEST.mf ./bin
-	cd ./bin
-	jar cvfe OkuyasuEngine.jar src.Parser ./src/*.class
+	cd bin; jar cvfe OkuyasuEngine.jar src.Parser src/*.class; mv OkuyasuEngine.jar ..;
