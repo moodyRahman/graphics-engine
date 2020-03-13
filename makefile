@@ -20,3 +20,8 @@ run: ./bin
 	echo $(script)
 	javac src/*.java -d bin
 	java -cp bin src.Parser $(script)
+
+jar: ./bin
+	cp MANIFEST.mf ./bin
+	cd ./bin
+	jar cvfe OkuyasuEngine.jar src.Parser ./src/*.class
