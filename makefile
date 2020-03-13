@@ -1,10 +1,12 @@
 
 all:	
 	-mkdir bin
-	-mkdir tmp
-	-mkdir pics
 	javac src/*.java -d bin
-	java -cp bin src.Parser
+	java -cp bin src.Parser scripts/stuyface.mscript
+
+
+compile:
+	javac src/*.java -d bin
 
 
 clean:
@@ -14,11 +16,10 @@ clean:
 	-rm ./src/*.class
 	-rm *.gif
 
-
-run:	
+run:	./bin
+	echo $(script)
 	javac src/*.java -d bin
-	java -cp bin src.Parser
-
+	java -cp bin src.Parser $(script)
 
 animate-clean:
 	rm *.png
