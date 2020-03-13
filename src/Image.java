@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.util.ArrayDeque;
 import java.util.Iterator;
 
+/**
+ * Represents an image
+ */
 public class Image{
 
 private int width;
