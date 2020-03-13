@@ -26,6 +26,10 @@ deepclean:
 	-rm *.gif
 	-rm -rf ./pics
 
+info:
+	mkdir docs
+	cd docs;javadoc ../src/*.java;
+
 run: ./bin
 	echo $(script)
 	javac src/*.java -d bin
