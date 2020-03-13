@@ -6,6 +6,7 @@ all:
 
 
 compile:
+	-mkdir bin
 	javac src/*.java -d bin
 
 
