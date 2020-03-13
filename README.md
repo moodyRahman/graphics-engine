@@ -37,7 +37,7 @@ Anything that is not in the command set is a comment
 | hermite      | x0, y0, x1, y1, rx0, ry0, rx1, ry1 | draws an hermite curve                                                    |
 | bezier       | x0, y0, x1, y1, x2, y2, x3, y3     | draws a bezier curve                                                      |
 
-#### Exanple script
+#### Example script
 ```
 #face
 circle
