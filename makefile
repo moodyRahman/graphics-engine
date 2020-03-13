@@ -16,13 +16,7 @@ clean:
 	-rm ./src/*.class
 	-rm *.gif
 
-run:	./bin
+run: ./bin
 	echo $(script)
 	javac src/*.java -d bin
 	java -cp bin src.Parser $(script)
-
-animate-clean:
-	rm *.png
-	rm *.ppm
-	javac *.java
-	java Parser
