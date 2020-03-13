@@ -32,7 +32,7 @@ Anything that is not in the command set is a comment
 | apply        |                 x                  | apply all of the pending operations to the current image                  |
 | display      |                 x                  | display the current image in an JFrame                                    |
 | save         | filename.ppm                       | write the current image to a filename.ppm                                 |
-| save-convert | filename.xyz width height          | writes the current image to filename.ppm and converts it to fileimage.xyz |
+| save-convert | filename.ppm width height          | writes the current image to filename.ppm and converts it to fileimage.png |
 | circle       | cx cy radius                       | draws a circle                                                            |
 | hermite      | x0, y0, x1, y1, rx0, ry0, rx1, ry1 | draws an hermite curve                                                    |
 | bezier       | x0, y0, x1, y1, x2, y2, x3, y3     | draws a bezier curve                                                      |

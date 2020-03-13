@@ -227,7 +227,7 @@ public class Parser {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Parser p = new Parser("./scripts/script.txt");
+		Parser p = new Parser("./scripts/stuyface.mscript");
 
 		try {
 			p.parse();
