@@ -1,3 +1,5 @@
+package src;
+
 /**
  * Stores the RGB Values of a pixel
  */

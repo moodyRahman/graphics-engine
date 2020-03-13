@@ -1,3 +1,5 @@
+package src;
+
 import java.io.File;
 import java.lang.Math;
 import java.io.FileWriter;
