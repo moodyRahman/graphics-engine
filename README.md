@@ -6,7 +6,7 @@ This is a graphics engine written entirely in Java, for the class MKS66C, Comput
 #### To run
 - Clone into this repo
 - run make
-- edit the script.txt to change the output file
+- edit the script/stuyface.mscript to change the output file
 
 #### MoodScript
 The script.txt interprets commands in MoodScript  
@@ -75,3 +75,7 @@ display
 save-convert
 x.ppm 500 500
 ```
+
+#### Future Plans
+- implement multiple user defined scripts inside ./scripts
+- pass this class
