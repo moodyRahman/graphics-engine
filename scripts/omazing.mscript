@@ -1,0 +1,130 @@
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+circle
+100 100 0 50
+rotatepoint
+100 100 0 y 10
+apply
+
+
+
+display
+pause
+
+save-convert
+ofont.ppm 500 500
