@@ -116,6 +116,7 @@ public class Parser {
 	 * @throws IOException
 	 */
 	public void parse() throws IOException {
+		Scanner scanner = new Scanner(System.in);
 		for (int x = 0; x < tokens.size(); x++) {
 			Command currtoken = tokens.get(x);
 			System.out.println(currtoken);
@@ -228,8 +229,11 @@ public class Parser {
 					double xsp = params[0], ysp = params[1], zsp = params[2], radiussp = params[3];
 					EdgeGenerator.sphere(edge, xsp, ysp, zsp, radiussp);
 				case "pause":
+					scanner.nextLine();
 			}
+
 		}
+		scanner.close();
 
 		// System.out.println(this.transform);
 		// System.out.println(this.edge);
