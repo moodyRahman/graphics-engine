@@ -110,10 +110,58 @@ public class EdgeGenerator {
 				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
 				double zc = radius * Math.sin(picir) * Math.sin(theta) + z;
 				edge.addpoint(xc, yc, zc);
+				edge.addpoint(xc + 1, yc + 1, zc + 1);
 			}
 		}
+	}
 
-		
+	public static void box(DoubleMatrix edge, double x, double y, double z, double width, double height, double depth){
+// ----------------------------------------------------------------------- |
+		edge.addpoint(x, y, z);
+		edge.addpoint(x+width, y, z);
+
+		edge.addpoint(x+width, y, z);
+		edge.addpoint(x+width, y, z-depth);
+								// draw the top face
+		edge.addpoint(x+width, y, z-depth);
+		edge.addpoint(x, y, z-depth);
+
+		edge.addpoint(x, y, z-depth);
+		edge.addpoint(x, y, z);
+// ----------------------------------------------------------------------- |
+// ----------------------------------------------------------------------- |
+		edge.addpoint(x, y-height, z);
+		edge.addpoint(x+width, y-height, z);
+
+		edge.addpoint(x+width, y-height, z);
+		edge.addpoint(x+width, y-height, z-depth);
+								// draw the bottom face
+		edge.addpoint(x+width, y-height, z-depth);
+		edge.addpoint(x, y-height, z-depth);
+
+		edge.addpoint(x, y-height, z-depth);
+		edge.addpoint(x, y-height, z);
+// ----------------------------------------------------------------------- |
+// ----------------------------------------------------------------------- |
+		edge.addpoint(x, y, z);
+		edge.addpoint(x, y-height, z);
+
+		edge.addpoint(x+width, y, z);
+		edge.addpoint(x+width, y-height, z);
+								// draw the height
+		edge.addpoint(x+width, y, z-depth);
+		edge.addpoint(x+width, y-height, z-depth);
+
+		edge.addpoint(x, y, z-depth);
+		edge.addpoint(x, y-height, z-depth);
+// ----------------------------------------------------------------------- |
+// ----------------------------------------------------------------------- |
+
+
+
+
+
+
 
 	}
 
