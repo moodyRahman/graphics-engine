@@ -115,9 +115,9 @@ public class EdgeGenerator {
 	public static DoubleMatrix sphereGenerator(double x, double y, double z, double radius) {
 		DoubleMatrix out = new DoubleMatrix();
 		for (double deg = 0; deg < 1; deg += .02) {
-			double theta = deg * 6.2831;
+			double theta = deg * 3.141;
 			for (double cir = 0; cir < 1; cir += .02) {
-				double picir = cir * 3.141;
+				double picir = cir * 3.141 * 2;
 				double xc = radius * Math.cos(picir) + x;
 				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
 				double zc = radius * Math.sin(picir) * Math.sin(theta) + z;
