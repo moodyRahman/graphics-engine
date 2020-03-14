@@ -121,8 +121,8 @@ public class EdgeGenerator {
 				double xc = radius * Math.cos(picir) + x;
 				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
 				double zc = radius * Math.sin(picir) * Math.sin(theta) + z;
-				edge.addpoint(xc, yc, zc);
-				edge.addpoint(xc + 1, yc + 1, zc + 1);
+				out.addpoint(xc, yc, zc);
+				out.addpoint(xc + 1, yc + 1, zc + 1);
 			}
 		}
 		return out;
