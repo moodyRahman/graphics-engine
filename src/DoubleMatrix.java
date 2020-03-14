@@ -72,6 +72,15 @@ public void addpoint(double x, double y, double z){
 }
 
 
+public void addmatrixedge(DoubleMatrix append){
+	for(int x = 0; x < append.getcols(); x++){
+		Double[] points = append.getpoint(x);
+		this.addpoint(points[0], points[1], points[2]);
+	}
+}
+
+
+
 
 public void addedge(double x0, double y0, double z0, double x1, double y1, double z1){
 	this.addpoint(x0, y0, z0);
