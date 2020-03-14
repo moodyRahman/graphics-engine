@@ -17,18 +17,22 @@ public class Parser {
 	class Command {
 		private String command;
 		private String arg;
+		private int line;
 
-		public Command(String command, String args) {
+		public Command(String command, String args, int line) {
 			this.command = command;
 			this.arg = args;
+			this.line = line;
 		}
 
-		public Command(String command) {
+		public Command(String command, int line) {
 			this.command = command;
+			this.line = line;
 		}
 
 		public String toString() {
 			String out = "";
+			out += this.line + " : ";
 			out += this.command;
 			if (this.arg != null) {
 				out += "=>";
@@ -43,6 +47,10 @@ public class Parser {
 
 		public String getParameters() {
 			return this.arg;
+		}
+
+		public int getLine(){
+			return this.line;
 		}
 
 	}
@@ -85,9 +93,9 @@ public class Parser {
 					|| command.equals("bg-color") || command.equals("sphere") || command.equals("rotatepoint")) {
 				x++;
 				String arg = stokens.get(x);
-				tokens.add(new Command(command, arg));
+				tokens.add(new Command(command, arg, x));
 			} else {
-				tokens.add(new Command(command));
+				tokens.add(new Command(command, x));
 			}
 		}
 	}
@@ -224,6 +232,7 @@ public class Parser {
 					double by0 = params[1], by1 = params[3], by2 = params[5], by3 = params[7];
 					EdgeGenerator.bezier(edge, bx0, by0, bx1, by1, bx2, by2, bx3, by3);
 					break;
+
 				case "sphere":
 					params = argstoarray(currtoken.getParameters());
 					double xsp = params[0], ysp = params[1], zsp = params[2], radiussp = params[3];
