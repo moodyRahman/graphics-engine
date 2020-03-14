@@ -101,15 +101,17 @@ public class EdgeGenerator {
 	}
 
 	public static void sphere(DoubleMatrix edge, double x, double y, double z, double radius) {
-		DoubleMatrix spherepoints = new DoubleMatrix();
-
-		for (int i = 0; i < 180; i+=10) {
-			EdgeGenerator.circle(spherepoints, x, y, z, radius);
-			DoubleMatrix rotate = TransformGenerator.rotatepoint(x, y, z, 'x', i * 0.0174);
-			spherepoints = DoubleMatrix.multiply(rotate, spherepoints);
+		
+		for (double deg = 0; deg < 1; deg += .02) {
+			double theta = deg * 6.2831;
+			for (double cir = 0; cir < 1; cir += .02){
+				double picir = cir * 3.141;
+				double xc = radius * Math.cos(picir) + x;
+				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
+				double zc = radius * Math.sin(picir) * Math.sin(theta) + z;
+				edge.addpoint(xc, yc, zc);
+			}
 		}
-
-		edge.addmatrixedge(spherepoints);
 
 		
 
