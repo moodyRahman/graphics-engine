@@ -157,12 +157,24 @@ public class EdgeGenerator {
 // ----------------------------------------------------------------------- |
 // ----------------------------------------------------------------------- |
 
-
-
-
-
-
-
 	}
+
+	public static void torus(DoubleMatrix edge, double x, double y, double z, double inner_rad, double outer_rad){
+		for (double deg = 0; deg < 1; deg += .02) {
+			double theta = deg * 6.2831;
+			// double theta = deg * 1;
+
+			for (double cir = 0; cir < 1; cir += .02){
+				double picir = cir * 6.2831;
+				double tx = (outer_rad + inner_rad*Math.cos(picir)) * Math.cos(theta) + x;
+				double ty = inner_rad * Math.sin(picir) + y;
+				double tz = (outer_rad + inner_rad*Math.cos(picir)) * Math.sin(theta) + z;
+
+				edge.addpoint(tx, ty, tz);
+			}
+		}
+	}
+
+
 
 }

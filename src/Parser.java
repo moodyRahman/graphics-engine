@@ -255,7 +255,10 @@ public class Parser {
 					EdgeGenerator.box(edge, boxx, boxy, boxz, boxw, boxh, boxd);
 					break;
 				case "torus":
-					// TODO: implement torus
+					params = argstoarray(currtoken.getParameters());
+					double torx = params[0], tory = params[1], torz = params[2];
+					double torin = params[3], torout = params[4];
+					EdgeGenerator.torus(edge, torx, tory, torz, torin, torout);
 
 			}
 
