@@ -82,7 +82,7 @@ public class Parser {
 					|| command.equals("move") || command.equals("save") || command.equals("circle")
 					|| command.equals("hermite") || command.equals("bezier")
 					|| command.equals("save-convert") || command.equals("pen-color")
-					|| command.equals("bg-color")) {
+					|| command.equals("bg-color") || command.equals("sphere") || command.equals("rotatepoint")) {
 				x++;
 				String arg = stokens.get(x);
 				tokens.add(new Command(command, arg));
