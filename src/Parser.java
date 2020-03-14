@@ -223,6 +223,11 @@ public class Parser {
 					double by0 = params[1], by1 = params[3], by2 = params[5], by3 = params[7];
 					EdgeGenerator.bezier(edge, bx0, by0, bx1, by1, bx2, by2, bx3, by3);
 					break;
+				case "sphere":
+					params = argstoarray(currtoken.getParameters());
+					double xsp = params[0], ysp = params[1], zsp = params[2], radiussp = params[3];
+					EdgeGenerator.sphere(edge, xsp, ysp, zsp, radiussp);
+				case "pause":
 			}
 		}
 
