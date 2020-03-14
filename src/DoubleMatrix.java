@@ -37,6 +37,13 @@ public DoubleMatrix(double[][] in){
 	this.cols = in.length;
 }
 
+/** 
+ * Wipes the current matrix and deletes all columns
+*/
+public void wipe(){
+	this.matrix.clear();
+}
+
 
 /**
  * returns how many columns (podoubles) are in the matrix
