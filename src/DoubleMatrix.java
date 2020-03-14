@@ -82,6 +82,15 @@ public void addmatrixedge(DoubleMatrix append){
 
 
 
+/**
+ * add an adge from two points to the matrix
+ * @param x0
+ * @param y0
+ * @param z0
+ * @param x1
+ * @param y1
+ * @param z1
+ */
 public void addedge(double x0, double y0, double z0, double x1, double y1, double z1){
 	this.addpoint(x0, y0, z0);
 	this.addpoint(x1, y1, z1);
