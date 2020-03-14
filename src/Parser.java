@@ -229,7 +229,10 @@ public class Parser {
 					double xsp = params[0], ysp = params[1], zsp = params[2], radiussp = params[3];
 					EdgeGenerator.sphere(edge, xsp, ysp, zsp, radiussp);
 				case "pause":
+					System.out.println();
+					System.out.println("PRESS ENTER TO RESUME SCRIPT");
 					scanner.nextLine();
+					break;
 			}
 
 		}
