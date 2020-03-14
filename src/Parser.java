@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.function.ToDoubleBiFunction;
 import java.util.ArrayList;
 
 /**
@@ -262,6 +263,8 @@ public class Parser {
 		try {
 			p.parse();
 		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: better print for error
 		}
 
 	}
