@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.function.ToDoubleBiFunction;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class Parser {
 	
 	/**
-	 * Stores a command and paramaters
+	 * Stores a command, paramaters, and line number
 	 */
 	class Command {
 		private String command;
@@ -262,9 +261,12 @@ public class Parser {
 
 		try {
 			p.parse();
-		} catch (Exception e) {
+		} catch (ArrayIndexOutOfBoundsException e) {
 			e.printStackTrace();
-			// TODO: better print for error
+			System.out.println("^^ PARAMETER EXCEPTION: INCORRECT NUMBER OF ARGUMENTS");
+		} catch (IOException e){
+			e.printStackTrace();
+
 		}
 
 	}
