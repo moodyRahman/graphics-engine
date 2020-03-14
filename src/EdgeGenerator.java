@@ -1,15 +1,17 @@
 package src;
+
 /**
- * Holds are the methods to add shapes to an image\
+ * Holds are the methods to add shapes to an image
  */
 public class EdgeGenerator {
 
 	/**
 	 * adds the edges of a circle to the edge matrix parameter
-	 * @param edge edge matrix to add the sdgex to
-	 * @param cx center x
-	 * @param cy center y
-	 * @param cz center z
+	 * 
+	 * @param edge   edge matrix to add the sdgex to
+	 * @param cx     center x
+	 * @param cy     center y
+	 * @param cz     center z
 	 * @param radius radius
 	 */
 	public static void circle(DoubleMatrix edge, double cx, double cy, double cz, double radius) {
@@ -21,9 +23,9 @@ public class EdgeGenerator {
 		}
 	}
 
-
 	/**
 	 * generates a hermite curve and adds the edges
+	 * 
 	 * @param edge edge matrix to add the edges to
 	 * @param hx0
 	 * @param hy0
@@ -63,6 +65,7 @@ public class EdgeGenerator {
 
 	/**
 	 * generates a bezier curves and adds to edge matrix
+	 * 
 	 * @param edge edge matrix to add bezier edges to
 	 * @param bx0
 	 * @param by0
@@ -100,11 +103,20 @@ public class EdgeGenerator {
 		}
 	}
 
-	public static void sphere(DoubleMatrix edge, double x, double y, double z, double radius) {
-		
+	/**
+	 * Generates a DoubleMatrix containing a sphere
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param radius
+	 * @return DoubleMatrix containing a sphere
+	 */
+	public static DoubleMatrix sphereGenerator(double x, double y, double z, double radius) {
+		DoubleMatrix out = new DoubleMatrix();
 		for (double deg = 0; deg < 1; deg += .02) {
 			double theta = deg * 6.2831;
-			for (double cir = 0; cir < 1; cir += .02){
+			for (double cir = 0; cir < 1; cir += .02) {
 				double picir = cir * 3.141;
 				double xc = radius * Math.cos(picir) + x;
 				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
@@ -113,68 +125,122 @@ public class EdgeGenerator {
 				edge.addpoint(xc + 1, yc + 1, zc + 1);
 			}
 		}
+		return out;
 	}
 
-	public static void box(DoubleMatrix edge, double x, double y, double z, double width, double height, double depth){
-// ----------------------------------------------------------------------- |
+	/**
+	 * Wrapper method to seperate adding a sphere to the current edge matrix and
+	 * generating the sphere Generates a torus and adds it to the edge matrix
+	 * 
+	 * @param edge
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param radius
+	 */
+	public static void sphere(DoubleMatrix edge, double x, double y, double z, double radius) {
+		edge.addmatrixedge(EdgeGenerator.sphereGenerator(x, y, z, radius));
+	}
+
+	/**
+	 * Adds a box to the edge matrix
+	 * 
+	 * @param edge
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param width
+	 * @param height
+	 * @param depth
+	 */
+	public static void box(DoubleMatrix edge, double x, double y, double z, double width, double height,
+			double depth) {
+		// Note: Yes, I could possible make this into a few for-loops but allow me to
+		// ask you, why?
+		// It's dead just 12 edges, no point in debugging when this is garunteed to work
+		// So, me in the future reading this
+		// Don't you dare try to change anything
+
 		edge.addpoint(x, y, z);
-		edge.addpoint(x+width, y, z);
+		edge.addpoint(x + width, y, z);
 
-		edge.addpoint(x+width, y, z);
-		edge.addpoint(x+width, y, z-depth);
-								// draw the top face
-		edge.addpoint(x+width, y, z-depth);
-		edge.addpoint(x, y, z-depth);
+		edge.addpoint(x + width, y, z);
+		edge.addpoint(x + width, y, z - depth);
+		// draw the top face
+		edge.addpoint(x + width, y, z - depth);
+		edge.addpoint(x, y, z - depth);
 
-		edge.addpoint(x, y, z-depth);
+		edge.addpoint(x, y, z - depth);
 		edge.addpoint(x, y, z);
-// ----------------------------------------------------------------------- |
-// ----------------------------------------------------------------------- |
-		edge.addpoint(x, y-height, z);
-		edge.addpoint(x+width, y-height, z);
+		// ----------------------------------------------------------------------- |
+		edge.addpoint(x, y - height, z);
+		edge.addpoint(x + width, y - height, z);
 
-		edge.addpoint(x+width, y-height, z);
-		edge.addpoint(x+width, y-height, z-depth);
-								// draw the bottom face
-		edge.addpoint(x+width, y-height, z-depth);
-		edge.addpoint(x, y-height, z-depth);
+		edge.addpoint(x + width, y - height, z);
+		edge.addpoint(x + width, y - height, z - depth);
+		// draw the bottom face
+		edge.addpoint(x + width, y - height, z - depth);
+		edge.addpoint(x, y - height, z - depth);
 
-		edge.addpoint(x, y-height, z-depth);
-		edge.addpoint(x, y-height, z);
-// ----------------------------------------------------------------------- |
-// ----------------------------------------------------------------------- |
+		edge.addpoint(x, y - height, z - depth);
+		edge.addpoint(x, y - height, z);
+		// ----------------------------------------------------------------------- |
 		edge.addpoint(x, y, z);
-		edge.addpoint(x, y-height, z);
+		edge.addpoint(x, y - height, z);
 
-		edge.addpoint(x+width, y, z);
-		edge.addpoint(x+width, y-height, z);
-								// draw the height
-		edge.addpoint(x+width, y, z-depth);
-		edge.addpoint(x+width, y-height, z-depth);
+		edge.addpoint(x + width, y, z);
+		edge.addpoint(x + width, y - height, z);
+		// draw the height
+		edge.addpoint(x + width, y, z - depth);
+		edge.addpoint(x + width, y - height, z - depth);
 
-		edge.addpoint(x, y, z-depth);
-		edge.addpoint(x, y-height, z-depth);
-// ----------------------------------------------------------------------- |
-// ----------------------------------------------------------------------- |
+		edge.addpoint(x, y, z - depth);
+		edge.addpoint(x, y - height, z - depth);
+		// ----------------------------------------------------------------------- |
 
 	}
 
-	public static void torus(DoubleMatrix edge, double x, double y, double z, double inner_rad, double outer_rad){
+	/**
+	 * generates a DoubleMatrix containing a torus
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param inner_rad
+	 * @param outer_rad
+	 * @return
+	 */
+	public static DoubleMatrix torusGenerator(double x, double y, double z, double inner_rad, double outer_rad) {
+		DoubleMatrix out = new DoubleMatrix();
 		for (double deg = 0; deg < 1; deg += .02) {
 			double theta = deg * 6.2831;
 			// double theta = deg * 1;
 
-			for (double cir = 0; cir < 1; cir += .02){
+			for (double cir = 0; cir < 1; cir += .02) {
 				double picir = cir * 6.2831;
-				double tx = (outer_rad + inner_rad*Math.cos(picir)) * Math.cos(theta) + x;
+				double tx = (outer_rad + inner_rad * Math.cos(picir)) * Math.cos(theta) + x;
 				double ty = inner_rad * Math.sin(picir) + y;
-				double tz = (outer_rad + inner_rad*Math.cos(picir)) * Math.sin(theta) + z;
+				double tz = (outer_rad + inner_rad * Math.cos(picir)) * Math.sin(theta) + z;
 
-				edge.addpoint(tx, ty, tz);
+				out.addpoint(tx, ty, tz);
 			}
 		}
+		return out;
 	}
 
-
+	/**
+	 * Wrapper method to seperate adding a torus to the current edge matrix and
+	 * generating the torus Generates a torus and adds it to the edge matrix
+	 * 
+	 * @param edge      edge matrix to add to
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param inner_rad
+	 * @param outer_rad
+	 */
+	public static void torus(DoubleMatrix edge, double x, double y, double z, double inner_rad, double outer_rad) {
+		edge.addmatrixedge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad));
+	}
 
 }
