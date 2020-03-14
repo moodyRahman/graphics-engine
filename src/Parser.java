@@ -90,7 +90,8 @@ public class Parser {
 					|| command.equals("move") || command.equals("save") || command.equals("circle")
 					|| command.equals("hermite") || command.equals("bezier")
 					|| command.equals("save-convert") || command.equals("pen-color")
-					|| command.equals("bg-color") || command.equals("sphere") || command.equals("rotatepoint")) {
+					|| command.equals("bg-color") || command.equals("sphere") || command.equals("rotatepoint")
+					|| command.equals("box") || command.equals("torus")) {
 				x++;
 				String arg = stokens.get(x);
 				tokens.add(new Command(command, arg, x));
@@ -244,6 +245,18 @@ public class Parser {
 					System.out.println("PRESS ENTER TO RESUME SCRIPT");
 					scanner.nextLine();
 					break;
+				case "clear":
+					edge.wipe();
+					break;
+				case "box":
+					params = argstoarray(currtoken.getParameters());
+					double boxx = params[0], boxy = params[1], boxz = params[2];
+					double boxw = params[3], boxh = params[4], boxd = params[5];
+					EdgeGenerator.box(edge, boxx, boxy, boxz, boxw, boxh, boxd);
+					break;
+				case "torus":
+					// TODO: implement torus
+
 			}
 
 		}
@@ -266,7 +279,8 @@ public class Parser {
 			System.out.println("^^ PARAMETER EXCEPTION: INCORRECT NUMBER OF ARGUMENTS");
 		} catch (IOException e){
 			e.printStackTrace();
-
+		} catch (Exception e){
+			e.printStackTrace();
 		}
 
 	}
