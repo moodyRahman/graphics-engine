@@ -98,4 +98,21 @@ public static DoubleMatrix rotate(char axis, double thetadeg){
 }
 
 
+
+public static DoubleMatrix rotatepoint(double x, double y, double z, char axis, double thetadeg){
+
+	double theta = thetadeg *0.0174;
+
+	DoubleMatrix transform_to_origin = TransformGenerator.translate(-x, -y, -z);
+	DoubleMatrix transform_from_origin = TransformGenerator.translate(x, y, z);
+	DoubleMatrix rotate = TransformGenerator.rotate(axis, theta);
+
+
+	return DoubleMatrix.multiply(DoubleMatrix.multiply(transform_from_origin, rotate), transform_to_origin);
+
+
+
+}
+
+
 }

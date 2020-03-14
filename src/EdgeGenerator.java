@@ -100,4 +100,19 @@ public class EdgeGenerator {
 		}
 	}
 
+	public static void sphere(DoubleMatrix edge, double x, double y, double z, double radius) {
+		DoubleMatrix spherepoints = new DoubleMatrix();
+
+		for (int i = 0; i < 180; i+=10) {
+			EdgeGenerator.circle(spherepoints, x, y, z, radius);
+			DoubleMatrix rotate = TransformGenerator.rotatepoint(x, y, z, 'x', i * 0.0174);
+			spherepoints = DoubleMatrix.multiply(rotate, spherepoints);
+		}
+
+		edge.addmatrixedge(spherepoints);
+
+		
+
+	}
+
 }
