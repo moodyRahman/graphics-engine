@@ -92,6 +92,9 @@ public void flushToFile(String fname){
  * @param color color to make the point
  */
 public void plot(int x, int y, Pixel color){
+	if (x < 0 || x >= this.width || y < 0 || y >= this.height){
+		return;
+	}
 	this.pixelarray[x][y].set(color);
 }
 
