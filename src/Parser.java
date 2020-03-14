@@ -155,6 +155,11 @@ public class Parser {
 					DoubleMatrix rotate = TransformGenerator.rotate((char) axis, theta);
 					this.transform = DoubleMatrix.multiply(rotate, this.transform);
 					break;
+				case "rotatepoint":
+					params = argstoarray(currtoken.getParameters());
+					double xrp = params[0], yrp = params[1], zrp = params[2], axisrp = params[3], thetarp = params[4];
+					DoubleMatrix rotatepoint = TransformGenerator.rotatepoint(xrp, yrp, zrp, (char)axisrp, thetarp);
+					this.transform = DoubleMatrix.multiply(rotatepoint, this.transform);
 
 				case "apply":
 					this.edge = DoubleMatrix.multiply(this.transform, this.edge);
