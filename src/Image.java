@@ -180,7 +180,7 @@ private void drawLineHigh(int px1, int py1, int px2, int py2, Pixel c){
 }
 
 /**
- * draws a line of a given color
+ * @deprecated draws a line of a given color
  * @param px1 [description]
  * @param py1 [description]
  * @param px2 [description]
@@ -206,6 +206,14 @@ public void line(int px1, int py1, int px2, int py2, Pixel c){
 	}
 }
 
+/**
+ * Draws a line in the image of the given color
+ * @param pxl1
+ * @param pyl1
+ * @param pxl2
+ * @param pyl2
+ * @param c
+ */
 public void line(double pxl1, double pyl1, double pxl2, double pyl2, Pixel c){
 
 	//  int py2   =       (int)pyl2 < 0       ?     0 :       (int)pyl2 > this.height      ?     this.height : (int)pyl2;
