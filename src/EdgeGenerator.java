@@ -1,7 +1,7 @@
 package src;
 
 /**
- * Holds are the methods to add shapes to an image
+ * Holds all the methods to add shapes to an image
  */
 public class EdgeGenerator {
 
@@ -122,7 +122,7 @@ public class EdgeGenerator {
 				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
 				double zc = radius * Math.sin(picir) * Math.sin(theta) + z;
 				out.addpoint(xc, yc, zc);
-				out.addpoint(xc + 1, yc + 1, zc + 1);
+				// out.addpoint(xc + 1, yc + 1, zc + 1);
 			}
 		}
 		return out;
