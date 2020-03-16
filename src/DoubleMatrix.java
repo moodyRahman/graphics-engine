@@ -83,6 +83,10 @@ public void addpoint(double x, double y, double z){
 }
 
 
+/**
+ * Adjoins a matrix to this instance of matrix
+ * @param append
+ */
 public void addmatrixedge(DoubleMatrix append){
 	for(int x = 0; x < append.getcols(); x++){
 		Double[] points = append.getpoint(x);
@@ -129,7 +133,7 @@ public String toString(){
 
 
 /**
- * converts the doubleernal array for the matrix doubleo an double[][]
+ * converts the internal array for the matrix into an double[][]
  * @return the doubleernal array as an double[][]
  */
 public double[][] getarray(){
