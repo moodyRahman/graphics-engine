@@ -1,0 +1,178 @@
+bg-color
+0 0 0
+pen-color
+32 194 14
+sphere
+250 250 0 40
+sphere
+250 250 0 100
+sphere
+250 250 0 160
+sphere
+250 250 0 250
+# display
+save-convert
+00.ppm 500 500
+
+rotatepoint
+250 250 0 x 10
+rotatepoint
+250 250 0 y 10
+apply
+# display
+save-convert
+01.ppm 500 500
+
+rotatepoint
+250 250 0 x 20
+rotatepoint
+250 250 0 y 20
+apply
+# display
+save-convert
+02.ppm 500 500
+
+rotatepoint
+250 250 0 x 30
+rotatepoint
+250 250 0 y 30
+apply
+# display
+save-convert
+03.ppm 500 500
+
+rotatepoint
+250 250 0 x 40
+rotatepoint
+250 250 0 y 40
+apply
+# display
+save-convert
+04.ppm 500 500
+
+rotatepoint
+250 250 0 x 50
+rotatepoint
+250 250 0 y 50
+apply
+# display
+save-convert
+05.ppm 500 500
+
+rotatepoint
+250 250 0 x 60
+rotatepoint
+250 250 0 y 60
+apply
+# display
+save-convert
+06.ppm 500 500
+
+rotatepoint
+250 250 0 x 70
+rotatepoint
+250 250 0 y 70
+apply
+# display
+save-convert
+07.ppm 500 500
+
+rotatepoint
+250 250 0 x 80
+rotatepoint
+250 250 0 y 80
+apply
+# display
+save-convert
+08.ppm 500 500
+
+rotatepoint
+250 250 0 x 90
+rotatepoint
+250 250 0 y 90
+apply
+# display
+save-convert
+09.ppm 500 500
+
+rotatepoint
+250 250 0 x 100
+rotatepoint
+250 250 0 y 100
+apply
+# display
+save-convert
+10.ppm 500 500
+
+rotatepoint
+250 250 0 x 110
+rotatepoint
+250 250 0 y 110
+apply
+# display
+save-convert
+11.ppm 500 500
+
+rotatepoint
+250 250 0 x 120
+rotatepoint
+250 250 0 y 120
+apply
+# display
+save-convert
+12.ppm 500 500
+
+rotatepoint
+250 250 0 x 130
+rotatepoint
+250 250 0 y 130
+apply
+# display
+save-convert
+13.ppm 500 500
+
+rotatepoint
+250 250 0 x 140
+rotatepoint
+250 250 0 y 140
+apply
+# display
+save-convert
+14.ppm 500 500
+
+rotatepoint
+250 250 0 x 150
+rotatepoint
+250 250 0 y 150
+apply
+# display
+save-convert
+15.ppm 500 500
+
+rotatepoint
+250 250 0 x 160
+rotatepoint
+250 250 0 y 160
+apply
+# display
+save-convert
+16.ppm 500 500
+
+rotatepoint
+250 250 0 x 170
+rotatepoint
+250 250 0 y 170
+apply
+# display
+save-convert
+17.ppm 500 500
+
+rotatepoint
+250 250 0 x 180
+rotatepoint
+250 250 0 y 180
+apply
+# display
+save-convert
+18.ppm 500 500
+

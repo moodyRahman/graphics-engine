@@ -36,6 +36,14 @@ run: ./bin
 	javac src/*.java -d bin
 	java -cp bin src.Parser $(script)
 
+animate-run: ./bin
+	rm -rf ./pics
+	mkdir pics
+	echo $(script)
+	javac src/*.java -d bin
+	java -cp bin src.Parser $(script)
+	convert -delay $(delay) -loop 0 ./pics/*.png ./pics/sksk.gif
+	animate ./pics/sksk.gif
 jar: ./bin
 	cp MANIFEST.mf ./bin
 	cd bin; jar cvfe OkuyasuEngine.jar src.Parser src/*.class; mv OkuyasuEngine.jar ..;
