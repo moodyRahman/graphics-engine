@@ -1,0 +1,29 @@
+bg-color
+0 0 0
+pen-color
+8 146 208
+box
+12.5 160 75 475 50 200
+torus
+120 175 0 12.5 50
+torus
+120 200 0 12.5 37.5
+torus
+120 225 0 12.5 25
+torus
+120 250 0 12.5 12.5
+box
+115 285 0 10 130 10
+box
+265 286 0 10 130 10
+box
+405 285 0 10 130 10
+ident
+rotate
+y 30
+apply
+ident
+rotate
+x 30
+apply
+display
