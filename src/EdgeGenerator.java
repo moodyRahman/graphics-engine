@@ -223,6 +223,7 @@ public class EdgeGenerator {
 				double tz = (outer_rad + inner_rad * Math.cos(picir)) * Math.sin(theta) + z;
 
 				out.addpoint(tx, ty, tz);
+				out.addpoint(tx + 1, ty, tz);
 			}
 		}
 		return out;
