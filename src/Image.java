@@ -3,8 +3,8 @@ package src;
 import java.io.File;
 import java.lang.Math;
 import java.io.FileWriter;
-import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Represents an image
@@ -47,7 +47,7 @@ public Image(int width, int height, Pixel color){
  * @return Iterator with the PPM to be written
  */
 public Iterator<String> getBody(){
-	ArrayDeque<String> out = new ArrayDeque<String>();
+	LinkedList<String> out = new LinkedList<String>();
 
 	for (int y = height - 1; y >= 0; y--) {
 		for (int x = 0; x < width; x++) {
