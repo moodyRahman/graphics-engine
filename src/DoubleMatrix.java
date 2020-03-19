@@ -1,5 +1,7 @@
 package src;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Iterator;
 
 /**
  * Stores a DoubleMatrix
@@ -8,7 +10,7 @@ public class DoubleMatrix {
 
 
 
-private ArrayList<Double[]> matrix;
+private LinkedList<Double[]> matrix;
 private int cols;
 private int rows = 4;
 
@@ -16,7 +18,7 @@ private int rows = 4;
  * Initializes a new DoubleMatrix with 0 columns
  */
 public DoubleMatrix(){
-	this.matrix = new ArrayList<Double[]>();
+	this.matrix = new LinkedList<Double[]>();
 	this.cols = 0;
 }
 
@@ -25,7 +27,7 @@ public DoubleMatrix(){
  * @param in 2D array to be inputted
  */
 public DoubleMatrix(double[][] in){
-	this.matrix = new ArrayList<Double[]>();
+	this.matrix = new LinkedList<Double[]>();
 
 	for (int x = 0; x < in.length; x++) {
 		Double[] toadd = new Double[4];
@@ -138,9 +140,18 @@ public String toString(){
  */
 public double[][] getarray(){
 	double[][] out = new double[this.cols][this.rows];
-	for (int x = 0; x < this.cols; x++) {
+	Iterator<Double[]> outiter = this.matrix.iterator();
+	// for (int x = 0; x < this.cols; x++) {
+	// 	for (int y = 0; y < this.rows; y++) {
+	// 		out[x][y] = this.matrix.get(x)[y];
+	// 	}
+	// }
+
+	for (int x = 0; outiter.hasNext(); x++){
+		Double[] row = outiter.next();
 		for (int y = 0; y < this.rows; y++) {
-			out[x][y] = this.matrix.get(x)[y];
+			// out[x][y] = this.matrix.get(x)[y];
+			out[x][y] = row[y];
 		}
 	}
 	return out;
@@ -204,11 +215,19 @@ public Image flushToImage(int width, int height, Pixel init, Pixel linecolor){
 
 	// System.out.println("HERE");
 	System.out.println(matrix.size());
-	for (int x = 0; x < matrix.size(); x+=2) {
-		// System.out.println(x);
-		Double[] p1 = matrix.get(x);
-		Double[] p2 = matrix.get(x+1);
+	// for (int x = 0; x < matrix.size(); x+=2) {
+	// 	// System.out.println(x);
+		// Double[] p1 = matrix.get(x);
+		// Double[] p2 = matrix.get(x+1);
 		
+		// out.line(p1[0], p1[1], p2[0], p2[1], linecolor);
+	// }
+
+	Iterator<Double []> outiter = this.matrix.iterator();
+
+	while (outiter.hasNext()){
+		Double[] p1 = outiter.next();
+		Double[] p2 = outiter.next();
 		out.line(p1[0], p1[1], p2[0], p2[1], linecolor);
 	}
 
