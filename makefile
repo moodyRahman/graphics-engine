@@ -45,5 +45,5 @@ animate-run: ./bin
 	convert -delay $(delay) -loop 0 ./pics/*.png ./pics/sksk.gif
 	animate ./pics/sksk.gif
 jar: ./bin
-	cp MANIFEST.mf ./bin
+	cp MANIFEST ./bin
 	cd bin; jar cvfe OkuyasuEngine.jar src.Parser src/*.class; mv OkuyasuEngine.jar ..;
