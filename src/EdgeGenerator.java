@@ -14,8 +14,9 @@ public class EdgeGenerator {
 	 * @param cz     center z
 	 * @param radius radius
 	 */
-	public static void circle(DoubleMatrix edge, double cx, double cy, double cz, double radius) {
-		for (double deg = 0; deg < 1; deg += .02) {
+	public static void circle(DoubleMatrix edge, double cx, double cy, double cz, double radius, int total_steps) {
+		for (int step = 0; step < total_steps; step++) {
+			double deg = (double)step/(double)total_steps;
 			double rad = deg * 6.2831;
 			edge.addedge((radius * Math.cos(rad)) + cx, (radius * Math.sin(rad)) + cy, cz,
 					(radius * Math.cos(rad + 0.174)) + cx, (radius * Math.sin(rad + 0.174)) + cy,
@@ -37,7 +38,7 @@ public class EdgeGenerator {
 	 * @param hry1
 	 */
 	public static void hermite(DoubleMatrix edge, double hx0, double hy0, double hx1, double hy1, double hrx0,
-			double hry0, double hrx1, double hry1) {
+			double hry0, double hrx1, double hry1, int total_step) {
 		double xa = 2 * hx0 - 2 * hx1 + hrx0 + hrx1;
 		double xb = -3 * hx0 + 3 * hx1 - 2 * hrx0 - hrx1;
 		double xc = hrx0;
@@ -49,8 +50,9 @@ public class EdgeGenerator {
 		double yd = hy0;
 
 		double plotx, ploty, newplotx, newploty, dt;
-
-		for (double t = 0; t < 1; t += .02) {
+		
+		for (int step = 0; step < total_step; step++) {
+			double t = (double)step / (double)total_step;
 			plotx = xa * t * t * t + xb * t * t + xc * t + xd;
 			ploty = ya * t * t * t + yb * t * t + yc * t + yd;
 
@@ -77,7 +79,7 @@ public class EdgeGenerator {
 	 * @param by3
 	 */
 	public static void bezier(DoubleMatrix edge, double bx0, double by0, double bx1, double by1, double bx2,
-			double by2, double bx3, double by3) {
+			double by2, double bx3, double by3, int total_step) {
 		double bxa = -bx0 + 3 * bx1 - 3 * bx2 + bx3;
 		double bxb = 3 * bx0 - 6 * bx1 + 3 * bx2;
 		double bxc = -3 * bx0 + 3 * bx1;
@@ -90,7 +92,9 @@ public class EdgeGenerator {
 
 		double plotx, ploty, newplotx, newploty, dt;
 
-		for (double t = 0; t < 1; t += .02) {
+		
+		for (int step = 0; step < total_step; step++) {
+			double t = (double)step/(double)total_step;
 			plotx = bxa * t * t * t + bxb * t * t + bxc * t + bxd;
 			ploty = bya * t * t * t + byb * t * t + byc * t + byd;
 
@@ -112,11 +116,12 @@ public class EdgeGenerator {
 	 * @param radius
 	 * @return DoubleMatrix containing a sphere
 	 */
-	public static DoubleMatrix sphereGenerator(double x, double y, double z, double radius) {
+	public static DoubleMatrix sphereGenerator(double x, double y, double z, double radius, int total_step_circle, int total_step_rotation) {
 		DoubleMatrix out = new DoubleMatrix();
-		for (double deg = 0; deg < 1; deg += .05) {
-			double theta = deg * 3.141;
-			for (double cir = 0; cir < 1; cir += .02) {
+		for (int step_circle = 0; step_circle < total_step_circle; step_circle++) {
+			double theta = ((double)step_circle/(double)total_step_circle) * 3.141;
+			for (int step_rotation = 0; step_rotation < total_step_rotation; step_rotation++) {
+				double cir = (double)step_rotation/(double)total_step_rotation;
 				double picir = cir * 3.141 * 2;
 				double xc = radius * Math.cos(picir) + x;
 				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
@@ -139,7 +144,7 @@ public class EdgeGenerator {
 	 * @param radius
 	 */
 	public static void sphere(DoubleMatrix edge, double x, double y, double z, double radius) {
-		edge.addmatrixedge(EdgeGenerator.sphereGenerator(x, y, z, radius));
+		edge.addmatrixedge(EdgeGenerator.sphereGenerator(x, y, z, radius, 50, 50));
 	}
 
 	/**
@@ -210,14 +215,15 @@ public class EdgeGenerator {
 	 * @param outer_rad
 	 * @return
 	 */
-	public static DoubleMatrix torusGenerator(double x, double y, double z, double inner_rad, double outer_rad) {
+	public static DoubleMatrix torusGenerator(double x, double y, double z, double inner_rad, double outer_rad, int total_step_translate, int total_step_circle) {
 		DoubleMatrix out = new DoubleMatrix();
-		for (double deg = 0; deg < 1; deg += .02) {
-			double theta = deg * 6.2831;
+		for (int step_circle = 0; step_circle < total_step_circle; step_circle++) {
+			// double deg = (double)step_circle/(double)total_step_circle
+			double theta = ((double)step_circle/(double)total_step_circle) * 6.2831;
 			// double theta = deg * 1;
 
-			for (double cir = 0; cir < 1; cir += .02) {
-				double picir = cir * 6.2831;
+			for (int step_translate = 0; step_translate < total_step_translate; step_translate++) {
+				double picir = ((double)step_translate/(double)total_step_translate) * 6.2831;
 				double tx = (outer_rad + inner_rad * Math.cos(picir)) * Math.cos(theta) + x;
 				double ty = inner_rad * Math.sin(picir) + y;
 				double tz = (outer_rad + inner_rad * Math.cos(picir)) * Math.sin(theta) + z;
@@ -241,7 +247,7 @@ public class EdgeGenerator {
 	 * @param outer_rad
 	 */
 	public static void torus(DoubleMatrix edge, double x, double y, double z, double inner_rad, double outer_rad) {
-		edge.addmatrixedge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad));
+		edge.addmatrixedge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad, 50, 50));
 	}
 
 }
