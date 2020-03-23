@@ -132,15 +132,7 @@ public void addpolygon(double x0, double y0, double z0, double x1, double y1, do
  */
 public String toString(){
 	String out = "";
-	for (int y = 0; y < 4; y++) {
-		for (int x = 0; x < matrix.size(); x++) {
-			Double[] m = matrix.get(x);
-			out = out + m[y];
-			out = out + ", ";
-		}
-		out = out + "\n";
-	}
-
+	out += this.getcols();
 	return out;
 }
 
