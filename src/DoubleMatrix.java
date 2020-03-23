@@ -91,11 +91,9 @@ public void addpoint(double x, double y, double z){
  * @param append
  */
 public void addmatrixedge(DoubleMatrix append){
-	for(int x = 0; x < append.getcols(); x++){
-		Double[] points = append.getpoint(x);
-		this.addpoint(points[0], points[1], points[2]);
+	this.matrix.addAll(append.getinnermatrix());
+	cols+=append.getcols();
 	}
-}
 
 
 
