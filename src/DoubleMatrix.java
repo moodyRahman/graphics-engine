@@ -145,16 +145,9 @@ public String toString(){
 public double[][] getarray(){
 	double[][] out = new double[this.cols][this.rows];
 	Iterator<Double[]> outiter = this.matrix.iterator();
-	// for (int x = 0; x < this.cols; x++) {
-	// 	for (int y = 0; y < this.rows; y++) {
-	// 		out[x][y] = this.matrix.get(x)[y];
-	// 	}
-	// }
-
 	for (int x = 0; outiter.hasNext(); x++){
 		Double[] row = outiter.next();
 		for (int y = 0; y < this.rows; y++) {
-			// out[x][y] = this.matrix.get(x)[y];
 			out[x][y] = row[y];
 		}
 	}
@@ -188,12 +181,6 @@ public static DoubleMatrix multiply (DoubleMatrix a, DoubleMatrix b) throws Doub
 			for (int d = 0; d < ber.length; d++) {
 				toprdoubleber.add(ber[d]);
 			}
-
-			// System.out.prdoubleln("looking at: " + x + ", " + y);
-			// System.out.prdoubleln(aer);
-			// System.out.prdoubleln(toprdoubleber);
-			// System.out.prdoubleln();
-			// System.out.prdoubleln();
 
 			for (int g = 0; g < ber.length; g++) {
 				cumsum += aer.get(g)*ber[g];
