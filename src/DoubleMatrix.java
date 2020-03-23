@@ -39,6 +39,11 @@ public DoubleMatrix(double[][] in){
 	this.cols = in.length;
 }
 
+
+public Iterator<Double[]> getiterator(){
+	return this.matrix.iterator();
+}
+
 /** 
  * Wipes the current matrix and deletes all columns
 */
