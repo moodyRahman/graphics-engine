@@ -1,5 +1,6 @@
 package src;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.lang.Math;
 import java.io.FileWriter;
@@ -67,12 +68,8 @@ public void flushToFile(String fname){
 	try {
 		toflush.createNewFile();
 
-	} catch(Exception e) {
-		e.printStackTrace();
-	}
-
-	try {
-		FileWriter towrite = new FileWriter(fname);
+		FileWriter towritefw = new FileWriter(fname);
+		BufferedWriter towrite = new BufferedWriter(towritefw);
 		towrite.write(this.HEADER);
 
 		Iterator<String> body = this.getBody();
@@ -81,7 +78,7 @@ public void flushToFile(String fname){
 		}
 		towrite.close();
 	} catch(Exception e) {
-
+		e.printStackTrace();
 	}
 }
 
