@@ -84,6 +84,7 @@ public class Parser {
 	}
 
 	private DoubleMatrix edge = new DoubleMatrix();
+	private DoubleMatrix polygon = new DoubleMatrix();
 	private DoubleMatrix transform = TransformGenerator.identity();
 	private ArrayList<Command> tokens = new ArrayList<Command>();
 	ProcessBuilder processBuilder = new ProcessBuilder();
@@ -192,14 +193,17 @@ public class Parser {
 					DoubleMatrix rotate = TransformGenerator.rotate((char) axis, theta);
 					this.transform = DoubleMatrix.multiply(rotate, this.transform);
 					break;
+
 				case "rotate-point":
 					params = argstoarray(currtoken.getParameters());
 					double xrp = params[0], yrp = params[1], zrp = params[2], axisrp = params[3], thetarp = params[4];
 					DoubleMatrix rotatepoint = TransformGenerator.rotatepoint(xrp, yrp, zrp, (char)axisrp, thetarp);
 					this.transform = DoubleMatrix.multiply(rotatepoint, this.transform);
+					break;
 
 				case "apply":
 					this.edge = DoubleMatrix.multiply(this.transform, this.edge);
+					this.polygon = DoubleMatrix.multiply(this.transform, this.polygon);
 					break;
 
 				case "pen-color":
@@ -213,6 +217,7 @@ public class Parser {
 					break;
 
 				case "display":
+					this.edge.addmatrixedge(this.polygon);
 					Image i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
 					i.flushToFile("./tmp/d.ppm");
 					Runtime.getRuntime().exec("convert ./tmp/d.ppm ./tmp/d.png");
@@ -226,6 +231,7 @@ public class Parser {
 
 				case "save":
 					String outfile = currtoken.getParameters();
+					this.edge.addmatrixedge(this.polygon);
 					i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
 					i.flushToFile("./pics/" + outfile);
 					break;
@@ -233,6 +239,7 @@ public class Parser {
 				case "save-convert":
 					String param = currtoken.getParameters();
 					String[] arr = param.split(" ");
+					this.edge.addmatrixedge(this.polygon);
 					i = this.edge.flushToImage(Integer.parseInt(arr[1]), Integer.parseInt(arr[2]),
 							bgcolor, linecolor);
 					i.flushToFile("./pics/" + arr[0]);
@@ -264,7 +271,7 @@ public class Parser {
 				case "sphere":
 					params = argstoarray(currtoken.getParameters());
 					double xsp = params[0], ysp = params[1], zsp = params[2], radiussp = params[3];
-					EdgeGenerator.sphere(edge, xsp, ysp, zsp, radiussp);
+					EdgeGenerator.sphere(polygon, xsp, ysp, zsp, radiussp);
 					break;
 
 				case "pause":
@@ -272,20 +279,24 @@ public class Parser {
 					System.out.println("PRESS ENTER TO RESUME SCRIPT");
 					scanner.nextLine();
 					break;
+					
 				case "clear":
 					edge.wipe();
 					break;
+
 				case "box":
 					params = argstoarray(currtoken.getParameters());
 					double boxx = params[0], boxy = params[1], boxz = params[2];
 					double boxw = params[3], boxh = params[4], boxd = params[5];
-					EdgeGenerator.box(edge, boxx, boxy, boxz, boxw, boxh, boxd);
+					EdgeGenerator.box(polygon, boxx, boxy, boxz, boxw, boxh, boxd);
 					break;
+
 				case "torus":
 					params = argstoarray(currtoken.getParameters());
 					double torx = params[0], tory = params[1], torz = params[2];
 					double torin = params[3], torout = params[4];
-					EdgeGenerator.torus(edge, torx, tory, torz, torin, torout);
+					EdgeGenerator.torus(polygon, torx, tory, torz, torin, torout);
+					break;
 
 			}
 
