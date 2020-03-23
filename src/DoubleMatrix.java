@@ -96,6 +96,10 @@ public void addmatrixedge(DoubleMatrix append){
 	}
 
 
+private ArrayDeque<Double[]> getinnermatrix(){
+	return this.matrix;
+}
+
 
 
 /**
