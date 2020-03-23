@@ -118,6 +118,14 @@ public void addedge(double x0, double y0, double z0, double x1, double y1, doubl
 }
 
 
+public void addpolygon(double x0, double y0, double z0, double x1, double y1, double z1, double x2, double y2, double z2){
+	this.addpoint(x0, y0, z0);
+	this.addpoint(x1, y1, z1);
+	this.addpoint(x2, y2, z2);
+	this.cols+=3;
+}
+
+
 /**
  * Graphical representation of the matrix
  * @return returns a String of the matrix, formatted nicely
