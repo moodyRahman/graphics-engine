@@ -114,6 +114,7 @@ private ArrayDeque<Double[]> getinnermatrix(){
 public void addedge(double x0, double y0, double z0, double x1, double y1, double z1){
 	this.addpoint(x0, y0, z0);
 	this.addpoint(x1, y1, z1);
+	this.cols+=2;
 }
 
 
