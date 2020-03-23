@@ -1,6 +1,6 @@
 package src;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Iterator;
 
 /**
@@ -10,7 +10,7 @@ public class DoubleMatrix {
 
 
 
-private LinkedList<Double[]> matrix;
+private ArrayDeque<Double[]> matrix;
 private int cols;
 private int rows = 4;
 
@@ -18,7 +18,7 @@ private int rows = 4;
  * Initializes a new DoubleMatrix with 0 columns
  */
 public DoubleMatrix(){
-	this.matrix = new LinkedList<Double[]>();
+	this.matrix = new ArrayDeque<Double[]>();
 	this.cols = 0;
 }
 
@@ -27,7 +27,7 @@ public DoubleMatrix(){
  * @param in 2D array to be inputted
  */
 public DoubleMatrix(double[][] in){
-	this.matrix = new LinkedList<Double[]>();
+	this.matrix = new ArrayDeque<Double[]>();
 
 	for (int x = 0; x < in.length; x++) {
 		Double[] toadd = new Double[4];
