@@ -68,10 +68,6 @@ public int getrows(){
 	return this.rows;
 }
 
-public Double[] getpoint(int col){
-	return matrix.get(col);
-}
-
 
 /**
  * Adds a new column (edge) to the matrix
