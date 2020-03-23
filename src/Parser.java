@@ -118,7 +118,7 @@ public class Parser {
 					|| command.equals("move") || command.equals("save") || command.equals("circle")
 					|| command.equals("hermite") || command.equals("bezier")
 					|| command.equals("save-convert") || command.equals("pen-color")
-					|| command.equals("bg-color") || command.equals("sphere") || command.equals("rotatepoint")
+					|| command.equals("bg-color") || command.equals("sphere") || command.equals("rotate-point")
 					|| command.equals("box") || command.equals("torus")) {
 				x++;
 				String arg = stokens.get(x);
@@ -192,7 +192,7 @@ public class Parser {
 					DoubleMatrix rotate = TransformGenerator.rotate((char) axis, theta);
 					this.transform = DoubleMatrix.multiply(rotate, this.transform);
 					break;
-				case "rotatepoint":
+				case "rotate-point":
 					params = argstoarray(currtoken.getParameters());
 					double xrp = params[0], yrp = params[1], zrp = params[2], axisrp = params[3], thetarp = params[4];
 					DoubleMatrix rotatepoint = TransformGenerator.rotatepoint(xrp, yrp, zrp, (char)axisrp, thetarp);
@@ -244,21 +244,21 @@ public class Parser {
 				case "circle":
 					params = argstoarray(currtoken.getParameters());
 					double cx = params[0], cy = params[1], cz = params[2], radius = params[3];
-					EdgeGenerator.circle(edge, cx, cy, cz, radius);
+					EdgeGenerator.circle(edge, cx, cy, cz, radius, 75);
 					break;
 
 				case "hermite":
 					params = argstoarray(currtoken.getParameters());
 					double hx0 = params[0], hy0 = params[1], hx1 = params[2], hy1 = params[3];
 					double hrx0 = params[4], hry0 = params[5], hrx1 = params[6], hry1 = params[6];
-					EdgeGenerator.hermite(edge, hx0, hy0, hx1, hy1, hrx0, hry0, hrx1, hry1);
+					EdgeGenerator.hermite(edge, hx0, hy0, hx1, hy1, hrx0, hry0, hrx1, hry1, 50);
 					break;
 
 				case "bezier":
 					params = argstoarray(currtoken.getParameters());
 					double bx0 = params[0], bx1 = params[2], bx2 = params[4], bx3 = params[6];
 					double by0 = params[1], by1 = params[3], by2 = params[5], by3 = params[7];
-					EdgeGenerator.bezier(edge, bx0, by0, bx1, by1, bx2, by2, bx3, by3);
+					EdgeGenerator.bezier(edge, bx0, by0, bx1, by1, bx2, by2, bx3, by3, 50);
 					break;
 
 				case "sphere":
@@ -304,11 +304,6 @@ public class Parser {
 
 		try {
 			p.parse();
-		} catch (ArrayIndexOutOfBoundsException e) {
-			e.printStackTrace();
-			System.out.println("^^ PARAMETER EXCEPTION: INCORRECT NUMBER OF ARGUMENTS");
-		} catch (IOException e){
-			e.printStackTrace();
 		} catch (Exception e){
 			e.printStackTrace();
 		}
