@@ -116,21 +116,36 @@ public class EdgeGenerator {
 	 * @param radius
 	 * @return DoubleMatrix containing a sphere
 	 */
-	public static DoubleMatrix sphereGenerator(double x, double y, double z, double radius, int total_step_circle, int total_step_rotation) {
+	public static DoubleMatrix sphereGenerator(double x, double y, double z, double radius, int total_step_circle,
+			int total_step_rotation) {
 		DoubleMatrix out = new DoubleMatrix();
-		for (int step_circle = 0; step_circle < total_step_circle; step_circle++) {
-			double theta = ((double)step_circle/(double)total_step_circle) * 3.141;
+		ArrayList<Point> spherepoints = new ArrayList<Point>(
+				(total_step_circle + 1) * (total_step_rotation + 1));
+		System.out.println(spherepoints.size());
+		int pointidcounter = 0;
+
+		for (int step_circle = 0; step_circle <= total_step_circle; step_circle++) {
+			double theta = ((double) step_circle / (double) total_step_circle) * 3.141 * -1;
+
 			for (int step_rotation = 0; step_rotation < total_step_rotation; step_rotation++) {
-				double cir = (double)step_rotation/(double)total_step_rotation;
+				double cir = (double) step_rotation / (double) total_step_rotation;
 				double picir = cir * 3.141 * 2;
 				double xc = radius * Math.cos(picir) + x;
 				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
 				double zc = radius * Math.sin(picir) * Math.sin(theta) + z;
-				out.addpoint(xc, yc, zc);
-				out.addpoint(xc + 1, yc, zc);
+				spherepoints.add(new Point(xc, yc, zc, pointidcounter));
+				pointidcounter++;
 			}
+			}
+		System.out.println(spherepoints.size());
+
+		for (int i = 0; i < spherepoints.size() - total_step_rotation - 1; i++) {
+			out.addpoint(spherepoints.get(i));
+			out.addpoint(spherepoints.get(i + 1));
+			out.addpoint(spherepoints.get(i + 1 + total_step_rotation));
 		}
 		return out;
+
 	}
 
 	/**
@@ -145,6 +160,7 @@ public class EdgeGenerator {
 	 */
 	public static void sphere(DoubleMatrix edge, double x, double y, double z, double radius) {
 		edge.addmatrixedge(EdgeGenerator.sphereGenerator(x, y, z, radius, 50, 50));
+		// slices points per slice
 	}
 
 	/**
