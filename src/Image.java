@@ -265,13 +265,12 @@ public void display(){
 }
 
 /**
- * @deprecated lines on the image according to a matrix
+ * draw lines on the image according to a matrix
  * recommended to use Matrix.flushtofile()
  * @param m Matrix to draw
  * @param c Color to make the lines
  */
-@Deprecated
-public void matrixLine(DoubleMatrix m, Pixel c){
+public void matrixLineEdge(DoubleMatrix m, Pixel c){
 	double[][] array = m.getarray();
 	for (int x = 1; x < array.length; x++) {
 		double[] p1 = array[x];
@@ -281,5 +280,35 @@ public void matrixLine(DoubleMatrix m, Pixel c){
 	}
 
 }
+
+public void matrixLinePolygon(DoubleMatrix m, Pixel c){
+	double[][] array = m.getarray();
+	for (int x = 2; x < array.length; x+=3) {
+		double[] p0 = array[x];
+		double[] p1 = array[x-1];
+		double[] p2 = array[x-2];
+
+		line(p0[0], p0[1], p1[0], p1[1], c);
+		line(p1[0], p1[1], p2[0], p2[1], c);
+		line(p2[0], p2[1], p0[0], p0[1], c);
+	}
+
+}
+
+
+
+public static void main(String[] args) {
+
+	Image i = new Image(200, 200, new Pixel(100, 100, 0));
+	DoubleMatrix edges = new DoubleMatrix();
+	DoubleMatrix polygons = new DoubleMatrix();
+	edges.addedge(10, 10, 0, 70, 150, 0);
+	System.out.println(edges);
+	polygons.addpolygon(20, 20, 0, 50, 50, 0, 80, 20, 0);
+	i.matrixLineEdge(edges, new Pixel(255, 255, 255));
+	i.matrixLinePolygon(polygons, new Pixel(8, 146, 208));
+	i.display();
+}
+
 
 }
