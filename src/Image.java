@@ -250,6 +250,20 @@ public void line(double pxl1, double pyl1, double pxl2, double pyl2, Pixel c){
 	}
 }
 
+
+public void display(){
+	try {
+		this.flushToFile("./tmp/d.ppm");
+		Runtime.getRuntime().exec("convert ./tmp/d.ppm ./tmp/d.png");
+		Thread.sleep(500);
+		Picture p = new Picture("./tmp/d.png");
+		p.show();
+		// TODO: remove the tmp creation after testing
+	} catch (Exception e) {
+		
+	}
+}
+
 /**
  * @deprecated lines on the image according to a matrix
  * recommended to use Matrix.flushtofile()
