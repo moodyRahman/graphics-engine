@@ -85,6 +85,17 @@ public class DoubleMatrix {
 		this.cols++;
 	}
 
+
+	public void addpoint(Point in){
+		Double[] toadd = new Double[4];
+		toadd[0] = in.x;
+		toadd[1] = in.y;
+		toadd[2] = in.z;
+		toadd[3] = 1.0;
+		this.matrix.add(toadd);
+		this.cols++;
+	}
+
 	/**
 	 * Adjoins a matrix to this instance of matrix
 	 * 
