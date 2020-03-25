@@ -120,7 +120,7 @@ public class Parser {
 					|| command.equals("hermite") || command.equals("bezier")
 					|| command.equals("save-convert") || command.equals("pen-color")
 					|| command.equals("bg-color") || command.equals("sphere") || command.equals("rotate-point")
-					|| command.equals("box") || command.equals("torus")) {
+					|| command.equals("box") || command.equals("torus") || command.equals("display-custom")) {
 				x++;
 				String arg = stokens.get(x);
 				tokens.add(new Command(command, arg, x));
@@ -131,8 +131,8 @@ public class Parser {
 	}
 
 	/**
-	 * @param args String of int parameters
-	 * @return int[] of parameters
+	 * @param args String of double parameters
+	 * @return double[] of parameters
 	 */
 	public double[] argstoarray(String args) {
 		String[] arr = args.split(" ");
@@ -217,32 +217,36 @@ public class Parser {
 					break;
 
 				case "display":
-					this.edge.addmatrixedge(this.polygon);
-					Image i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
-					i.flushToFile("./tmp/d.ppm");
-					Runtime.getRuntime().exec("convert ./tmp/d.ppm ./tmp/d.png");
-					try {
-						Thread.sleep(500);
-					} catch (Exception e) {
-					}
-					Picture p = new Picture("./tmp/d.png");
-					p.show();
+					Image i = new Image(500, 500, bgcolor);
+					i.matrixLineEdge(edge, linecolor);
+					i.matrixLinePolygon(polygon, linecolor);
+					i.display();
+					break;
+				case "display-custom":
+					params = argstoarray(currtoken.getParameters());
+					Image customdisp = new Image((int)params[0], (int)params[1], bgcolor);
+					customdisp.matrixLineEdge(edge, linecolor);
+					customdisp.matrixLinePolygon(polygon, linecolor);
+					customdisp.display();
 					break;
 
 				case "save":
 					String outfile = currtoken.getParameters();
-					this.edge.addmatrixedge(this.polygon);
-					i = this.edge.flushToImage(500, 500, bgcolor, linecolor);
+					i = new Image(500, 500, bgcolor);
+					i.matrixLineEdge(edge, linecolor);
+					i.matrixLinePolygon(polygon, linecolor);
 					i.flushToFile("./pics/" + outfile);
 					break;
 
 				case "save-convert":
 					String param = currtoken.getParameters();
 					String[] arr = param.split(" ");
-					this.edge.addmatrixedge(this.polygon);
-					i = this.edge.flushToImage(Integer.parseInt(arr[1]), Integer.parseInt(arr[2]),
-							bgcolor, linecolor);
-					i.flushToFile("./pics/" + arr[0]);
+					
+					Image saveconv = new Image(Integer.parseInt(arr[1]), Integer.parseInt(arr[2]), bgcolor);
+					saveconv.matrixLineEdge(edge, linecolor);
+					saveconv.matrixLinePolygon(polygon, linecolor);
+					
+					saveconv.flushToFile("./pics/" + arr[0]);
 					String outfilepng = arr[0].substring(0, arr[0].length() - 3) + "png";
 					String convertcommand = "convert ./pics/" + arr[0] + " ./pics/" + outfilepng;
 					Runtime.getRuntime().exec(convertcommand);
@@ -279,7 +283,7 @@ public class Parser {
 					System.out.println("PRESS ENTER TO RESUME SCRIPT");
 					scanner.nextLine();
 					break;
-					
+
 				case "clear":
 					edge.wipe();
 					break;
