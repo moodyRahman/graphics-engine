@@ -258,7 +258,6 @@ public void display(){
 		Thread.sleep(500);
 		Picture p = new Picture("./tmp/d.png");
 		p.show();
-		// TODO: remove the tmp creation after testing
 	} catch (Exception e) {
 		
 	}
