@@ -47,3 +47,8 @@ animate-run: ./bin
 jar: ./bin
 	cp MANIFEST ./bin
 	cd bin; jar cvfe OkuyasuEngine.jar src.Parser src/*.class; mv OkuyasuEngine.jar ..;
+
+test:
+	-mkdir bin
+	javac src/*.java -d bin
+	java -cp bin src.Image
