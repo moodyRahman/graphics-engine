@@ -1,5 +1,7 @@
 package src;
 
+import java.util.ArrayList;
+
 /**
  * Holds all the methods to add shapes to an image
  */
@@ -16,7 +18,7 @@ public class EdgeGenerator {
 	 */
 	public static void circle(DoubleMatrix edge, double cx, double cy, double cz, double radius, int total_steps) {
 		for (int step = 0; step < total_steps; step++) {
-			double deg = (double)step/(double)total_steps;
+			double deg = (double) step / (double) total_steps;
 			double rad = deg * 6.2831;
 			edge.addedge((radius * Math.cos(rad)) + cx, (radius * Math.sin(rad)) + cy, cz,
 					(radius * Math.cos(rad + 0.174)) + cx, (radius * Math.sin(rad + 0.174)) + cy,
@@ -52,7 +54,7 @@ public class EdgeGenerator {
 		double plotx, ploty, newplotx, newploty, dt;
 		
 		for (int step = 0; step < total_step; step++) {
-			double t = (double)step / (double)total_step;
+			double t = (double) step / (double) total_step;
 			plotx = xa * t * t * t + xb * t * t + xc * t + xd;
 			ploty = ya * t * t * t + yb * t * t + yc * t + yd;
 
@@ -92,9 +94,8 @@ public class EdgeGenerator {
 
 		double plotx, ploty, newplotx, newploty, dt;
 
-		
 		for (int step = 0; step < total_step; step++) {
-			double t = (double)step/(double)total_step;
+			double t = (double) step / (double) total_step;
 			plotx = bxa * t * t * t + bxb * t * t + bxc * t + bxd;
 			ploty = bya * t * t * t + byb * t * t + byc * t + byd;
 
@@ -233,10 +234,10 @@ public class EdgeGenerator {
 	 */
 	public static DoubleMatrix torusGenerator(double x, double y, double z, double inner_rad, double outer_rad, int total_step_translate, int total_step_circle) {
 		DoubleMatrix out = new DoubleMatrix();
-		for (int step_circle = 0; step_circle < total_step_circle; step_circle++) {
-			// double deg = (double)step_circle/(double)total_step_circle
+		ArrayList<Point> toruspoints = new ArrayList<Point>();
+		int pointid = 0;
+		for (int step_circle = 0; step_circle <= total_step_circle; step_circle++) {
 			double theta = ((double)step_circle/(double)total_step_circle) * 6.2831;
-			// double theta = deg * 1;
 
 			for (int step_translate = 0; step_translate < total_step_translate; step_translate++) {
 				double picir = ((double)step_translate/(double)total_step_translate) * 6.2831;
@@ -244,9 +245,19 @@ public class EdgeGenerator {
 				double ty = inner_rad * Math.sin(picir) + y;
 				double tz = (outer_rad + inner_rad * Math.cos(picir)) * Math.sin(theta) + z;
 
+				toruspoints.add(new Point(tx, ty, tz, pointid));
+
 				out.addpoint(tx, ty, tz);
-				out.addpoint(tx + 1, ty, tz);
+				out.addpoint(tx + 3, ty, tz);
+				out.addpoint(tx+3, ty+3, tz);
+				pointid++;
 			}
+		}
+
+		for (int i = 0; i < toruspoints.size() - total_step_circle - 1; i++) {
+			out.addpoint(toruspoints.get(i));
+			out.addpoint(toruspoints.get(i + 1));
+			out.addpoint(toruspoints.get(i + 1 + total_step_circle));
 		}
 		return out;
 	}
@@ -263,7 +274,7 @@ public class EdgeGenerator {
 	 * @param outer_rad
 	 */
 	public static void torus(DoubleMatrix edge, double x, double y, double z, double inner_rad, double outer_rad) {
-		edge.addmatrixedge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad, 50, 50));
+		edge.addmatrixedge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad, 13, 10));
 	}
 
 }
