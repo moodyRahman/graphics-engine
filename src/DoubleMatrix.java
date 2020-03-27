@@ -132,6 +132,12 @@ public class DoubleMatrix {
 		this.addpoint(x2, y2, z2);
 	}
 
+	public void addpolygon(Point a, Point b, Point c){
+		this.addpoint(a);
+		this.addpoint(b);
+		this.addpoint(c);
+	}
+
 	/**
 	 * Graphical representation of the matrix
 	 * 
