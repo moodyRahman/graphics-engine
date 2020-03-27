@@ -263,6 +263,20 @@ public void display(){
 	}
 }
 
+public void displaydebug(){
+	try {
+		Runtime.getRuntime().exec("mkdir ./tmp");
+		this.flushToFile("./tmp/d.ppm");
+		Runtime.getRuntime().exec("convert ./tmp/d.ppm ./tmp/d.png");
+		Thread.sleep(500);
+		Picture p = new Picture("./tmp/d.png");
+		p.showdebug();
+		Runtime.getRuntime().exec("rm -rf ./tmp");
+	} catch (Exception e) {
+		
+	}
+}
+
 /**
  * draw lines on the image according to a matrix
  * recommended to use Matrix.flushtofile()
