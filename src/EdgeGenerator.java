@@ -140,10 +140,34 @@ public class EdgeGenerator {
 			}
 		System.out.println(spherepoints.size());
 
-		for (int i = 0; i < spherepoints.size() - total_step_rotation - 1; i++) {
-			out.addpoint(spherepoints.get(i));
-			out.addpoint(spherepoints.get(i + 1));
-			out.addpoint(spherepoints.get(i + 1 + total_step_rotation));
+		for (int i = 0; i < spherepoints.size() - total_step_rotation - 2; i++) {
+			// TODO: DEGENERACY
+			// System.out.println("DEGENERACY DETECTED3");
+		
+			Point p1 = spherepoints.get(i);
+			Point p2 = spherepoints.get(i + 1);
+			Point p3 = spherepoints.get(i + 1 + total_step_rotation);
+			Point p4 = spherepoints.get(i + 2 + total_step_rotation);
+
+			if (! Point.isdegenerate(p1, p2, p3)){
+				out.addpolygon(p1, p2, p3);
+			}
+
+			if (! Point.isdegenerate(p3, p2, p4)){
+				out.addpolygon(p3, p2, p4);
+			}
+
+			// // up triangle
+			// out.addpoint(spherepoints.get(i));
+			// out.addpoint(spherepoints.get(i + 1));
+			// out.addpoint(spherepoints.get(i + 1 + total_step_rotation));
+
+			// // down triangle
+			// out.addpoint(spherepoints.get(i + 1 + total_step_rotation));
+			// out.addpoint(spherepoints.get(i + 1));
+			// out.addpoint(spherepoints.get(i + 2 + total_step_rotation));
+			
+
 		}
 		return out;
 
