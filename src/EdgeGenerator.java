@@ -270,10 +270,6 @@ public class EdgeGenerator {
 				double tz = (outer_rad + inner_rad * Math.cos(picir)) * Math.sin(theta) + z;
 
 				toruspoints.add(new Point(tx, ty, tz, pointid));
-
-				out.addpoint(tx, ty, tz);
-				out.addpoint(tx + 3, ty, tz);
-				out.addpoint(tx+3, ty+3, tz);
 				pointid++;
 			}
 		}
