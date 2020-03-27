@@ -296,7 +296,7 @@ public void matrixLineEdge(DoubleMatrix m, Pixel c){
 
 public void matrixLinePolygon(DoubleMatrix m, Pixel c){
 	double[][] array = m.getarray();
-	for (int x = 2; x < array.length; x+=3) {
+	for (int x = 2; x < array.length - 3; x+=3) {
 		double[] p0 = array[x];
 		double[] p1 = array[x-1];
 		double[] p2 = array[x-2];
@@ -304,6 +304,7 @@ public void matrixLinePolygon(DoubleMatrix m, Pixel c){
 		line(p0[0], p0[1], p1[0], p1[1], c);
 		line(p1[0], p1[1], p2[0], p2[1], c);
 		line(p2[0], p2[1], p0[0], p0[1], c);
+		// this.displaydebug();
 	}
 
 }
@@ -313,14 +314,17 @@ public void matrixLinePolygon(DoubleMatrix m, Pixel c){
 public static void main(String[] args) {
 
 	Image i = new Image(200, 200, new Pixel(100, 100, 0));
-	DoubleMatrix edges = new DoubleMatrix();
 	DoubleMatrix polygons = new DoubleMatrix();
-	edges.addedge(10, 10, 0, 70, 150, 0);
-	System.out.println(edges);
-	polygons.addpolygon(20, 20, 0, 50, 50, 0, 80, 20, 0);
-	i.matrixLineEdge(edges, new Pixel(255, 255, 255));
-	i.matrixLinePolygon(polygons, new Pixel(8, 146, 208));
-	i.display();
+
+	polygons.addpoint(10, 10, 0);
+	polygons.addpoint(20, 30, 0);
+	polygons.addpoint(10, 20, 0);
+
+
+
+	i.matrixLinePolygon(polygons, new Pixel(0, 0, 0));
+
+	i.displaydebug();
 }
 
 
