@@ -263,6 +263,45 @@ public final class Picture implements ActionListener {
 		frame.repaint();
 	}
 
+
+	public void showdebug() {
+
+		// create the GUI for viewing the image if needed
+		if (frame == null) {
+			frame = new JFrame();
+
+			JMenuBar menuBar = new JMenuBar();
+			JMenu menu = new JMenu("File");
+			menuBar.add(menu);
+			JMenuItem menuItem1 = new JMenuItem(" Save...   ");
+			menuItem1.addActionListener(this);
+			// use getMenuShortcutKeyMaskEx() in Java 10 (getMenuShortcutKeyMask() deprecated)           
+			menuItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+									 Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+			menu.add(menuItem1);
+			frame.setJMenuBar(menuBar);
+
+
+
+			frame.setContentPane(getJLabel());
+			// f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			if (filename == null) frame.setTitle(width + "-by-" + height);
+			else                  frame.setTitle(filename);
+			frame.setResizable(false);
+			frame.pack();
+			frame.setVisible(true);
+		}
+
+		// draw
+		frame.repaint();
+		try {
+			Thread.sleep(2000);
+		} catch (Exception e) {
+		}
+		frame.dispose();
+	}
+
    /**
 	 * Returns the height of the picture.
 	 *
