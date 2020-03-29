@@ -296,15 +296,23 @@ public void matrixLineEdge(DoubleMatrix m, Pixel c){
 
 public void matrixLinePolygon(DoubleMatrix m, Pixel c){
 	double[][] array = m.getarray();
-	for (int x = 2; x < array.length - 3; x+=3) {
+	for (int x = 0; x < array.length - 3; x+=3) {
 		double[] p0 = array[x];
-		double[] p1 = array[x-1];
-		double[] p2 = array[x-2];
+		double[] p1 = array[x+1];
+		double[] p2 = array[x+2];
 
+		Vector v1 = new Vector(p0, p1);
+		Vector v2 = new Vector(p0, p2);
+
+		Vector normal = Vector.crossproduct(v1, v2);
+
+		
+		if (Vector.dotproduct(normal, Vector.VIEW_VECTOR) > 0){
 		line(p0[0], p0[1], p1[0], p1[1], c);
 		line(p1[0], p1[1], p2[0], p2[1], c);
 		line(p2[0], p2[1], p0[0], p0[1], c);
-		// this.displaydebug();
+		}
+
 	}
 
 }
