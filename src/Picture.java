@@ -264,7 +264,7 @@ public final class Picture implements ActionListener {
 	}
 
 
-	public void showdebug() {
+	public void showdebug(int sleep) {
 
 		// create the GUI for viewing the image if needed
 		if (frame == null) {
@@ -296,7 +296,7 @@ public final class Picture implements ActionListener {
 		// draw
 		frame.repaint();
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(sleep);
 		} catch (Exception e) {
 		}
 		frame.dispose();
