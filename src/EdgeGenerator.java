@@ -119,13 +119,18 @@ public class EdgeGenerator {
 	 */
 	public static DoubleMatrix sphereGenerator(double x, double y, double z, double radius, int total_step_circle,
 			int total_step_rotation) {
+
+		// stores the final sphere
 		DoubleMatrix out = new DoubleMatrix();
+
+		// keeps track of all the generated points
+		// minor optimization, preallocates all the needed memory for sphere
 		ArrayList<Point> spherepoints = new ArrayList<Point>(
 				(total_step_circle + 1) * (total_step_rotation + 1));
-		System.out.println(spherepoints.size());
 		int pointidcounter = 0;
 
-		for (int step_circle = 0; step_circle <= total_step_circle; step_circle++) {
+		// generate the points on a sphere, going from right pole to left pole
+		for (int step_circle = 0; step_circle <= total_step_circle + 1; step_circle++) {
 			double theta = ((double) step_circle / (double) total_step_circle) * 3.141 * -1;
 
 			for (int step_rotation = 0; step_rotation < total_step_rotation; step_rotation++) {
@@ -138,37 +143,24 @@ public class EdgeGenerator {
 				pointidcounter++;
 			}
 			}
-		System.out.println(spherepoints.size());
-
-		for (int i = 0; i < spherepoints.size() - total_step_rotation - 2; i++) {
-			// TODO: DEGENERACY
-			// System.out.println("DEGENERACY DETECTED3");
-		
+		for (int i = 0; i < spherepoints.size() - total_step_rotation - 1; i++) {
 			Point p1 = spherepoints.get(i);
 			Point p2 = spherepoints.get(i + 1);
-			Point p3 = spherepoints.get(i + 1 + total_step_rotation);
-			Point p4 = spherepoints.get(i + 2 + total_step_rotation);
+			Point p3 = spherepoints.get(i + total_step_rotation);
+			Point p4 = spherepoints.get(i + 1 + total_step_rotation);
 
-			if (! Point.isdegenerate(p1, p2, p3)){
-				out.addpolygon(p1, p2, p3);
+			if (Point.isdegenerate(p3, p1, p2) == false) {
+				out.addpolygon(p3, p1, p2);
 			}
 
-			if (! Point.isdegenerate(p3, p2, p4)){
-				out.addpolygon(p3, p2, p4);
+			if (Point.isdegenerate(p2, p4, p3) == false) {
+				out.addpolygon(p2, p4, p3);
 			}
-
-			// // up triangle
-			// out.addpoint(spherepoints.get(i));
-			// out.addpoint(spherepoints.get(i + 1));
-			// out.addpoint(spherepoints.get(i + 1 + total_step_rotation));
-
-			// // down triangle
-			// out.addpoint(spherepoints.get(i + 1 + total_step_rotation));
-			// out.addpoint(spherepoints.get(i + 1));
-			// out.addpoint(spherepoints.get(i + 2 + total_step_rotation));
-			
-
 		}
+
+		System.out.println();
+		System.out.println("END OF SPHERE GENERATION");
+		System.out.println();
 		return out;
 
 	}
