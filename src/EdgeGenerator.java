@@ -176,7 +176,7 @@ public class EdgeGenerator {
 	 * @param radius
 	 */
 	public static void sphere(DoubleMatrix edge, double x, double y, double z, double radius) {
-		edge.addmatrixedge(EdgeGenerator.sphereGenerator(x, y, z, radius, 50, 50));
+		edge.addmatrixedge(EdgeGenerator.sphereGenerator(x, y, z, radius, 20, 20));
 		// slices points per slice
 	}
 
@@ -309,7 +309,7 @@ public class EdgeGenerator {
 	 * @param outer_rad
 	 */
 	public static void torus(DoubleMatrix edge, double x, double y, double z, double inner_rad, double outer_rad) {
-		edge.addmatrixedge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad, 13, 10));
+		edge.addmatrixedge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad, 26, 26));
 	}
 
 }
