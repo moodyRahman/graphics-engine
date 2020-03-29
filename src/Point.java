@@ -12,12 +12,19 @@ public class Point{
 		this.id = id;
 	}
 
+	public Point(double[] input, int id){
+		this.x = input[0];
+		this.y = input[1];
+		this.z = input[2];
+		this.id = id;
+	}
+
 	public Point(){
 
 	}
 
 	public String toString() {
-	return "I AM POINT " + this.id + "LOCATED AT: " + x + ", " + y + ", " + z;
+	return "POINT " + this.id + "  LOCATED AT: " + x + ", " + y + ", " + z;
 	}
 
 	public boolean equals(Point other){
@@ -39,9 +46,15 @@ class Vector extends Point{
 	static final Vector VIEW_VECTOR = new Vector(0.0, 0.0, 1.0);
 
 	public Vector(Point a, Point b){
-		this.x = a.x - b.x;
-		this.y = a.y - b.y;
-		this.z = a.z - b.z;
+		this.x = b.x - a.x;
+		this.y = b.y - a.y;
+		this.z = b.z - a.z;
+	}
+
+	public Vector(double[] a, double[] b){
+		this.x = b[0] - a[0];
+		this.y = b[1] - a[1];
+		this.z = b[2] - a[0];
 	}
 
 	public Vector(double dx, double dy, double dz){
@@ -57,5 +70,9 @@ class Vector extends Point{
 	public static double dotproduct(Vector a, Vector b){
 		
 		return a.x * b.x + a.y * b.y + a.z * b.z;
+	}
+
+	public String toString() {
+		return "VECTOR: " + x + ", " + y + ", " + z;
 	}
 }
