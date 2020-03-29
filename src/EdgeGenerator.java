@@ -199,42 +199,65 @@ public class EdgeGenerator {
 		// So, me in the future reading this
 		// Don't you dare try to change anything
 
-		edge.addpoint(x, y, z);
-		edge.addpoint(x + width, y, z);
-
-		edge.addpoint(x + width, y, z);
-		edge.addpoint(x + width, y, z - depth);
 		// draw the top face
+		edge.addpoint(x, y, z);
+		edge.addpoint(x + width, y, z);
+		edge.addpoint(x, y, z - depth);
+
 		edge.addpoint(x + width, y, z - depth);
 		edge.addpoint(x, y, z - depth);
+		edge.addpoint(x + width, y, z);
 
-		edge.addpoint(x, y, z - depth);
-		edge.addpoint(x, y, z);
-		// ----------------------------------------------------------------------- |
-		edge.addpoint(x, y - height, z);
-		edge.addpoint(x + width, y - height, z);
 
-		edge.addpoint(x + width, y - height, z);
-		edge.addpoint(x + width, y - height, z - depth);
 		// draw the bottom face
-		edge.addpoint(x + width, y - height, z - depth);
+		edge.addpoint(x, y - height, z);
+		edge.addpoint(x + width, y - height, z);
 		edge.addpoint(x, y - height, z - depth);
 
+		edge.addpoint(x + width, y - height, z - depth);
 		edge.addpoint(x, y - height, z - depth);
+		edge.addpoint(x + width, y - height, z);
+
+
+		// draw the front face
 		edge.addpoint(x, y - height, z);
-		// ----------------------------------------------------------------------- |
+		edge.addpoint(x + width, y - height, z);
 		edge.addpoint(x, y, z);
-		edge.addpoint(x, y - height, z);
 
 		edge.addpoint(x + width, y, z);
+		edge.addpoint(x , y, z);
 		edge.addpoint(x + width, y - height, z);
-		// draw the height
+
+		// draw back face
+		edge.addpoint(x, y - height, z - depth);
+		edge.addpoint(x + width, y - height, z - depth);
+		edge.addpoint(x, y, z - depth);
+
 		edge.addpoint(x + width, y, z - depth);
+		edge.addpoint(x , y, z - depth);
 		edge.addpoint(x + width, y - height, z - depth);
 
+
+		// draw left face
+		edge.addpoint(x, y, z);
+		edge.addpoint(x, y - height, z);
 		edge.addpoint(x, y, z - depth);
+
 		edge.addpoint(x, y - height, z - depth);
-		// ----------------------------------------------------------------------- |
+		edge.addpoint(x, y, z - depth);
+		edge.addpoint(x, y - height, z);
+
+		// draw right face
+		edge.addpoint(x + width, y, z);
+		edge.addpoint(x + width, y - height, z);
+		edge.addpoint(x + width, y, z - depth);
+
+		edge.addpoint(x + width, y - height, z - depth);
+		edge.addpoint(x + width, y, z - depth);
+		edge.addpoint(x + width, y - height, z);
+
+
+	
 
 	}
 
