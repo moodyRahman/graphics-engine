@@ -265,13 +265,11 @@ public void display(){
 
 public void displaydebug(){
 	try {
-		Runtime.getRuntime().exec("mkdir ./tmp");
 		this.flushToFile("./tmp/d.ppm");
 		Runtime.getRuntime().exec("convert ./tmp/d.ppm ./tmp/d.png");
 		Thread.sleep(500);
 		Picture p = new Picture("./tmp/d.png");
-		p.showdebug();
-		Runtime.getRuntime().exec("rm -rf ./tmp");
+		p.showdebug(2000);
 	} catch (Exception e) {
 		
 	}
@@ -308,9 +306,9 @@ public void matrixLinePolygon(DoubleMatrix m, Pixel c){
 
 		
 		if (Vector.dotproduct(normal, Vector.VIEW_VECTOR) > 0){
-		line(p0[0], p0[1], p1[0], p1[1], c);
-		line(p1[0], p1[1], p2[0], p2[1], c);
-		line(p2[0], p2[1], p0[0], p0[1], c);
+			line(p0[0], p0[1], p1[0], p1[1], c);
+			line(p1[0], p1[1], p2[0], p2[1], c);
+			line(p2[0], p2[1], p0[0], p0[1], c);
 		}
 
 	}
