@@ -130,30 +130,31 @@ public class EdgeGenerator {
 		int pointidcounter = 0;
 
 		// generate the points on a sphere, going from right pole to left pole
-		for (int step_circle = 0; step_circle <= total_step_circle + 1; step_circle++) {
-			double theta = ((double) step_circle / (double) total_step_circle) * 3.141 * -1;
+		for (int step_circle = 0; step_circle <= total_step_circle; step_circle++) {
+			double theta = ((double) step_circle / (double) total_step_circle) * 3.141 * -2;
 
-			for (int step_rotation = 0; step_rotation < total_step_rotation; step_rotation++) {
+			for (int step_rotation = 0; step_rotation <= total_step_rotation; step_rotation++) {
 				double cir = (double) step_rotation / (double) total_step_rotation;
-				double picir = cir * 3.141 * 2;
+				double picir = cir * 3.141 * 1;
 				double xc = radius * Math.cos(picir) + x;
 				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
 				double zc = radius * Math.sin(picir) * Math.sin(theta) + z;
 				spherepoints.add(new Point(xc, yc, zc, pointidcounter));
+				System.out.println(new Point(xc, yc, zc, pointidcounter));
 				pointidcounter++;
 			}
 			}
-		for (int i = 0; i < spherepoints.size() - total_step_rotation - 1; i++) {
+		for (int i = 0; i < spherepoints.size() - total_step_rotation - 2; i++) {
 			Point p1 = spherepoints.get(i);
 			Point p2 = spherepoints.get(i + 1);
-			Point p3 = spherepoints.get(i + total_step_rotation);
-			Point p4 = spherepoints.get(i + 1 + total_step_rotation);
+			Point p3 = spherepoints.get(i + total_step_rotation + 1);
+			Point p4 = spherepoints.get(i + 2 + total_step_rotation);
 
-			if (Point.isdegenerate(p3, p1, p2) == false) {
+			if (!Point.isdegenerate(p3, p1, p2)) {
 				out.addpolygon(p3, p1, p2);
 			}
 
-			if (Point.isdegenerate(p2, p4, p3) == false) {
+			if (!Point.isdegenerate(p2, p4, p3)) {
 				out.addpolygon(p2, p4, p3);
 			}
 		}
