@@ -278,7 +278,7 @@ public class EdgeGenerator {
 		for (int step_circle = 0; step_circle <= total_step_circle; step_circle++) {
 			double theta = ((double)step_circle/(double)total_step_circle) * 6.2831;
 
-			for (int step_translate = 0; step_translate < total_step_translate; step_translate++) {
+			for (int step_translate = 0; step_translate <= total_step_translate; step_translate++) {
 				double picir = ((double)step_translate/(double)total_step_translate) * 6.2831;
 				double tx = (outer_rad + inner_rad * Math.cos(picir)) * Math.cos(theta) + x;
 				double ty = inner_rad * Math.sin(picir) + y;
@@ -290,6 +290,10 @@ public class EdgeGenerator {
 		}
 
 		for (int i = 0; i < toruspoints.size() - total_step_circle - 1; i++) {
+			// out.addpoint(toruspoints.get(i + 1 + total_step_circle));
+			// out.addpoint(toruspoints.get(i));
+			// out.addpoint(toruspoints.get(i + 1));
+
 			out.addpoint(toruspoints.get(i));
 			out.addpoint(toruspoints.get(i + 1));
 			out.addpoint(toruspoints.get(i + 1 + total_step_circle));
