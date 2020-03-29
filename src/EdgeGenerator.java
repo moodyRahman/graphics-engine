@@ -143,7 +143,7 @@ public class EdgeGenerator {
 				System.out.println(new Point(xc, yc, zc, pointidcounter));
 				pointidcounter++;
 			}
-			}
+		}
 		for (int i = 0; i < spherepoints.size() - total_step_rotation - 2; i++) {
 			Point p1 = spherepoints.get(i);
 			Point p2 = spherepoints.get(i + 1);
