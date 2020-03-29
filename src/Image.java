@@ -311,6 +311,10 @@ public void matrixLinePolygon(DoubleMatrix m, Pixel c){
 			line(p2[0], p2[1], p0[0], p0[1], c);
 		}
 
+		// line(p0[0], p0[1], p1[0], p1[1], c);
+		// line(p1[0], p1[1], p2[0], p2[1], c);
+		// line(p2[0], p2[1], p0[0], p0[1], c);
+
 	}
 
 }
