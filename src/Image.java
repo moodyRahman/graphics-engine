@@ -126,7 +126,14 @@ protected void drawLine(int px1, int py1, int px2, int py2){
 	}
 }
 
-
+/**
+ * draws a line where the slopes delta x > delta y
+ * @param px1
+ * @param py1
+ * @param px2
+ * @param py2
+ * @param c
+ */
 private void drawLineLow(int px1, int py1, int px2, int py2, Pixel c){
 	int dx = px2 - px1;
 	int dy = py2 - py1;
@@ -151,7 +158,14 @@ private void drawLineLow(int px1, int py1, int px2, int py2, Pixel c){
 	}
 }
 
-
+/**
+ * draws a line where the slopes delta y > delta x
+ * @param px1
+ * @param py1
+ * @param px2
+ * @param py2
+ * @param c
+ */
 private void drawLineHigh(int px1, int py1, int px2, int py2, Pixel c){
 	int dx = px2 - px1;
 	int dy = py2 - py1;
@@ -176,32 +190,6 @@ private void drawLineHigh(int px1, int py1, int px2, int py2, Pixel c){
 	}
 }
 
-/**
- * @deprecated draws a line of a given color
- * @param px1 [description]
- * @param py1 [description]
- * @param px2 [description]
- * @param py2 [description]
- * @param c   Color of the line
- */
-public void line(int px1, int py1, int px2, int py2, Pixel c){
-	if (Math.abs(py2 - py1) <= Math.abs(px2 - px1)){
-		if (px1 > px2){
-			drawLineLow(px2, py2, px1, py1, c);
-		}
-		else {
-			drawLineLow(px1, py1, px2, py2, c);
-		}
-	}
-	else {
-		if (py1 > py2){
-			drawLineHigh(px2, py2, px1, py1, c);
-		}
-		else {
-			drawLineHigh(px1, py1, px2, py2, c);
-		}
-	}
-}
 
 /**
  * Draws a line in the image of the given color
@@ -250,7 +238,9 @@ public void line(double pxl1, double pyl1, double pxl2, double pyl2, Pixel c){
 	}
 }
 
-
+/**
+ * write the current pixel array to a file and display it
+ */
 public void display(){
 	try {
 		this.flushToFile("./tmp/d.ppm");
@@ -263,6 +253,9 @@ public void display(){
 	}
 }
 
+/**
+ * Write the current pixel array to a file, and display it for 2 seconds, and then terminate the image
+ */
 public void displaydebug(){
 	try {
 		this.flushToFile("./tmp/d.ppm");
@@ -292,6 +285,11 @@ public void matrixLineEdge(DoubleMatrix m, Pixel c){
 
 }
 
+/**
+ * draw the matrix, iterating through every three to draw a triangle
+ * @param m
+ * @param c
+ */
 public void matrixLinePolygon(DoubleMatrix m, Pixel c){
 	double[][] array = m.getarray();
 	for (int x = 0; x < array.length - 3; x+=3) {
@@ -340,6 +338,9 @@ public static void main(String[] args) {
 
 }
 
+/**
+ * Stores a pixel
+ */
 class Pixel {
 
 

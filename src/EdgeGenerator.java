@@ -291,10 +291,6 @@ public class EdgeGenerator {
 		}
 
 		for (int i = 0; i < toruspoints.size() - total_step_circle - 1; i++) {
-			// out.addpoint(toruspoints.get(i + 1 + total_step_circle));
-			// out.addpoint(toruspoints.get(i));
-			// out.addpoint(toruspoints.get(i + 1));
-
 			out.addpoint(toruspoints.get(i));
 			out.addpoint(toruspoints.get(i + 1));
 			out.addpoint(toruspoints.get(i + 1 + total_step_circle));

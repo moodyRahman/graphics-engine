@@ -1,5 +1,8 @@
 package src;
 
+/**
+ * Describes a point
+ */
 public class Point{
 	public double x;
 	public double y;
@@ -41,6 +44,9 @@ public class Point{
 }
 
 
+/**
+ * Describes a vector
+ */
 class Vector extends Point{
 
 	static final Vector VIEW_VECTOR = new Vector(0.0, 0.0, 1.0);

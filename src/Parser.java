@@ -86,10 +86,10 @@ public class Parser {
 
 	private DoubleMatrix edge = new DoubleMatrix();
 	private DoubleMatrix polygon = new DoubleMatrix();
-	private DoubleMatrix transform = TransformGenerator.identity();
+	private DoubleMatrix transform = TransformGenerator.identity();   // deprecate this field later
 	private ArrayDeque<DoubleMatrix> coorstack = new ArrayDeque<DoubleMatrix>();
 	private ArrayList<Command> tokens = new ArrayList<Command>();
-	ProcessBuilder processBuilder = new ProcessBuilder();
+	ProcessBuilder processBuilder = new ProcessBuilder();             // enables shell command execution
 	Pixel linecolor = new Pixel(0, 0, 0);
 	Pixel bgcolor = new Pixel(200, 200, 200);
 
@@ -103,20 +103,23 @@ public class Parser {
 		File f = new File(fname);
 		Scanner sc = new Scanner(f);
 		sc.useDelimiter("\n");
+
+		// translate all the lines of the files into String tokens in stokens
 		ArrayList<String> stokens = new ArrayList<String>();
 		while (sc.hasNextLine()) {
 			try {
 				String data = sc.nextLine();
 				stokens.add(data);
-
 			} catch (Exception e) {
-
+				e.printStackTrace();
 			}
 		}
 		sc.close();
 
 		for (int x = 0; x < stokens.size(); x++) {
 			String command = stokens.get(x);
+
+			// all the commands that involve a parameter on the next line
 			if (command.equals("line") || command.equals("rotate") || command.equals("scale")
 					|| command.equals("move") || command.equals("save") || command.equals("circle")
 					|| command.equals("hermite") || command.equals("bezier")
@@ -133,6 +136,7 @@ public class Parser {
 	}
 
 	/**
+	 * streamlines parameter parsing
 	 * @param args String of double parameters
 	 * @return double[] of parameters
 	 */
@@ -151,7 +155,7 @@ public class Parser {
 	}
 
 	/**
-	 * processes the tokens in the input script executes the commands <br>
+	 * processes the tokens in the input script executes the commands
 	 * @throws IOException
 	 */
 	public void parse() throws IOException {
@@ -164,6 +168,10 @@ public class Parser {
 			Runtime.getRuntime().exec("mkdir tmp");
 			Runtime.getRuntime().exec("mkdir pics");
 			switch (c) {
+				case "push":
+					break;
+				case "pop":
+					break;
 				case "line":
 					params = argstoarray(currtoken.getParameters());
 					double px1 = params[0], py1 = params[1], pz1 = params[2];
@@ -308,11 +316,6 @@ public class Parser {
 
 		}
 		scanner.close();
-
-		// System.out.println(this.transform);
-		// System.out.println(this.edge);
-		// Image i = this.edge.flushToImage(150, 150, new Pixel(200, 200, 200));
-		// i.flushToFile("d.ppm");
 		Runtime.getRuntime().exec("rm -rf ./tmp");
 	}
 

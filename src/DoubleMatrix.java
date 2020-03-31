@@ -85,7 +85,10 @@ public class DoubleMatrix{
 		this.cols++;
 	}
 
-
+	/**
+	 * Adds a new column (edge) to the matrix
+	 * @param in
+	 */
 	public void addpoint(Point in){
 		Double[] toadd = new Double[4];
 		toadd[0] = in.x;
@@ -106,12 +109,16 @@ public class DoubleMatrix{
 		cols += append.getcols();
 	}
 
+	/**
+	 * Returns the inner data of the matrix
+	 * @return
+	 */
 	private ArrayDeque<Double[]> getinnermatrix() {
 		return this.matrix;
 	}
 
 	/**
-	 * add an adge from two points to the matrix
+	 * add an edge (two columns) from two points to the matrix
 	 * 
 	 * @param x0
 	 * @param y0
@@ -125,19 +132,40 @@ public class DoubleMatrix{
 		this.addpoint(x1, y1, z1);
 	}
 
+	/**
+	 * Add a polygon (three columns) given three points
+	 * @param x0
+	 * @param y0
+	 * @param z0
+	 * @param x1
+	 * @param y1
+	 * @param z1
+	 * @param x2
+	 * @param y2
+	 * @param z2
+	 */
 	public void addpolygon(double x0, double y0, double z0, double x1, double y1, double z1, double x2, double y2,
 			double z2) {
 		this.addpoint(x0, y0, z0);
 		this.addpoint(x1, y1, z1);
 		this.addpoint(x2, y2, z2);
 	}
-
+	
+	/**
+	 * Add a polygon (three columns) given three points
+	 * @param a
+	 * @param b
+	 * @param c
+	 */
 	public void addpolygon(Point a, Point b, Point c){
 		this.addpoint(a);
 		this.addpoint(b);
 		this.addpoint(c);
 	}
 
+	/**
+	 * returns a deep copy of this matrix
+	 */
 	public DoubleMatrix clone(){
 		DoubleMatrix out = new DoubleMatrix();
 		for (Double[] e:matrix){
@@ -211,8 +239,6 @@ public class DoubleMatrix{
 
 			}
 		}
-
-		// System.out.prdoubleln(new DoubleMatrix(out));
 		return new DoubleMatrix(out);
 	}
 
