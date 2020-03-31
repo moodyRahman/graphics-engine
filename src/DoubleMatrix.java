@@ -7,7 +7,7 @@ import java.util.Iterator;
 /**
  * Stores a DoubleMatrix
  */
-public class DoubleMatrix {
+public class DoubleMatrix{
 
 	private ArrayDeque<Double[]> matrix;
 	private int cols;
@@ -138,6 +138,15 @@ public class DoubleMatrix {
 		this.addpoint(c);
 	}
 
+	public DoubleMatrix clone(){
+		DoubleMatrix out = new DoubleMatrix();
+		for (Double[] e:matrix){
+			Double[] temp = e.clone();
+			out.addpoint(temp[0], temp[1], temp[2]);
+		}
+		return out;
+	}
+
 	/**
 	 * Graphical representation of the matrix
 	 * 
@@ -214,27 +223,12 @@ public class DoubleMatrix {
 	 */
 	public Image flushToImage(int width, int height, Pixel init, Pixel linecolor) {
 		Image out = new Image(width, height, init);
-
-		// Pixel c = new Pixel(0, 0, 0);
-
-		// System.out.println("HERE");
-		System.out.println(matrix.size());
-		// for (int x = 0; x < matrix.size(); x+=2) {
-		// // System.out.println(x);
-		// Double[] p1 = matrix.get(x);
-		// Double[] p2 = matrix.get(x+1);
-
-		// out.line(p1[0], p1[1], p2[0], p2[1], linecolor);
-		// }
-
 		Iterator<Double[]> outiter = this.matrix.iterator();
-
 		while (outiter.hasNext()) {
 			Double[] p1 = outiter.next();
 			Double[] p2 = outiter.next();
 			out.line(p1[0], p1[1], p2[0], p2[1], linecolor);
 		}
-
 		return out;
 	}
 
