@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.ArrayDeque;
 
 /**
  * 
@@ -86,6 +87,7 @@ public class Parser {
 	private DoubleMatrix edge = new DoubleMatrix();
 	private DoubleMatrix polygon = new DoubleMatrix();
 	private DoubleMatrix transform = TransformGenerator.identity();
+	private ArrayDeque<DoubleMatrix> coorstack = new ArrayDeque<DoubleMatrix>();
 	private ArrayList<Command> tokens = new ArrayList<Command>();
 	ProcessBuilder processBuilder = new ProcessBuilder();
 	Pixel linecolor = new Pixel(0, 0, 0);
