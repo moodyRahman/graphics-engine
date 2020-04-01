@@ -1,54 +1,54 @@
 
 all:	
-	-mkdir bin
-	javac src/*.java -d bin
-	java -cp bin src.Parser scripts/stuyface.mscript
+	@-mkdir bin
+	@javac src/*.java -d bin
+	@java -cp bin src.Parser scripts/stuyface.mscript
 
 
 compile:
-	-mkdir bin
-	javac src/*.java -d bin
+	@-mkdir bin
+	@javac src/*.java -d bin
 
 
 clean:
-	-rm *.png
-	-rm *.ppm
-	-rm -rf ./bin
-	-rm ./src/*.class
-	-rm *.gif
+	@-rm *.png
+	@-rm *.ppm
+	@-rm -rf ./bin
+	@-rm ./src/*.class
+	@-rm *.gif
 
 
 deepclean:
-	-rm *.png
-	-rm *.ppm
-	-rm -rf ./bin
-	-rm ./src/*.class
-	-rm *.gif
-	-rm -rf ./pics
-	-rm -rf ./docs
+	@-rm *.png
+	@-rm *.ppm
+	@-rm -rf ./bin
+	@-rm ./src/*.class
+	@-rm *.gif
+	@-rm -rf ./pics
+	@-rm -rf ./docs
 
 info:
-	mkdir docs
-	cd docs;javadoc ../src/*.java;
+	@mkdir docs
+	@cd docs;javadoc ../src/*.java;
 
 run: ./bin
-	echo $(script)
-	javac src/*.java -d bin
-	java -cp bin src.Parser $(script)
+	@echo $(script)
+	@javac src/*.java -d bin
+	@java -cp bin src.Parser $(script)
 
 animate-run: ./bin
-	rm -rf ./pics
-	mkdir pics
-	echo $(script)
-	javac src/*.java -d bin
-	java -cp bin src.Parser $(script)
-	convert -delay $(delay) -loop 0 ./pics/*.png ./pics/sksk.gif
-	animate ./pics/sksk.gif
+	@rm -rf ./pics
+	@mkdir pics
+	@echo $(script)
+	@javac src/*.java -d bin
+	@java -cp bin src.Parser $(script)
+	@convert -delay $(delay) -loop 0 ./pics/*.png ./pics/sksk.gif
+	@animate ./pics/sksk.gif
 jar: ./bin
-	cp MANIFEST ./bin
-	cd bin; jar cvfe OkuyasuEngine.jar src.Parser src/*.class; mv OkuyasuEngine.jar ..;
+	@cp MANIFEST ./bin
+	@cd bin; jar cvfe OkuyasuEngine.jar src.Parser src/*.class; mv OkuyasuEngine.jar ..;
 
 test:
-	-mkdir bin
-	javac src/*.java -d bin
-	java -cp bin src.Image
+	@-mkdir bin
+	@javac src/*.java -d bin
+	@java -cp bin src.Image
