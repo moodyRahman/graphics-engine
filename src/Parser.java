@@ -196,44 +196,48 @@ public class Parser {
 					params = argstoarray(currtoken.getParameters());
 					double px1 = params[0], py1 = params[1], pz1 = params[2];
 					double px2 = params[3], py2 = params[4], pz2 = params[5];
-					edge.addedge(px1, py1, pz1, px2, py2, pz2);
-					break;
-
-				case "ident":
-					this.transform = TransformGenerator.identity();
+					DoubleMatrix drawtempline = new DoubleMatrix();
+					drawtempline.wipe();
+					drawtempline.addpoint(px1, py1, pz1);
+					drawtempline.addpoint(px2, py2, pz2);
+					top = coorstack.peek();
+					edge.addmatrixedge(DoubleMatrix.multiply(top, drawtempline));
 					break;
 
 				case "scale":
 					params = argstoarray(currtoken.getParameters());
 					double scalex = params[0], scaley = params[1], scalez = params[2];
-					DoubleMatrix scale = TransformGenerator.scale(scalex, scaley, scalez);
-					this.transform = DoubleMatrix.multiply(scale, this.transform);
+					DoubleMatrix scaler = TransformGenerator.scale(scalex, scaley, scalez);
+					top = coorstack.pop();
+					toinsert = DoubleMatrix.multiply(top, scaler);
+					coorstack.push(toinsert);
 					break;
 
 				case "move":
 					params = argstoarray(currtoken.getParameters());
 					double movex = params[0], movey = params[1], movez = params[2];
 					DoubleMatrix move = TransformGenerator.translate(movex, movey, movez);
-					this.transform = DoubleMatrix.multiply(move, this.transform);
+					top = coorstack.pop();
+					toinsert = DoubleMatrix.multiply(top, move);
+					coorstack.push(toinsert);
 					break;
 
 				case "rotate":
 					params = argstoarray(currtoken.getParameters());
 					double axis = params[0], theta = params[1];
 					DoubleMatrix rotate = TransformGenerator.rotate((char) axis, theta);
-					this.transform = DoubleMatrix.multiply(rotate, this.transform);
+					top = coorstack.pop();
+					toinsert = DoubleMatrix.multiply(top, rotate);
+					coorstack.push(toinsert);
 					break;
 
 				case "rotate-point":
 					params = argstoarray(currtoken.getParameters());
-					double xrp = params[0], yrp = params[1], zrp = params[2], axisrp = params[3], thetarp = params[4];
-					DoubleMatrix rotatepoint = TransformGenerator.rotatepoint(xrp, yrp, zrp, (char)axisrp, thetarp);
+					double xrp = params[0], yrp = params[1], zrp = params[2], axisrp = params[3],
+							thetarp = params[4];
+					DoubleMatrix rotatepoint = TransformGenerator.rotatepoint(xrp, yrp, zrp,
+							(char) axisrp, thetarp);
 					this.transform = DoubleMatrix.multiply(rotatepoint, this.transform);
-					break;
-
-				case "apply":
-					this.edge = DoubleMatrix.multiply(this.transform, this.edge);
-					this.polygon = DoubleMatrix.multiply(this.transform, this.polygon);
 					break;
 
 				case "pen-color":
@@ -254,7 +258,7 @@ public class Parser {
 					break;
 				case "display-custom":
 					params = argstoarray(currtoken.getParameters());
-					Image customdisp = new Image((int)params[0], (int)params[1], bgcolor);
+					Image customdisp = new Image((int) params[0], (int) params[1], bgcolor);
 					customdisp.matrixLineEdge(edge, linecolor);
 					customdisp.matrixLinePolygon(polygon, linecolor);
 					customdisp.display();
@@ -272,7 +276,8 @@ public class Parser {
 					String param = currtoken.getParameters();
 					String[] arr = param.split(" ");
 					
-					Image saveconv = new Image(Integer.parseInt(arr[1]), Integer.parseInt(arr[2]), bgcolor);
+					Image saveconv = new Image(Integer.parseInt(arr[1]), Integer.parseInt(arr[2]),
+							bgcolor);
 					saveconv.matrixLineEdge(edge, linecolor);
 					saveconv.matrixLinePolygon(polygon, linecolor);
 					
@@ -285,27 +290,35 @@ public class Parser {
 				case "circle":
 					params = argstoarray(currtoken.getParameters());
 					double cx = params[0], cy = params[1], cz = params[2], radius = params[3];
-					EdgeGenerator.circle(edge, cx, cy, cz, radius, 75);
+					DoubleMatrix circ = EdgeGenerator.circle(cx, cy, cz, radius, 75);
+					top = coorstack.peek();
+					edge.addmatrixedge(DoubleMatrix.multiply(top, circ));
 					break;
 
 				case "hermite":
 					params = argstoarray(currtoken.getParameters());
 					double hx0 = params[0], hy0 = params[1], hx1 = params[2], hy1 = params[3];
 					double hrx0 = params[4], hry0 = params[5], hrx1 = params[6], hry1 = params[6];
-					EdgeGenerator.hermite(edge, hx0, hy0, hx1, hy1, hrx0, hry0, hrx1, hry1, 50);
+					DoubleMatrix herm = EdgeGenerator.hermite(hx0, hy0, hx1, hy1, hrx0, hry0, hrx1, hry1, 50);
+					top = coorstack.peek();
+					edge.addmatrixedge(DoubleMatrix.multiply(top, herm));
 					break;
 
 				case "bezier":
 					params = argstoarray(currtoken.getParameters());
 					double bx0 = params[0], bx1 = params[2], bx2 = params[4], bx3 = params[6];
 					double by0 = params[1], by1 = params[3], by2 = params[5], by3 = params[7];
-					EdgeGenerator.bezier(edge, bx0, by0, bx1, by1, bx2, by2, bx3, by3, 50);
+					DoubleMatrix bez = EdgeGenerator.bezier(bx0, by0, bx1, by1, bx2, by2, bx3, by3, 50);
+					top = coorstack.peek();
+					edge.addmatrixedge(DoubleMatrix.multiply(top, bez));
 					break;
 
 				case "sphere":
 					params = argstoarray(currtoken.getParameters());
 					double xsp = params[0], ysp = params[1], zsp = params[2], radiussp = params[3];
-					EdgeGenerator.sphere(polygon, xsp, ysp, zsp, radiussp);
+					DoubleMatrix sph = EdgeGenerator.sphereGenerator(xsp, ysp, zsp, radiussp, 20, 20);
+					top = coorstack.peek();
+					polygon.addmatrixedge(DoubleMatrix.multiply(top, sph));
 					break;
 
 				case "pause":
@@ -322,14 +335,18 @@ public class Parser {
 					params = argstoarray(currtoken.getParameters());
 					double boxx = params[0], boxy = params[1], boxz = params[2];
 					double boxw = params[3], boxh = params[4], boxd = params[5];
-					EdgeGenerator.box(polygon, boxx, boxy, boxz, boxw, boxh, boxd);
+					DoubleMatrix bx = EdgeGenerator.box(boxx, boxy, boxz, boxw, boxh, boxd);
+					top = coorstack.peek();
+					polygon.addmatrixedge(DoubleMatrix.multiply(top, bx));
 					break;
 
 				case "torus":
 					params = argstoarray(currtoken.getParameters());
 					double torx = params[0], tory = params[1], torz = params[2];
 					double torin = params[3], torout = params[4];
-					EdgeGenerator.torus(polygon, torx, tory, torz, torin, torout);
+					DoubleMatrix tor = EdgeGenerator.torusGenerator(torx, tory, torz, torin, torout, 26, 26);
+					top = coorstack.peek();
+					polygon.addmatrixedge(DoubleMatrix.multiply(top, tor));
 					break;
 
 			}
@@ -344,7 +361,7 @@ public class Parser {
 
 		try {
 			p.parse();
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
