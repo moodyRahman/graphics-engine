@@ -182,10 +182,15 @@ public class Parser {
 			double[] params;
 			Runtime.getRuntime().exec("mkdir tmp");
 			Runtime.getRuntime().exec("mkdir pics");
+			DoubleMatrix top;
+			DoubleMatrix toinsert;
 			switch (c) {
 				case "push":
+					DoubleMatrix newtop = coorstack.peek().clone();
+					coorstack.push(newtop);
 					break;
 				case "pop":
+					coorstack.pop();
 					break;
 				case "line":
 					params = argstoarray(currtoken.getParameters());
