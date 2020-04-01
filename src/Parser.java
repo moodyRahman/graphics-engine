@@ -233,16 +233,7 @@ public class Parser {
 					toinsert = DoubleMatrix.multiply(top, rotate);
 					coorstack.push(toinsert);
 					break;
-
-				case "rotate-point":
-					params = argstoarray(currtoken.getParameters());
-					double xrp = params[0], yrp = params[1], zrp = params[2], axisrp = params[3],
-							thetarp = params[4];
-					DoubleMatrix rotatepoint = TransformGenerator.rotatepoint(xrp, yrp, zrp,
-							(char) axisrp, thetarp);
-					this.transform = DoubleMatrix.multiply(rotatepoint, this.transform);
-					break;
-
+				
 				case "pen-color":
 					params = argstoarray(currtoken.getParameters());
 					linecolor.set(new Pixel((int) params[0], (int) params[1], (int) params[2]));
