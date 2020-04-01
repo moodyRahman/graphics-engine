@@ -18,7 +18,7 @@ import java.util.ArrayDeque;
  * 1) Parser takes some in input file via the first command line argument <br>
  * 	Java Parser sphere.mscript <br> <br>
  * 	
- * 	The specifications for .mscripts and MoodScript are viewable in the README <br> <br>
+ * The specifications for .mscripts and MoodScript are viewable in the README
  * 
  * 2) THe constructor for Parser opens the input file, and splits it by newlines <br>
  * 	It then organizes the inputs into an ArrayList of Command objects <br> <br>
