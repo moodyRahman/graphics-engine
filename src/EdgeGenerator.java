@@ -16,7 +16,8 @@ public class EdgeGenerator {
 	 * @param cz     center z
 	 * @param radius radius
 	 */
-	public static void circle(DoubleMatrix edge, double cx, double cy, double cz, double radius, int total_steps) {
+	public static DoubleMatrix circle(double cx, double cy, double cz, double radius, int total_steps) {
+		DoubleMatrix edge = new DoubleMatrix();
 		for (int step = 0; step < total_steps; step++) {
 			double deg = (double) step / (double) total_steps;
 			double rad = deg * 6.2831;
@@ -24,6 +25,7 @@ public class EdgeGenerator {
 					(radius * Math.cos(rad + 0.174)) + cx, (radius * Math.sin(rad + 0.174)) + cy,
 					cz);
 		}
+		return edge;
 	}
 
 	/**
@@ -39,8 +41,9 @@ public class EdgeGenerator {
 	 * @param hrx1
 	 * @param hry1
 	 */
-	public static void hermite(DoubleMatrix edge, double hx0, double hy0, double hx1, double hy1, double hrx0,
+	public static DoubleMatrix hermite(double hx0, double hy0, double hx1, double hy1, double hrx0,
 			double hry0, double hrx1, double hry1, int total_step) {
+		DoubleMatrix edge = new DoubleMatrix();
 		double xa = 2 * hx0 - 2 * hx1 + hrx0 + hrx1;
 		double xb = -3 * hx0 + 3 * hx1 - 2 * hrx0 - hrx1;
 		double xc = hrx0;
@@ -65,6 +68,8 @@ public class EdgeGenerator {
 
 			edge.addedge(plotx, ploty, 1, newplotx, newploty, 1);
 		}
+
+		return edge;
 	}
 
 	/**
@@ -80,8 +85,9 @@ public class EdgeGenerator {
 	 * @param bx3
 	 * @param by3
 	 */
-	public static void bezier(DoubleMatrix edge, double bx0, double by0, double bx1, double by1, double bx2,
+	public static DoubleMatrix bezier(double bx0, double by0, double bx1, double by1, double bx2,
 			double by2, double bx3, double by3, int total_step) {
+		DoubleMatrix edge = new DoubleMatrix();
 		double bxa = -bx0 + 3 * bx1 - 3 * bx2 + bx3;
 		double bxb = 3 * bx0 - 6 * bx1 + 3 * bx2;
 		double bxc = -3 * bx0 + 3 * bx1;
@@ -106,6 +112,7 @@ public class EdgeGenerator {
 
 			edge.addedge(plotx, ploty, 1, newplotx, newploty, 1);
 		}
+		return edge;
 	}
 
 	/**
@@ -140,7 +147,6 @@ public class EdgeGenerator {
 				double yc = radius * Math.sin(picir) * Math.cos(theta) + y;
 				double zc = radius * Math.sin(picir) * Math.sin(theta) + z;
 				spherepoints.add(new Point(xc, yc, zc, pointidcounter));
-				System.out.println(new Point(xc, yc, zc, pointidcounter));
 				pointidcounter++;
 			}
 		}
@@ -158,10 +164,6 @@ public class EdgeGenerator {
 				out.addpolygon(p2, p4, p3);
 			}
 		}
-
-		System.out.println();
-		System.out.println("END OF SPHERE GENERATION");
-		System.out.println();
 		return out;
 
 	}
@@ -192,13 +194,15 @@ public class EdgeGenerator {
 	 * @param height
 	 * @param depth
 	 */
-	public static void box(DoubleMatrix edge, double x, double y, double z, double width, double height,
+	public static DoubleMatrix box(double x, double y, double z, double width, double height,
 			double depth) {
 		// Note: Yes, I could possible make this into a few for-loops but allow me to
 		// ask you, why?
 		// It's dead just 12 edges, no point in debugging when this is garunteed to work
 		// So, me in the future reading this
 		// Don't you dare try to change anything
+		
+		DoubleMatrix edge = new DoubleMatrix();
 
 		// draw the top face
 		edge.addpoint(x, y, z);
@@ -257,6 +261,7 @@ public class EdgeGenerator {
 		edge.addpoint(x + width, y, z - depth);
 		edge.addpoint(x + width, y - height, z);
 
+		return edge;
 
 	
 
