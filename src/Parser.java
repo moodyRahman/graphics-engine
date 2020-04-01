@@ -1,6 +1,4 @@
 
-
-
 package src;
 
 import java.io.File;
@@ -13,28 +11,44 @@ import java.util.ArrayDeque;
 /**
  * 
  * This is the main executable file for Okuyasu Engine <br>
- * The program flow is as follows <br> <br>
+ * The program flow is as follows <br>
+ * <br>
  * 
  * 1) Parser takes some in input file via the first command line argument <br>
- * 	Java Parser sphere.mscript <br> <br>
+ * Java Parser sphere.mscript <br>
+ * <br>
  * 	
  * The specifications for .mscripts and MoodScript are viewable in the README
+ * <br>
+ * <br>
  * 
- * 2) THe constructor for Parser opens the input file, and splits it by newlines <br>
- * 	It then organizes the inputs into an ArrayList of Command objects <br> <br>
+ * 2) THe constructor for Parser opens the input file, and splits it by newlines
+ * <br>
+ * It then organizes the inputs into an ArrayList of Command objects <br>
+ * <br>
  * 
  * 3) Run Parser.parse(), which processes the Command objects <br>
- * 	The method has one instance of an DoubleMatrix edge, to which all generated edges will be added to <br> <br>
+ * The method has one instance of an DoubleMatrix edge, to which all generated
+ * edges will be added to <br>
+ * <br>
  * 
- * 4) Run through the switch statements and modify the edge and the transformation accordingly <br> <br>
+ * 4) Run through the switch statements and modify the edge and the
+ * transformation accordingly <br>
+ * <br>
  * 
- * 	4a) Transformation type commands will modify the transformation matrix, that queues up the operations to be <br>
- * 		executed with an apply command <br>
- * 	4b) Edge generating commands will go into their static method with the parameters <br>
- * 		inside the static method, it will generate the edges and then append them to the Parser's edge matrix <br> <br>
+ * 4a) Transformation type commands will modify the transformation matrix, that
+ * queues up the operations to be <br>
+ * executed with an apply command <br>
+ * 4b) Edge generating commands will go into their static method with the
+ * parameters <br>
+ * inside the static method, it will generate the edges and then append them to
+ * the Parser's edge matrix <br>
+ * <br>
  * 
- * 5) when a save type command is encountered, the edge matrix runs .flushToImage, which draws the edges into an Image object <br>
- * 	in accordance to the matrix. <br> <br>
+ * 5) when a save type command is encountered, the edge matrix runs
+ * .flushToImage, which draws the edges into an Image object <br>
+ * in accordance to the matrix. <br>
+ * <br>
  * 
  */
 
