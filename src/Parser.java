@@ -92,7 +92,7 @@ public class Parser {
 			return this.arg;
 		}
 
-		public int getLine(){
+		public int getLine() {
 			return this.line;
 		}
 
