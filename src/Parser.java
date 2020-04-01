@@ -148,6 +148,8 @@ public class Parser {
 				tokens.add(new Command(command, x));
 			}
 		}
+
+		coorstack.push(TransformGenerator.identity());
 	}
 
 	/**
