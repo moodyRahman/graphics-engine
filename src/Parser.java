@@ -17,7 +17,7 @@ import java.util.ArrayDeque;
  * 1) Parser takes some in input file via the first command line argument <br>
  * Java Parser sphere.mscript <br>
  * <br>
- * 	
+ * 
  * The specifications for .mscripts and MoodScript are viewable in the README
  * <br>
  * <br>
@@ -53,7 +53,7 @@ import java.util.ArrayDeque;
  */
 
 public class Parser {
-	
+
 	/**
 	 * Stores a command, paramaters, and line number
 	 */
@@ -100,10 +100,9 @@ public class Parser {
 
 	private DoubleMatrix edge = new DoubleMatrix();
 	private DoubleMatrix polygon = new DoubleMatrix();
-	private DoubleMatrix transform = TransformGenerator.identity();   // deprecate this field later
 	private ArrayDeque<DoubleMatrix> coorstack = new ArrayDeque<DoubleMatrix>();
 	private ArrayList<Command> tokens = new ArrayList<Command>();
-	ProcessBuilder processBuilder = new ProcessBuilder();             // enables shell command execution
+	ProcessBuilder processBuilder = new ProcessBuilder(); // enables shell command execution
 	Pixel linecolor = new Pixel(0, 0, 0);
 	Pixel bgcolor = new Pixel(200, 200, 200);
 
@@ -154,6 +153,7 @@ public class Parser {
 
 	/**
 	 * streamlines parameter parsing
+	 * 
 	 * @param args String of double parameters
 	 * @return double[] of parameters
 	 */
@@ -173,6 +173,7 @@ public class Parser {
 
 	/**
 	 * processes the tokens in the input script executes the commands
+	 * 
 	 * @throws IOException
 	 */
 	public void parse() throws IOException {
@@ -277,12 +278,12 @@ public class Parser {
 				case "save-convert":
 					String param = currtoken.getParameters();
 					String[] arr = param.split(" ");
-					
+
 					Image saveconv = new Image(Integer.parseInt(arr[1]), Integer.parseInt(arr[2]),
 							bgcolor);
 					saveconv.matrixLineEdge(edge, linecolor);
 					saveconv.matrixLinePolygon(polygon, linecolor);
-					
+
 					saveconv.flushToFile("./pics/" + arr[0]);
 					String outfilepng = arr[0].substring(0, arr[0].length() - 3) + "png";
 					String convertcommand = "convert ./pics/" + arr[0] + " ./pics/" + outfilepng;

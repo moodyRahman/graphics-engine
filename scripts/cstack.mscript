@@ -1,0 +1,57 @@
+bg-color
+0 0 0
+pen-color
+8 146 208
+push
+sphere
+30 90 0 20
+sphere
+90 90 0 20
+rotate
+x 15
+torus
+60 50 0 20 30
+pop
+move
+90 90 0
+push
+sphere
+30 90 0 20
+sphere
+90 90 0 20
+rotate
+x 15
+torus
+60 50 0 20 30
+pop
+rotate
+y 15
+move
+180 180 0
+push
+sphere
+30 90 0 20
+sphere
+90 90 0 20
+rotate
+x 15
+torus
+60 50 0 20 30
+pop
+rotate
+y 30
+move
+270 270 0
+push
+sphere
+30 90 0 20
+sphere
+90 90 0 20
+rotate
+x 15
+torus
+60 50 0 20 30
+pop
+display
+save-convert
+mau5.ppm 500 500
