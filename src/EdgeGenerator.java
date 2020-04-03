@@ -216,12 +216,12 @@ public class EdgeGenerator {
 
 		// draw the bottom face
 		edge.addpoint(x, y - height, z);
-		edge.addpoint(x + width, y - height, z);
 		edge.addpoint(x, y - height, z - depth);
+		edge.addpoint(x + width, y - height, z);
 
 		edge.addpoint(x + width, y - height, z - depth);
-		edge.addpoint(x, y - height, z - depth);
 		edge.addpoint(x + width, y - height, z);
+		edge.addpoint(x, y - height, z - depth);
 
 
 		// draw the front face
@@ -235,22 +235,22 @@ public class EdgeGenerator {
 
 		// draw back face
 		edge.addpoint(x, y - height, z - depth);
-		edge.addpoint(x + width, y - height, z - depth);
 		edge.addpoint(x, y, z - depth);
+		edge.addpoint(x + width, y - height, z - depth);
 
 		edge.addpoint(x + width, y, z - depth);
-		edge.addpoint(x , y, z - depth);
 		edge.addpoint(x + width, y - height, z - depth);
+		edge.addpoint(x , y, z - depth);
 
 
 		// draw left face
 		edge.addpoint(x, y, z);
-		edge.addpoint(x, y - height, z);
 		edge.addpoint(x, y, z - depth);
+		edge.addpoint(x, y - height, z);
 
 		edge.addpoint(x, y - height, z - depth);
-		edge.addpoint(x, y, z - depth);
 		edge.addpoint(x, y - height, z);
+		edge.addpoint(x, y, z - depth);
 
 		// draw right face
 		edge.addpoint(x + width, y, z);
