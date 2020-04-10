@@ -169,6 +169,7 @@ public class EdgeGenerator {
 	}
 
 	/**
+	 * @deprecated
 	 * Wrapper method to seperate adding a sphere to the current edge matrix and
 	 * generating the sphere Generates a torus and adds it to the edge matrix
 	 * 
@@ -178,8 +179,9 @@ public class EdgeGenerator {
 	 * @param z
 	 * @param radius
 	 */
+	@Deprecated
 	public static void sphere(DoubleMatrix edge, double x, double y, double z, double radius) {
-		edge.addmatrixedge(EdgeGenerator.sphereGenerator(x, y, z, radius, 20, 20));
+		edge.addmatrixedge(EdgeGenerator.sphereGenerator(x, y, z, radius, 5, 5));
 		// slices points per slice
 	}
 
@@ -304,6 +306,7 @@ public class EdgeGenerator {
 	}
 
 	/**
+	 * @deprecated
 	 * Wrapper method to seperate adding a torus to the current edge matrix and
 	 * generating the torus Generates a torus and adds it to the edge matrix
 	 * 
@@ -314,6 +317,7 @@ public class EdgeGenerator {
 	 * @param inner_rad
 	 * @param outer_rad
 	 */
+	@Deprecated
 	public static void torus(DoubleMatrix edge, double x, double y, double z, double inner_rad, double outer_rad) {
 		edge.addmatrixedge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad, 26, 26));
 	}
