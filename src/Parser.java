@@ -323,6 +323,7 @@ public class Parser {
 
 				case "clear":
 					edge.wipe();
+					polygon.wipe();
 					break;
 
 				case "box":
