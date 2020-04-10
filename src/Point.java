@@ -1,5 +1,6 @@
 package src;
 
+import java.lang.Math;
 /**
  * Describes a point
  */
