@@ -30,11 +30,22 @@ public class Point{
 	return "POINT " + this.id + "  LOCATED AT: " + x + ", " + y + ", " + z;
 	}
 
-	public boolean equals(Point other){
-		if (this.x == other.x && this.y == other.y && this.z == other.z){
+	// public boolean equals(Point other){
+	// 	if (this.x == other.x && this.y == other.y && this.z == other.z){
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
+
+	public boolean equals(Point other) {
+		if (almostEqual(this.x, other.x) && almostEqual(this.y, other.y) && almostEqual(this.z, other.z)) {
 			return true;
 		}
 		return false;
+	}
+
+	public static boolean almostEqual(double a, double b) {
+		return Math.abs(a - b) < 0.15;
 	}
 
 
