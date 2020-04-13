@@ -139,7 +139,8 @@ public class Parser {
 					|| command.equals("save-convert") || command.equals("pen-color")
 					|| command.equals("bg-color") || command.equals("sphere")
 					|| command.equals("rotate-point") || command.equals("box")
-					|| command.equals("torus") || command.equals("display-custom")) {
+					|| command.equals("torus") || command.equals("display-custom")
+					|| command.equals("polygon-point")) {
 				x++;
 				String arg = stokens.get(x);
 				tokens.add(new Command(command, arg, x));
@@ -344,9 +345,16 @@ public class Parser {
 					polygon.addmatrixedge(DoubleMatrix.multiply(top, tor));
 					break;
 
+				case "polygon-point":
+					params = argstoarray(currtoken.getParameters());
+					double poly0 = params[0], poly1 = params[1], poly2 = params[2];
+					this.polygon.addpoint(poly0, poly1, poly2);
+					break;
+
 			}
 
 		}
+		System.out.println(polygon);
 		scanner.close();
 		Runtime.getRuntime().exec("rm -rf ./tmp");
 	}
