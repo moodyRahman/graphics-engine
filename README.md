@@ -40,26 +40,24 @@ Anything that is not in the command set is a comment
 |---------------------|-----------------------------------------|---------------------------------------------------------------------------|
 | ```pen-color```     | red green blue                          | sets the color of the edges of the image                                  |
 | ```bg-color```      | red green blue                          | sets the color of the background of the image                             |
-| ```line```          | x0 y0 z0 x1 y1 z1                       | draws a line                                                              |
-| ```ident```         |                 -                       | set the internal transformation matrix to an identity matrix              |
-| ```apply```         |                 -                       | apply all of the pending operations to the current image                  |
-| ```display```       |                 -                       | display the current image in an JFrame                                    |
-| ```display-custom```|xresolution yresolution                  | display the current image in an JFrame of the given resolution            |
-| ```save```          | filename.ppm                            | write the current image to a filename.ppm                                 |
-| ```save-convert```  | filename.ppm width height               | writes the current image to filename.ppm and converts it to fileimage.png |
-| ```circle```        | cx cy radius                            | draws a circle                                                            |
-| ```hermite```       | x0 y0 x1 y1 rx0 ry0 rx1 ry1             | draws an hermite curve                                                    |
-| ```bezier```        | x0 y0 x1 y1 x2 y2 x3 y3                 | draws a bezier curve                                                      |
-| ```clear```         |                 -                       | removes all shapes from the image                                         |
-| ```sphere```        | x y z radius                            | draws a sphere                                                            |
-| ```torus```         | x y z inner_radius outer_radius         | draws a torus                                                             |
-| ```box```           | x y z width height depth                | draws a box                                                               |
-| ```pause```         |                 -                       | pauses the script execution                                               |
-| ```scale```         | sx sy sz                                | appends a scaling operation to the coordinate stack                       |
 | ```move```          | dx dy dz                                | appends a transformation operation to the coordinate stack                |
+| ```scale```         | sx sy sz                                | appends a scaling operation to the coordinate stack                       |
 | ```rotate```        | (x, y, z) theta                         | appends a rotation operation to the coordinate stack                      |
 | ```push```          |                 -                       | push the current coordinate system to the stack                           |
 | ```pop```           |                 -                       | pop the current coordinate system to the stack                            |
+| ```line```          | x0 y0 z0 x1 y1 z1                       | draws a line                                                              |
+| ```circle```        | cx cy radius                            | draws a circle                                                            |
+| ```hermite```       | x0 y0 x1 y1 rx0 ry0 rx1 ry1             | draws an hermite curve                                                    |
+| ```bezier```        | x0 y0 x1 y1 x2 y2 x3 y3                 | draws a bezier curve                                                      |
+| ```sphere```        | x y z radius                            | draws a sphere                                                            |
+| ```torus```         | x y z inner_radius outer_radius         | draws a torus                                                             |
+| ```box```           | x y z width height depth                | draws a box                                                               |
+| ```clear```         |                 -                       | removes all shapes from the image                                         |
+| ```pause```         |                 -                       | pauses the script execution                                               |
+| ```save```          | filename.ppm                            | write the current image to a filename.ppm                                 |
+| ```save-convert```  | filename.ppm width height               | writes the current image to filename.ppm and converts it to fileimage.png |
+| ```display```       |                 -                       | display the current image in an JFrame                                    |
+| ```display-custom```|xresolution yresolution                  | display the current image in an JFrame of the given resolution            |
 #### Example script
 ```
 bg-color
