@@ -39,7 +39,7 @@ public class DoubleMatrix{
 		this.cols = in.length;
 	}
 
-	public Iterator<Double[]> getiterator() {
+	public Iterator<Double[]> getIterator() {
 		return this.matrix.iterator();
 	}
 
@@ -55,7 +55,7 @@ public class DoubleMatrix{
 	 * 
 	 * @return how many columsn there are
 	 */
-	public int getcols() {
+	public int getCols() {
 		return this.cols;
 	}
 
@@ -64,7 +64,7 @@ public class DoubleMatrix{
 	 * 
 	 * @return how many rows there are
 	 */
-	public int getrows() {
+	public int getRows() {
 		return this.rows;
 	}
 
@@ -75,7 +75,7 @@ public class DoubleMatrix{
 	 * @param y y coordinate
 	 * @param z z coordinate
 	 */
-	public void addpoint(double x, double y, double z) {
+	public void addPoint(double x, double y, double z) {
 		Double[] toadd = new Double[4];
 		toadd[0] = x;
 		toadd[1] = y;
@@ -89,7 +89,7 @@ public class DoubleMatrix{
 	 * Adds a new column (edge) to the matrix
 	 * @param in
 	 */
-	public void addpoint(Point in){
+	public void addPoint(Point in){
 		Double[] toadd = new Double[4];
 		toadd[0] = in.x;
 		toadd[1] = in.y;
@@ -104,16 +104,16 @@ public class DoubleMatrix{
 	 * 
 	 * @param append
 	 */
-	public void addmatrixedge(DoubleMatrix append) {
-		this.matrix.addAll(append.getinnermatrix());
-		cols += append.getcols();
+	public void addMatrixEdge(DoubleMatrix append) {
+		this.matrix.addAll(append.getInnerMatrix());
+		cols += append.getCols();
 	}
 
 	/**
 	 * Returns the inner data of the matrix
 	 * @return
 	 */
-	private ArrayDeque<Double[]> getinnermatrix() {
+	private ArrayDeque<Double[]> getInnerMatrix() {
 		return this.matrix;
 	}
 
@@ -127,9 +127,9 @@ public class DoubleMatrix{
 	 * @param y1
 	 * @param z1
 	 */
-	public void addedge(double x0, double y0, double z0, double x1, double y1, double z1) {
-		this.addpoint(x0, y0, z0);
-		this.addpoint(x1, y1, z1);
+	public void addEdge(double x0, double y0, double z0, double x1, double y1, double z1) {
+		this.addPoint(x0, y0, z0);
+		this.addPoint(x1, y1, z1);
 	}
 
 	/**
@@ -144,11 +144,11 @@ public class DoubleMatrix{
 	 * @param y2
 	 * @param z2
 	 */
-	public void addpolygon(double x0, double y0, double z0, double x1, double y1, double z1, double x2, double y2,
+	public void addPolygon(double x0, double y0, double z0, double x1, double y1, double z1, double x2, double y2,
 			double z2) {
-		this.addpoint(x0, y0, z0);
-		this.addpoint(x1, y1, z1);
-		this.addpoint(x2, y2, z2);
+		this.addPoint(x0, y0, z0);
+		this.addPoint(x1, y1, z1);
+		this.addPoint(x2, y2, z2);
 	}
 	
 	/**
@@ -157,10 +157,10 @@ public class DoubleMatrix{
 	 * @param b
 	 * @param c
 	 */
-	public void addpolygon(Point a, Point b, Point c){
-		this.addpoint(a);
-		this.addpoint(b);
-		this.addpoint(c);
+	public void addPolygon(Point a, Point b, Point c){
+		this.addPoint(a);
+		this.addPoint(b);
+		this.addPoint(c);
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class DoubleMatrix{
 		DoubleMatrix out = new DoubleMatrix();
 		for (Double[] e:matrix){
 			Double[] temp = e.clone();
-			out.addpoint(temp[0], temp[1], temp[2]);
+			out.addPoint(temp[0], temp[1], temp[2]);
 		}
 		return out;
 	}
@@ -182,7 +182,7 @@ public class DoubleMatrix{
 	 */
 	public String toString() {
 		String out = "";
-		out += this.getcols();
+		out += this.getCols();
 		return out;
 	}
 
@@ -191,7 +191,7 @@ public class DoubleMatrix{
 	 * 
 	 * @return the doubleernal array as an double[][]
 	 */
-	public double[][] getarray() {
+	public double[][] getArray() {
 		double[][] out = new double[this.cols][this.rows];
 		Iterator<Double[]> outiter = this.matrix.iterator();
 		for (int x = 0; outiter.hasNext(); x++) {
@@ -212,14 +212,14 @@ public class DoubleMatrix{
 	 * @throws DoubleMatrixDimensionError mismatching dimensions for a and b
 	 */
 	public static DoubleMatrix multiply(DoubleMatrix a, DoubleMatrix b) throws DoubleMatrixDimensionError {
-		double[][] out = new double[b.getcols()][a.getrows()];
-		double[][] ar = a.getarray();
-		double[][] br = b.getarray();
-		if (a.getcols() != b.getrows()) {
+		double[][] out = new double[b.getCols()][a.getRows()];
+		double[][] ar = a.getArray();
+		double[][] br = b.getArray();
+		if (a.getCols() != b.getRows()) {
 			throw new DoubleMatrixDimensionError("mooos");
 		}
-		for (int x = 0; x < b.getcols(); x++) {
-			for (int y = 0; y < a.getrows(); y++) {
+		for (int x = 0; x < b.getCols(); x++) {
+			for (int y = 0; y < a.getRows(); y++) {
 				double cumsum = 0;
 				double[] ber = br[x];
 				ArrayList<Double> aer = new ArrayList<Double>();

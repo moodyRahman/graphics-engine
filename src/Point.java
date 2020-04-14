@@ -50,7 +50,7 @@ public class Point{
 	}
 
 
-	public static boolean isdegenerate(Point a, Point b, Point c){
+	public static boolean isDegenerate(Point a, Point b, Point c){
 		return a.equals(b) || a.equals(c) || b.equals(c);
 	}
 }

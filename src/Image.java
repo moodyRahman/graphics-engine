@@ -256,7 +256,7 @@ public void display(){
 /**
  * Write the current pixel array to a file, and display it for 2 seconds, and then terminate the image
  */
-public void displaydebug(){
+public void displayDebug(){
 	try {
 		this.flushToFile("./tmp/d.ppm");
 		Runtime.getRuntime().exec("convert ./tmp/d.ppm ./tmp/d.png");
@@ -275,7 +275,7 @@ public void displaydebug(){
  * @param c Color to make the lines
  */
 public void matrixLineEdge(DoubleMatrix m, Pixel c){
-	double[][] array = m.getarray();
+	double[][] array = m.getArray();
 	for (int x = 1; x < array.length; x++) {
 		double[] p1 = array[x];
 		double[] p2 = array[x-1];
@@ -291,7 +291,7 @@ public void matrixLineEdge(DoubleMatrix m, Pixel c){
  * @param c
  */
 public void matrixLinePolygon(DoubleMatrix m, Pixel c){
-	double[][] array = m.getarray();
+	double[][] array = m.getArray();
 	for (int x = 0; x < array.length - 3; x+=3) {
 		double[] p0 = array[x];
 		double[] p1 = array[x+1];
@@ -319,15 +319,15 @@ public static void main(String[] args) {
 	Image i = new Image(200, 200, new Pixel(100, 100, 0));
 	DoubleMatrix polygons = new DoubleMatrix();
 
-	polygons.addpoint(10, 10, 0);
-	polygons.addpoint(20, 30, 0);
-	polygons.addpoint(10, 20, 0);
+	polygons.addPoint(10, 10, 0);
+	polygons.addPoint(20, 30, 0);
+	polygons.addPoint(10, 20, 0);
 
 
 
 	i.matrixLinePolygon(polygons, new Pixel(0, 0, 0));
 
-	i.displaydebug();
+	i.displayDebug();
 }
 
 

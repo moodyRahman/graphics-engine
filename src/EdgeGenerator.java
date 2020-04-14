@@ -21,7 +21,7 @@ public class EdgeGenerator {
 		for (int step = 0; step < total_steps; step++) {
 			double deg = (double) step / (double) total_steps;
 			double rad = deg * 6.2831;
-			edge.addedge((radius * Math.cos(rad)) + cx, (radius * Math.sin(rad)) + cy, cz,
+			edge.addEdge((radius * Math.cos(rad)) + cx, (radius * Math.sin(rad)) + cy, cz,
 					(radius * Math.cos(rad + 0.174)) + cx, (radius * Math.sin(rad + 0.174)) + cy,
 					cz);
 		}
@@ -66,7 +66,7 @@ public class EdgeGenerator {
 			newplotx = xa * dt * dt * dt + xb * dt * dt + xc * dt + xd;
 			newploty = ya * dt * dt * dt + yb * dt * dt + yc * dt + yd;
 
-			edge.addedge(plotx, ploty, 1, newplotx, newploty, 1);
+			edge.addEdge(plotx, ploty, 1, newplotx, newploty, 1);
 		}
 
 		return edge;
@@ -110,7 +110,7 @@ public class EdgeGenerator {
 			newplotx = bxa * dt * dt * dt + bxb * dt * dt + bxc * dt + bxd;
 			newploty = bya * dt * dt * dt + byb * dt * dt + byc * dt + byd;
 
-			edge.addedge(plotx, ploty, 1, newplotx, newploty, 1);
+			edge.addEdge(plotx, ploty, 1, newplotx, newploty, 1);
 		}
 		return edge;
 	}
@@ -156,12 +156,12 @@ public class EdgeGenerator {
 			Point p3 = spherepoints.get(i + total_step_rotation + 1);
 			Point p4 = spherepoints.get(i + 2 + total_step_rotation);
 
-			if (!Point.isdegenerate(p3, p1, p2)) {
-				out.addpolygon(p3, p1, p2);
+			if (!Point.isDegenerate(p3, p1, p2)) {
+				out.addPolygon(p3, p1, p2);
 			}
 
-			if (!Point.isdegenerate(p2, p4, p3)) {
-				out.addpolygon(p2, p4, p3);
+			if (!Point.isDegenerate(p2, p4, p3)) {
+				out.addPolygon(p2, p4, p3);
 			}
 		}
 		return out;
@@ -181,7 +181,7 @@ public class EdgeGenerator {
 	 */
 	@Deprecated
 	public static void sphere(DoubleMatrix edge, double x, double y, double z, double radius) {
-		edge.addmatrixedge(EdgeGenerator.sphereGenerator(x, y, z, radius, 5, 5));
+		edge.addMatrixEdge(EdgeGenerator.sphereGenerator(x, y, z, radius, 5, 5));
 		// slices points per slice
 	}
 
@@ -207,61 +207,61 @@ public class EdgeGenerator {
 		DoubleMatrix edge = new DoubleMatrix();
 
 		// draw the top face
-		edge.addpoint(x, y, z);
-		edge.addpoint(x + width, y, z);
-		edge.addpoint(x, y, z - depth);
+		edge.addPoint(x, y, z);
+		edge.addPoint(x + width, y, z);
+		edge.addPoint(x, y, z - depth);
 
-		edge.addpoint(x + width, y, z - depth);
-		edge.addpoint(x, y, z - depth);
-		edge.addpoint(x + width, y, z);
+		edge.addPoint(x + width, y, z - depth);
+		edge.addPoint(x, y, z - depth);
+		edge.addPoint(x + width, y, z);
 
 
 		// draw the bottom face
-		edge.addpoint(x, y - height, z);
-		edge.addpoint(x, y - height, z - depth);
-		edge.addpoint(x + width, y - height, z);
+		edge.addPoint(x, y - height, z);
+		edge.addPoint(x, y - height, z - depth);
+		edge.addPoint(x + width, y - height, z);
 
-		edge.addpoint(x + width, y - height, z - depth);
-		edge.addpoint(x + width, y - height, z);
-		edge.addpoint(x, y - height, z - depth);
+		edge.addPoint(x + width, y - height, z - depth);
+		edge.addPoint(x + width, y - height, z);
+		edge.addPoint(x, y - height, z - depth);
 
 
 		// draw the front face
-		edge.addpoint(x, y - height, z);
-		edge.addpoint(x + width, y - height, z);
-		edge.addpoint(x, y, z);
+		edge.addPoint(x, y - height, z);
+		edge.addPoint(x + width, y - height, z);
+		edge.addPoint(x, y, z);
 
-		edge.addpoint(x + width, y, z);
-		edge.addpoint(x , y, z);
-		edge.addpoint(x + width, y - height, z);
+		edge.addPoint(x + width, y, z);
+		edge.addPoint(x , y, z);
+		edge.addPoint(x + width, y - height, z);
 
 		// draw back face
-		edge.addpoint(x, y - height, z - depth);
-		edge.addpoint(x, y, z - depth);
-		edge.addpoint(x + width, y - height, z - depth);
+		edge.addPoint(x, y - height, z - depth);
+		edge.addPoint(x, y, z - depth);
+		edge.addPoint(x + width, y - height, z - depth);
 
-		edge.addpoint(x + width, y, z - depth);
-		edge.addpoint(x + width, y - height, z - depth);
-		edge.addpoint(x , y, z - depth);
+		edge.addPoint(x + width, y, z - depth);
+		edge.addPoint(x + width, y - height, z - depth);
+		edge.addPoint(x , y, z - depth);
 
 
 		// draw left face
-		edge.addpoint(x, y, z);
-		edge.addpoint(x, y, z - depth);
-		edge.addpoint(x, y - height, z);
+		edge.addPoint(x, y, z);
+		edge.addPoint(x, y, z - depth);
+		edge.addPoint(x, y - height, z);
 
-		edge.addpoint(x, y - height, z - depth);
-		edge.addpoint(x, y - height, z);
-		edge.addpoint(x, y, z - depth);
+		edge.addPoint(x, y - height, z - depth);
+		edge.addPoint(x, y - height, z);
+		edge.addPoint(x, y, z - depth);
 
 		// draw right face
-		edge.addpoint(x + width, y, z);
-		edge.addpoint(x + width, y - height, z);
-		edge.addpoint(x + width, y, z - depth);
+		edge.addPoint(x + width, y, z);
+		edge.addPoint(x + width, y - height, z);
+		edge.addPoint(x + width, y, z - depth);
 
-		edge.addpoint(x + width, y - height, z - depth);
-		edge.addpoint(x + width, y, z - depth);
-		edge.addpoint(x + width, y - height, z);
+		edge.addPoint(x + width, y - height, z - depth);
+		edge.addPoint(x + width, y, z - depth);
+		edge.addPoint(x + width, y - height, z);
 
 		return edge;
 
@@ -298,9 +298,9 @@ public class EdgeGenerator {
 		}
 
 		for (int i = 0; i < toruspoints.size() - total_step_circle - 1; i++) {
-			out.addpoint(toruspoints.get(i));
-			out.addpoint(toruspoints.get(i + 1));
-			out.addpoint(toruspoints.get(i + 1 + total_step_circle));
+			out.addPoint(toruspoints.get(i));
+			out.addPoint(toruspoints.get(i + 1));
+			out.addPoint(toruspoints.get(i + 1 + total_step_circle));
 		}
 		return out;
 	}
@@ -319,7 +319,7 @@ public class EdgeGenerator {
 	 */
 	@Deprecated
 	public static void torus(DoubleMatrix edge, double x, double y, double z, double inner_rad, double outer_rad) {
-		edge.addmatrixedge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad, 26, 26));
+		edge.addMatrixEdge(EdgeGenerator.torusGenerator(x, y, z, inner_rad, outer_rad, 26, 26));
 	}
 
 }
