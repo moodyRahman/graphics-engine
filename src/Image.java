@@ -320,14 +320,46 @@ public void matrixLinePolygon(DoubleMatrix m, Pixel c){
 
 }
 
-private void print(double[][] in){
-	for(double[] x : in){
-		for(double y: x){
-			System.out.print(y);
-		}
-		System.out.println();
+private void bottomflattri(double[][] points, Pixel c){
+	
+	double[] v1 = points[2];
+	double[] v2 = points[1];
+	double[] v3 = points[0];
+
+	double invslope1 = (v2[0] - v1[0]) / (v2[1] - v1[1]);
+	double invslope2 = (v3[0] - v1[0]) / (v3[1] - v1[1]);
+
+	double curx1 = v1[0];
+	double curx2 = v1[0];
+
+	for (int scanlineY = (int)v1[1]; scanlineY <= v2[1]; scanlineY++) {
+		line(curx1, scanlineY, curx2, scanlineY, c);
+		curx1 += invslope1;
+		curx2 += invslope2;
 	}
+
 }
+
+private void topflattri(double[][] points, Pixel c) {
+
+	double[] v1 = points[2];
+	double[] v2 = points[1];
+	double[] v3 = points[0];
+
+	double invslope1 = (v3[0] - v1[0]) / (v3[1] - v1[1]);
+	double invslope2 = (v3[0] - v2[0]) / (v3[1] - v2[1]);
+
+	double curx1 = v3[0];
+	double curx2 = v3[0];
+
+	for (int scanlineY = (int)v3[1]; scanlineY > v1[1]; scanlineY--) {
+		line(curx1, scanlineY,curx2, scanlineY, c);
+		curx1 -= invslope1;
+		curx2 -= invslope2;
+	}
+
+}
+
 
 /**
  * Handles the scanline filling
@@ -337,10 +369,6 @@ private void print(double[][] in){
  */
 public void scanline(double[][] points){
 	Pixel c = new Pixel(200, 200, 200);
-	// Pixel c = new Pixel(200, 200, 200);
-	// System.out.println("old array: ");
-	// print(points);
-	// // order the points from top to bottom
 	if (points[0][1] > points[1][1]){
 		swap(points, 0, 1);
 	}
@@ -350,60 +378,19 @@ public void scanline(double[][] points){
 	if (points[1][1] > points[2][1]){
 		swap(points, 1, 2);
 	}
-	// System.out.println("new array");
-	// print(points);
 
-	// System.out.println("------------------------\n");
+	double[] vt1 = points[2];
+	double[] vt2 = points[1];
+	double[] vt3 = points[0];
 
-	/**
-	 *  x0 = xb, x1 = xb, y0 = yb
-	    dx0 = (xt - xb) / (yt - yb)
-	    dx1 = (xm - xb) / (ym - yb)
-	    dx1_1 = (xt - xm) / (yt - ym)
-	*/
-	double xt = points[2][0];
-	double yt = points[2][1];
-	double xm = points[1][0];
-	double ym = points[1][1];
-	double xb = points[0][0];
-	double yb = points[0][1];
+	double[] vt4 = new double[2];
+	vt4[0] =(vt1[0] + ((vt2[1] - vt1[1]) / (vt3[1] - vt1[1])) * (vt3[0] - vt1[0]));
 
-	double x0 = xb;
-	double x1 = xb;
-	double y0 = yb;
-	double dx0 = (xt - xb) / (yt - yb);
-	double dx1 = (xm - xb) / (ym - yb);
-	double dx1_1 = (xt - xm) / (yt - ym);
-
-	/**
-	 * while y0 <= yt
-           draw_line(x0, y0, x1, y0)
-           //move the endpoints
-           x0+= dx0
-           x1+= dx1
-           y0+= 1
-           //swap dx1 if neeced
-           if y >= ym
-           dx1 = dx1_1
-           x1 = xm
-	*/
-	
-
-	// line(5, 5, 20, 20, c);
-	line(points[0], points[1], c);
-	line(points[1], points[2], c);
-	line(points[2], points[0], c);
-	// while (y0 <= yt){
-	// 	line(x0, y0, x1, y0, c);
-	// 	x0 += dx0;
-	// 	x1 += dx1;
-	// 	y0 += 1;
-	// 	if (y0 >= ym){
-	// 		dx1 = dx1_1;
-	// 		// x1 = xm;
-	// 	}
-
-	// }
+	double[][] toptripoints = {vt2, vt4, vt3};
+	double[][] bottripoints = {vt1, vt2, vt4};
+	topflattri(toptripoints, c);
+	bottomflattri(bottripoints, c);
+	bottomflattri(points, c);
 
 }
 
