@@ -6,6 +6,7 @@ import java.lang.Math;
 import java.io.FileWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * Represents an image
@@ -238,6 +239,11 @@ public void line(double pxl1, double pyl1, double pxl2, double pyl2, Pixel c){
 	}
 }
 
+
+public void line(double[] p1, double[] p2, Pixel c){
+	line(p1[0], p1[1], p2[0], p2[1], c);
+}
+
 /**
  * write the current pixel array to a file and display it
  */
@@ -301,16 +307,26 @@ public void matrixLinePolygon(DoubleMatrix m, Pixel c){
 		Vector v2 = new Vector(p0, p2);
 
 		Vector normal = Vector.crossproduct(v1, v2);
-
+		double[][] scan = {p0, p1, p2};
 		
 		if (Vector.dotproduct(normal, Vector.VIEW_VECTOR) > 0){
-			line(p0[0], p0[1], p1[0], p1[1], c);
-			line(p1[0], p1[1], p2[0], p2[1], c);
-			line(p2[0], p2[1], p0[0], p0[1], c);
-			scanline(p0, p1, p2);
+			// line(p0[0], p0[1], p1[0], p1[1], c);
+			// line(p1[0], p1[1], p2[0], p2[1], c);
+			// line(p2[0], p2[1], p0[0], p0[1], c);
+			scanline(scan);
+			// displayDebug();
 		}
 	}
 
+}
+
+private void print(double[][] in){
+	for(double[] x : in){
+		for(double y: x){
+			System.out.print(y);
+		}
+		System.out.println();
+	}
 }
 
 /**
@@ -319,26 +335,83 @@ public void matrixLinePolygon(DoubleMatrix m, Pixel c){
  * @param p2
  * @param p3
  */
-public void scanline(double[] p1, double[] p2, double[] p3){
-	// order the points from top to bottom
+public void scanline(double[][] points){
+	Pixel c = new Pixel(200, 200, 200);
+	// Pixel c = new Pixel(200, 200, 200);
+	// System.out.println("old array: ");
+	// print(points);
+	// // order the points from top to bottom
+	if (points[0][1] > points[1][1]){
+		swap(points, 0, 1);
+	}
+	if (points[0][1] > points[2][1]) {
+		swap(points, 0, 2);
+	}
+	if (points[1][1] > points[2][1]){
+		swap(points, 1, 2);
+	}
+	// System.out.println("new array");
+	// print(points);
+
+	// System.out.println("------------------------\n");
+
+	/**
+	 *  x0 = xb, x1 = xb, y0 = yb
+	    dx0 = (xt - xb) / (yt - yb)
+	    dx1 = (xm - xb) / (ym - yb)
+	    dx1_1 = (xt - xm) / (yt - ym)
+	*/
+	double xt = points[2][0];
+	double yt = points[2][1];
+	double xm = points[1][0];
+	double ym = points[1][1];
+	double xb = points[0][0];
+	double yb = points[0][1];
+
+	double x0 = xb;
+	double x1 = xb;
+	double y0 = yb;
+	double dx0 = (xt - xb) / (yt - yb);
+	double dx1 = (xm - xb) / (ym - yb);
+	double dx1_1 = (xt - xm) / (yt - ym);
+
+	/**
+	 * while y0 <= yt
+           draw_line(x0, y0, x1, y0)
+           //move the endpoints
+           x0+= dx0
+           x1+= dx1
+           y0+= 1
+           //swap dx1 if neeced
+           if y >= ym
+           dx1 = dx1_1
+           x1 = xm
+	*/
 	
+
+	// line(5, 5, 20, 20, c);
+	line(points[0], points[1], c);
+	line(points[1], points[2], c);
+	line(points[2], points[0], c);
+	// while (y0 <= yt){
+	// 	line(x0, y0, x1, y0, c);
+	// 	x0 += dx0;
+	// 	x1 += dx1;
+	// 	y0 += 1;
+	// 	if (y0 >= ym){
+	// 		dx1 = dx1_1;
+	// 		// x1 = xm;
+	// 	}
+
+	// }
+
 }
 
 
-public static void main(String[] args) {
-
-	Image i = new Image(200, 200, new Pixel(100, 100, 0));
-	DoubleMatrix polygons = new DoubleMatrix();
-
-	polygons.addPoint(10, 10, 0);
-	polygons.addPoint(20, 30, 0);
-	polygons.addPoint(10, 20, 0);
-
-
-
-	i.matrixLinePolygon(polygons, new Pixel(0, 0, 0));
-
-	i.displayDebug();
+private void swap(double[][] p, int from, int to){
+	double[] temp = p[from];
+	p[from] = p[to];
+	p[to] = temp;
 }
 
 
@@ -353,12 +426,13 @@ class Pixel {
 	private int red;
 	private int blue;
 	private int green;
+	private Random rand;
 	
 	public Pixel (int red, int green, int blue){
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
-	
+		rand = new Random(5);
 	}
 	
 	public int[] get(){
@@ -379,6 +453,10 @@ class Pixel {
 	
 	public int getb(){
 		return this.blue;
+	}
+
+	public Pixel randomColor(){
+		return new Pixel(rand.nextInt() % 256, rand.nextInt() % 256, rand.nextInt() % 256);
 	}
 	
 	public String toString(){
