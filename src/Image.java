@@ -325,13 +325,13 @@ public class Image {
 
 		// sorts according to height, shorttest to tallest
 
-		if (points[0][1] < points[1][1]) {
+		if (points[0][1] > points[1][1]) {
 			swap(points, 0, 1);
 		}
-		if (points[0][1] < points[2][1]) {
+		if (points[0][1] > points[2][1]) {
 			swap(points, 0, 2);
 		}
-		if (points[1][1] < points[2][1]) {
+		if (points[1][1] > points[2][1]) {
 			swap(points, 1, 2);
 		}
 
