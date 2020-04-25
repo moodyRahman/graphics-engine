@@ -242,22 +242,6 @@ public class DoubleMatrix{
 		return new DoubleMatrix(out);
 	}
 
-	/**
-	 * Flushes the current matrix into an image file
-	 * 
-	 * @return new Image with the drawn matrix
-	 */
-	public Image flushToImage(int width, int height, Pixel init, Pixel linecolor) {
-		Image out = new Image(width, height, init);
-		Iterator<Double[]> outiter = this.matrix.iterator();
-		while (outiter.hasNext()) {
-			Double[] p1 = outiter.next();
-			Double[] p2 = outiter.next();
-			out.line(p1[0], p1[1], p2[0], p2[1], linecolor);
-		}
-		return out;
-	}
-
 	public static void main(String[] args) {
 
 	}

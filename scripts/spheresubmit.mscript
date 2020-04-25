@@ -11,6 +11,10 @@ rotate
 y 30
 rotate
 x 10
+box
+-50 0 0 20 20 100
+box
+50 0 0 20 20 100
 push
 move
 0 70 0
@@ -21,16 +25,34 @@ box
 push
 move
 0 100 -80
+sphere
+0 0 0 110
 push
 move
 -110 0 0
+box
+-20 0 20 -10 150 -20
 pop
 push
 move
 110 0 0
 rotate
 x -120
+box
+0 0 20 10 150 20
+box
+0 -150 20 10 -10 -80
+push
+rotate
+x 90
+pop
+pop
+push
+move
+0 160 0
+sphere
+0 0 0 50
 display-custom
 1000 1000
 save-convert
-spooderman.ppm 1000 1000
+spooderman.ppm
