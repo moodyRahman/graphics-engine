@@ -100,8 +100,8 @@ public class Image {
 		}
 
 		// if (z > zbuffer[x][y]) {
-		// 	// this.pixelarray[x][y].set(color);
-		// 	zbuffer[x][y] = z;
+		// // this.pixelarray[x][y].set(color);
+		// zbuffer[x][y] = z;
 		// }
 		this.pixelarray[x][y].set(color);
 
@@ -263,18 +263,17 @@ public class Image {
 
 	/**
 	 * draw lines on the image according to a matrix recommended to use
-	 * Matrix.flushtofile()
+	 * 
 	 * 
 	 * @param m Matrix to draw
 	 * @param c Color to make the lines
 	 */
 	public void matrixLineEdge(DoubleMatrix m, Pixel c) {
 		double[][] array = m.getArray();
-		for (int x = 1; x < array.length; x++) {
+		for (int x = 0; x < array.length - 1; x+=2) {
 			double[] p1 = array[x];
-			double[] p2 = array[x - 1];
-
-			line(p1[0], p1[1], 99, p2[0], p2[1], 99, c);
+			double[] p2 = array[x + 1];
+			line(p1, p2, c);
 		}
 
 	}
@@ -287,7 +286,7 @@ public class Image {
 	 */
 	public void matrixLinePolygon(DoubleMatrix m, Pixel c) {
 		double[][] array = m.getArray();
-		for (int x = 0; x < array.length - 3; x += 3) {
+		for (int x = 0; x < array.length; x += 3) {
 			double[] p0 = array[x];
 			double[] p1 = array[x + 1];
 			double[] p2 = array[x + 2];
@@ -299,9 +298,9 @@ public class Image {
 			double[][] scan = { p0, p1, p2 };
 
 			if (Vector.dotproduct(normal, Vector.VIEW_VECTOR) > 0) {
-				line(p0[0], p0[1], p0[2], p1[0], p1[1], p1[2], c);
-				line(p1[0], p1[1], p1[2], p2[0], p2[1], p2[2], c);
-				line(p2[0], p2[1], p2[2], p0[0], p0[1], p0[2], c);
+				// line(p0[0], p0[1], p0[2], p1[0], p1[1], p1[2], c);
+				// line(p1[0], p1[1], p1[2], p2[0], p2[1], p2[2], c);
+				// line(p2[0], p2[1], p2[2], p0[0], p0[1], p0[2], c);
 				scanline(scan);
 				// displayDebug();
 			}
@@ -317,16 +316,25 @@ public class Image {
 	 * @param p3
 	 */
 	public void scanline(double[][] points) {
-		// Pixel c = new Pixel(200, 200, 200);
-		if (points[0][1] > points[1][1]) {
+		boolean flip = false;
+		int BOT = 0;
+		int TOP = 2;
+		int MID = 1;
+
+		Pixel randc = new Pixel(0, 0, 0);
+
+		// sorts according to height, shorttest to tallest
+
+		if (points[0][1] < points[1][1]) {
 			swap(points, 0, 1);
 		}
-		if (points[0][1] > points[2][1]) {
+		if (points[0][1] < points[2][1]) {
 			swap(points, 0, 2);
 		}
-		if (points[1][1] > points[2][1]) {
+		if (points[1][1] < points[2][1]) {
 			swap(points, 1, 2);
 		}
+
 
 		for (int x = 0; x < 3; x++) {
 			for (int y = 0; y < 3; y++) {
@@ -335,44 +343,43 @@ public class Image {
 			}
 			System.out.println();
 		}
+		System.out.println();
+		System.out.println();
 
-		double[] topvertex = points[0];
-		double[] midvertex = points[1];
-		double[] bottomvertex = points[2];
+		double x0 = points[BOT][0];
+		double z0 = points[BOT][2];
+		double x1 = points[BOT][0];
+		double z1 = points[BOT][2];
+		double y = (int) points[BOT][1];
 
-		double xt = topvertex[0], yt = topvertex[1], zt = topvertex[2];
-		double xm = midvertex[0], ym = midvertex[1], zm = midvertex[2];
-		double xb = bottomvertex[0], yb = bottomvertex[1], zb = bottomvertex[2];
+		double distance0 = (int) (points[TOP][1]) - y * 1.0 + 1;
+		double distance1 = (int) (points[MID][1]) - y * 1.0 + 1;
+		double distance2 = (int) (points[TOP][1]) - (int) (points[MID][1]) * 1.0 + 1;
 
-		Pixel randc = new Pixel(0, 0, 0);
 
-		double dx0 = (xt - xb) / (yt - yb);
-		double dx1 = (xm - xb) / (ym - yb);
-		double dx1_1 = (xt - xm) / (yt - ym);
+		double dx0 = distance0 != 0 ? (points[TOP][0] - points[BOT][0]) / distance0 : 0;
+		double dz0 = distance0 != 0 ? (points[TOP][2] - points[BOT][2]) / distance0 : 0;
+		double dx1 = distance1 != 0 ? (points[MID][0] - points[BOT][0]) / distance1 : 0;
+		double dz1 = distance1 != 0 ? (points[MID][2] - points[BOT][2]) / distance1 : 0;
 
-		double yOffset0 = Math.ceil(yb) - yb;
-		double yOffset1 = Math.ceil(ym) - ym;
+		while (y <= (int) points[TOP][1]) {
+			if (!flip && y >= (int) (points[MID][1])) {
+				flip = true;
 
-		double x0 = xb + (yOffset0 * dx0);
-		double x1 = xb + (yOffset0 * dx1);
-		double x2 = xm + (yOffset1 * dx1_1);
+				dx1 = distance2 != 0 ? (points[TOP][0] - points[MID][0]) / distance2 : 0;
+				dz1 = distance2 != 0 ? (points[TOP][2] - points[MID][2]) / distance2 : 0;
+				x1 = points[MID][0];
+				z1 = points[MID][2];
 
-		double y = Math.ceil(yb);
+			}
 
-		while (y < Math.ceil(ym)) {
-			line(x0, y, 0, x1, y, 0, randc);
+			line((int) x0, y, z0, (int) x1, z1, y, randc);
 			x0 += dx0;
+			z0 += dz0;
 			x1 += dx1;
+			z1 += dz1;
 			y += 1;
 		}
-
-		while (y < Math.ceil(yt)) {
-			line(x0, y, 0, x2, y, 0, randc);
-			x0 += dx0;
-			x2 += dx1_1;
-			y += 1;
-		}
-
 	}
 
 	private void swap(double[][] p, int from, int to) {
