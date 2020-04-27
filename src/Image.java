@@ -296,8 +296,8 @@ public class Image {
 	 */
 	public void matrixLinePolygon(DoubleMatrix m, Pixel col) {
 		double[][] array = m.getArray();
-		// Pixel color = new Pixel(8, 146, 208);
-		Pixel finalc = new Pixel(8, 146, 208);
+		Pixel color = new Pixel(8, 146, 208);
+		// Pixel finalc = new Pixel(8, 146, 208);
 
 		for (int x = 0; x < array.length; x += 3) {
 			double[] p0 = array[x];
@@ -311,40 +311,48 @@ public class Image {
 			double[][] scan = { p0, p1, p2 };
 
 			if (Vector.dotproduct(normal, Vector.VIEW_VECTOR) > 0) {
-				Pixel ambient = ambientc.scale(ka);
+				// Pixel ambient = ambientc.scale(ka);
 
-				Pixel diffuse0 = point_light.scale(kd);
-				double difprod = Vector.dotproduct(normal.normalize(), point_light_location.normalize());
-				Pixel diffuse = diffuse0.scale(difprod);
-
-				// P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂
-
-				// P * Ks
-				Pixel specular0 = point_light.scale(ks);
-				
-				// (N̂ • L̂)
-				double a = Vector.dotproduct(normal, point_light_location);
-
-				// (2N̂(N̂ • L̂)
-				Vector b = normal.scale(2*a);
-
-				// (2N̂(N̂ • L̂) - L̂)
-				Vector c = new Vector(b.x - point_light_location.x, b.y - point_light_location.y, b.z - point_light_location.z);
-
-				// (2N̂(N̂ • L̂) - L̂) • V̂
-				double d = Vector.dotproduct(c, Vector.VIEW_VECTOR);
+				// Pixel diffuse0 = point_light.scale(kd);
+				// double difprod = Vector.dotproduct(normal.normalize(), point_light_location.normalize());
+				// Pixel diffuse = diffuse0.scale(difprod);
 
 				// // P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂
-				specular0.scale(d);
 
-				// // (P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂) ^ n
-				Pixel specular = specular0.pow(1.5);
+				// // P * Ks
+				// Pixel specular0 = point_light.scale(ks);
+				
+				// // (N̂ • L̂)
+				// double a = Vector.dotproduct(normal.normalize(), point_light_location.normalize());
+
+				// // (2N̂(N̂ • L̂)
+				// // (2N̂(a)
+				// Vector b = normal.scale(2*a).normalize();
+
+				// // (2N̂(N̂ • L̂) - L̂)
+				// // (b - L̂)
+				// Vector point_light_normal = point_light_location.normalize();
+				// Vector c = new Vector(b.x - point_light_normal.x, b.y - point_light_normal.y, b.z - point_light_normal.z);
+
+
+				// // (2N̂(N̂ • L̂) - L̂) • V̂
+				// // c • V̂
+				// double d = Vector.dotproduct(c, Vector.VIEW_VECTOR.normalize());
+
+				// // P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂
+				// // P * Ks * c
+				// specular0.scale(d);
+
+				// // // (P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂) ^ n
+				// Pixel specular = specular0.pow(1.5);
 
 				// Pixel finalc = Pixel.lightingsum(ambient, diffuse, specular);
-				finalc.normalize();
+				// finalc.normalize();
 
 
-				scanline(scan, finalc);
+				// scanline(scan, finalc);
+				scanline(scan, color);
+				color.randomize();
 			}
 		}
 
