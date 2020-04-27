@@ -431,35 +431,41 @@ public class Image {
  */
 class Pixel {
 
-	private int red;
-	private int blue;
-	private int green;
-	private static Random rand;
+	private double red;
+	private double blue;
+	private double green;
+	private static Random rand = new Random();
 
 	public Pixel(int red, int green, int blue) {
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
-		rand = new Random();
 	}
 
-	public int[] get() {
-		int[] out = new int[3];
+	public Pixel(double red, double green, double blue) {
+		this.red = red;
+		this.green = green;
+		this.blue = blue;
+	}
+
+
+	public double[] get() {
+		double[] out = new double[3];
 		out[0] = this.red;
 		out[1] = this.green;
 		out[2] = this.blue;
 		return out;
 	}
 
-	public int getr() {
+	public double getr() {
 		return this.red;
 	}
 
-	public int getg() {
+	public double getg() {
 		return this.green;
 	}
 
-	public int getb() {
+	public double getb() {
 		return this.blue;
 	}
 
@@ -476,7 +482,7 @@ class Pixel {
 	public String toString() {
 		String out = "";
 
-		out += this.red + " " + this.green + " " + this.blue + " ";
+		out += (int)this.red + " " + (int)this.green + " " + (int)this.blue + " ";
 		return out;
 	}
 
