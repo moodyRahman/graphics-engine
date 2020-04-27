@@ -1,84 +1,61 @@
 push
-#HEAD
 move
-250 350 0
+200 50 0
+rotate
+y 30
+rotate
+x 10
 box
--125 125 50 250 250 100
-#NOSE
+-50 0 0 20 20 100
 box
--10 10 50 20 20 100
-#LEFT EYE
+50 0 0 20 20 100
+push
 move
--50 50 0
+0 70 0
+box
+-50 0 -80 20 70 20
+box
+50 0 -80 20 70 20
+push
+move
+0 100 -80
 sphere
-0 0 0 50
-#RIGHT EYE
+0 0 0 110
+push
 move
-100 0 0
-sphere
-0 0 0 50
-#MOUTH
-move
--100 -75 0
+-110 0 0
 box
--25 -5 0 150 10 10
-#TEETH
-move
-35 -15 0
-box
--10 0 0 20 20 20
-move
-30 0 0
-box
--10 0 0 20 20 20
-#SHIRT
-move
--15 -100 0
-box
--120 15 50 240 30 100
-#PANTS
-move
-0 -30 0
-box
--120 15 50 240 30 100
-#LEFT LEG
-move
--40 -25 -50
-torus
-0 0 0 10 15
-move
--5 0 0
-box
-0 0 -5 10 100 10
-#LEFT FOOT
-move
-10 -100 0
-box
--50 0 0 50 20 0
-#RIGHT LEG
-move
-75 100 0
-torus
-0 0 0 10 15
-move
--5 0 0
-box
-0 0 -5 10 100 10
-#RIGHT FOOT
-move
-0 -100 0
-box
-0 0 0 50 20 0
-#LEFT ARM
+-20 0 20 -10 150 -20
 pop
 push
 move
-125 250 0
+110 0 0
+rotate
+x -120
 box
--15 0 0 15 125 15
-#RIGHT ARM
+0 0 20 10 150 20
+box
+0 -150 20 10 -10 -80
+push
+rotate
+x 120
+torus
+0 160 40 10 20
+circle
+5 160 40 10 10
+circle
+0 160 30 10 10
+circle
+15 160 40 10 10
+pop
+pop
+push
 move
-250 0 0
-box
-0 0 0 15 125 15
+0 160 0
+sphere
+0 0 0 50
+sphere
+30 30 30 5
+sphere
+-30 30 30 5
 display

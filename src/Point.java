@@ -62,11 +62,13 @@ public class Point{
 class Vector extends Point{
 
 	static final Vector VIEW_VECTOR = new Vector(0.0, 0.0, 1.0);
+	public double magnitude;
 
 	public Vector(Point a, Point b){
 		this.x = b.x - a.x;
 		this.y = b.y - a.y;
 		this.z = b.z - a.z;
+		this.magnitude = Math.sqrt(x * x + y * y + z * z);
 	}
 
 	public Vector(double[] a, double[] b){
@@ -86,8 +88,15 @@ class Vector extends Point{
 	}
 
 	public static double dotproduct(Vector a, Vector b){
-		
 		return a.x * b.x + a.y * b.y + a.z * b.z;
+	}
+
+	public Vector normalize(){
+		return new Vector(this.x/magnitude, this.y/magnitude, this.z/magnitude);
+	}
+
+	public Vector scale(double factor){
+		return new Vector(this.x*factor, this.y*factor, this.z*factor);
 	}
 
 	public String toString() {

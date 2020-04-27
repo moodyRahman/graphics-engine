@@ -21,6 +21,16 @@ public class Image {
 	public static final Pixel BLACK = new Pixel(0, 0, 0);
 	public static final Pixel BEIGE = new Pixel(0, 0, 0);
 
+	private Pixel ambientc = new Pixel(250, 250, 250);
+	private Pixel point_light = new Pixel(200, 200, 200);
+	private Vector point_light_location = new Vector(1, 0.5, 1);
+	private final double ka = 0.1;
+	private final double ks = 0.5;
+	private final double kd = 0.5;
+
+
+	public Random rand = new Random();
+
 	/**
 	 * Instantiate a new Image
 	 * 
@@ -99,11 +109,11 @@ public class Image {
 			return;
 		}
 
-		// if (z > zbuffer[x][y]) {
-		// // this.pixelarray[x][y].set(color);
-		// zbuffer[x][y] = z;
-		// }
-		this.pixelarray[x][y].set(color);
+		if (z > zbuffer[x][y]) {
+			this.pixelarray[x][y].set(color);
+			zbuffer[x][y] = z;
+		}
+		// this.pixelarray[x][y].set(color);
 
 	}
 
@@ -270,7 +280,7 @@ public class Image {
 	 */
 	public void matrixLineEdge(DoubleMatrix m, Pixel c) {
 		double[][] array = m.getArray();
-		for (int x = 0; x < array.length - 1; x+=2) {
+		for (int x = 0; x < array.length - 1; x += 2) {
 			double[] p1 = array[x];
 			double[] p2 = array[x + 1];
 			line(p1, p2, c);
@@ -284,8 +294,11 @@ public class Image {
 	 * @param m
 	 * @param c
 	 */
-	public void matrixLinePolygon(DoubleMatrix m, Pixel c) {
+	public void matrixLinePolygon(DoubleMatrix m, Pixel col) {
 		double[][] array = m.getArray();
+		// Pixel color = new Pixel(8, 146, 208);
+		Pixel finalc = new Pixel(8, 146, 208);
+
 		for (int x = 0; x < array.length; x += 3) {
 			double[] p0 = array[x];
 			double[] p1 = array[x + 1];
@@ -298,11 +311,40 @@ public class Image {
 			double[][] scan = { p0, p1, p2 };
 
 			if (Vector.dotproduct(normal, Vector.VIEW_VECTOR) > 0) {
-				// line(p0[0], p0[1], p0[2], p1[0], p1[1], p1[2], c);
-				// line(p1[0], p1[1], p1[2], p2[0], p2[1], p2[2], c);
-				// line(p2[0], p2[1], p2[2], p0[0], p0[1], p0[2], c);
-				scanline(scan);
-				// displayDebug();
+				Pixel ambient = ambientc.scale(ka);
+
+				Pixel diffuse0 = point_light.scale(kd);
+				double difprod = Vector.dotproduct(normal.normalize(), point_light_location.normalize());
+				Pixel diffuse = diffuse0.scale(difprod);
+
+				// P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂
+
+				// P * Ks
+				Pixel specular0 = point_light.scale(ks);
+				
+				// (N̂ • L̂)
+				double a = Vector.dotproduct(normal, point_light_location);
+
+				// (2N̂(N̂ • L̂)
+				Vector b = normal.scale(2*a);
+
+				// (2N̂(N̂ • L̂) - L̂)
+				Vector c = new Vector(b.x - point_light_location.x, b.y - point_light_location.y, b.z - point_light_location.z);
+
+				// (2N̂(N̂ • L̂) - L̂) • V̂
+				double d = Vector.dotproduct(c, Vector.VIEW_VECTOR);
+
+				// // P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂
+				specular0.scale(d);
+
+				// // (P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂) ^ n
+				Pixel specular = specular0.pow(1.5);
+
+				// Pixel finalc = Pixel.lightingsum(ambient, diffuse, specular);
+				finalc.normalize();
+
+
+				scanline(scan, finalc);
 			}
 		}
 
@@ -315,13 +357,7 @@ public class Image {
 	 * @param p2
 	 * @param p3
 	 */
-	public void scanline(double[][] points) {
-		boolean flip = false;
-		int BOT = 0;
-		int TOP = 2;
-		int MID = 1;
-
-		Pixel randc = new Pixel(0, 0, 0);
+	public void scanline(double[][] points, Pixel randc) {
 
 		// sorts according to height, shorttest to tallest
 
@@ -335,6 +371,13 @@ public class Image {
 			swap(points, 1, 2);
 		}
 
+		boolean flip = false;
+		int BOT = 0;
+		int TOP = 2;
+		int MID = 1;
+
+		// randc = new Pixel(rand.nextInt(), rand.nextInt(), rand.nextInt());
+		// Pixel randc = new Pixel(10, 10, 10);
 
 		for (int x = 0; x < 3; x++) {
 			for (int y = 0; y < 3; y++) {
@@ -356,7 +399,6 @@ public class Image {
 		double distance1 = (int) (points[MID][1]) - y * 1.0 + 1;
 		double distance2 = (int) (points[TOP][1]) - (int) (points[MID][1]) * 1.0 + 1;
 
-
 		double dx0 = distance0 != 0 ? (points[TOP][0] - points[BOT][0]) / distance0 : 0;
 		double dz0 = distance0 != 0 ? (points[TOP][2] - points[BOT][2]) / distance0 : 0;
 		double dx1 = distance1 != 0 ? (points[MID][0] - points[BOT][0]) / distance1 : 0;
@@ -373,7 +415,7 @@ public class Image {
 
 			}
 
-			line((int) x0, y, z0, (int) x1, z1, y, randc);
+			line((int) x0, y, z0, (int) x1, y, z1, randc);
 			x0 += dx0;
 			z0 += dz0;
 			x1 += dx1;
@@ -388,6 +430,22 @@ public class Image {
 		p[to] = temp;
 	}
 
+	public void rainbowline() {
+
+		for (int x = 50; x < 200; x++) {
+			Pixel randc = new Pixel(rand.nextInt() % 250, rand.nextInt() % 250, rand.nextInt() % 250);
+			// Pixel randc = new Pixel(0, 0, 0);
+
+			plot(x, 100, 0, randc);
+		}
+	}
+
+	public static void main(String[] args) {
+		Image i = new Image(500, 500, new Pixel(200, 200, 200));
+		i.rainbowline();
+		i.display();
+	}
+
 }
 
 /**
@@ -395,40 +453,45 @@ public class Image {
  */
 class Pixel {
 
-	private int red;
-	private int blue;
-	private int green;
-	private static Random rand;
+	private double red;
+	private double blue;
+	private double green;
+	private static Random rand = new Random();
 
 	public Pixel(int red, int green, int blue) {
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
-		rand = new Random();
 	}
 
-	public int[] get() {
-		int[] out = new int[3];
-		out[0] = this.red;
-		out[1] = this.green;
-		out[2] = this.blue;
-		return out;
+	public Pixel(double r, double g, double b){
+
 	}
 
-	public int getr() {
+
+	public double getr() {
 		return this.red;
 	}
 
-	public int getg() {
+	public double getg() {
 		return this.green;
 	}
 
-	public int getb() {
+	public double getb() {
 		return this.blue;
 	}
 
-	public static Pixel randomColor() {
-		return new Pixel(rand.nextInt(), rand.nextInt(), rand.nextInt());
+	public Pixel scale(double factor){
+		double r = this.red * factor;
+		double g = this.green * factor;
+		double b = this.blue * factor;
+		return new Pixel(r, g, b);
+	}
+
+	public void randomize() {
+		this.red =  Math.abs(rand.nextInt() % 256);
+		this.green =Math.abs(rand.nextInt() % 256);
+		this.blue = Math.abs(rand.nextInt() % 256);
 	}
 
 	public String toString() {
@@ -439,15 +502,34 @@ class Pixel {
 	}
 
 	public void set(Pixel p) {
-		this.red = p.get()[0];
-		this.green = p.get()[1];
-		this.blue = p.get()[2];
+		this.red = p.getr();
+		this.green = p.getb();
+		this.blue = p.getg();
 	}
 
 	public void set(int r, int g, int b) {
 		this.red = r;
 		this.green = g;
 		this.blue = b;
+	}
+
+	public void normalize(){
+		red = red < 0 ? 0 : red > 255 ? 255:red; 
+		green = green < 0 ? 0 : green > 255 ? 255:green;
+		blue = blue < 0 ? 0 : blue > 255 ? 255 : blue;
+	}
+
+	public static Pixel lightingsum(Pixel a, Pixel b, Pixel c){
+		double rsum = a.red + b.red + c.red;
+		double gsum = a.green + b.green + c.green;
+		double bsum = a.blue + b.blue + c.blue;
+		Pixel out = new Pixel(rsum, gsum, bsum);
+		out.normalize();
+		return out;
+	}
+
+	public Pixel pow(double in){
+		return new Pixel(Math.pow(red, in), Math.pow(green, in), Math.pow(blue, in));
 	}
 
 }
