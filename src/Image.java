@@ -373,7 +373,7 @@ public class Image {
 
 			}
 
-			line((int) x0, y, z0, (int) x1, z1, y, randc);
+			line((int) x0, y, z0, (int) x1, y, z1, randc);
 			x0 += dx0;
 			z0 += dz0;
 			x1 += dx1;
