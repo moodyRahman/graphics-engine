@@ -21,8 +21,8 @@ public class Image {
 	public static final Pixel BLACK = new Pixel(0, 0, 0);
 	public static final Pixel BEIGE = new Pixel(0, 0, 0);
 
-	private Pixel ambientc = new Pixel(250, 250, 250);
-	private Pixel point_light = new Pixel(200, 200, 200);
+	private Pixel ambientc = new Pixel(100, 10, 10);
+	private Pixel point_light = new Pixel(250, 0, 0);
 	private Vector point_light_location = new Vector(1, 0.5, 1);
 	private final double ka = 0.1;
 	private final double ks = 0.5;
@@ -47,7 +47,7 @@ public class Image {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				pixelarray[x][y] = new Pixel(255, 255, 255);
-				zbuffer[x][y] = -99999;
+				zbuffer[x][y] = -999999;
 				pixelarray[x][y].set(color);
 			}
 		}
@@ -296,7 +296,6 @@ public class Image {
 	 */
 	public void matrixLinePolygon(DoubleMatrix m, Pixel col) {
 		double[][] array = m.getArray();
-		Pixel color = new Pixel(8, 146, 208);
 		// Pixel finalc = new Pixel(8, 146, 208);
 
 		for (int x = 0; x < array.length; x += 3) {
@@ -311,48 +310,57 @@ public class Image {
 			double[][] scan = { p0, p1, p2 };
 
 			if (Vector.dotproduct(normal, Vector.VIEW_VECTOR) > 0) {
-				// Pixel ambient = ambientc.scale(ka);
+				System.out.println(normal);
+				Pixel ambient = ambientc.scale(ka);
 
-				// Pixel diffuse0 = point_light.scale(kd);
-				// double difprod = Vector.dotproduct(normal.normalize(), point_light_location.normalize());
-				// Pixel diffuse = diffuse0.scale(difprod);
+				// P * Kd * (N̂ • L̂)
+				Pixel diffuse0 = point_light.scale(kd);
+				double difprod = Vector.dotproduct(normal.normalize(), point_light_location.normalize());
+				Pixel diffuse = diffuse0.scale(difprod);
 
-				// // P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂
+				// P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂
 
-				// // P * Ks
-				// Pixel specular0 = point_light.scale(ks);
+				// P * Ks
+				Pixel specular0 = point_light.scale(ks);
 				
-				// // (N̂ • L̂)
-				// double a = Vector.dotproduct(normal.normalize(), point_light_location.normalize());
+				// (N̂ • L̂)
+				double a = Vector.dotproduct(normal.normalize(), point_light_location.normalize());
 
-				// // (2N̂(N̂ • L̂)
-				// // (2N̂(a)
+				// (2N̂(N̂ • L̂)
+				// (2N̂(a)
 				// Vector b = normal.scale(2*a).normalize();
+				Vector b = normal.normalize().scale(2*a);
 
-				// // (2N̂(N̂ • L̂) - L̂)
-				// // (b - L̂)
-				// Vector point_light_normal = point_light_location.normalize();
-				// Vector c = new Vector(b.x - point_light_normal.x, b.y - point_light_normal.y, b.z - point_light_normal.z);
-
-
-				// // (2N̂(N̂ • L̂) - L̂) • V̂
-				// // c • V̂
-				// double d = Vector.dotproduct(c, Vector.VIEW_VECTOR.normalize());
-
-				// // P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂
-				// // P * Ks * c
-				// specular0.scale(d);
-
-				// // // (P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂) ^ n
-				// Pixel specular = specular0.pow(1.5);
-
-				// Pixel finalc = Pixel.lightingsum(ambient, diffuse, specular);
-				// finalc.normalize();
+				// (2N̂(N̂ • L̂) - L̂)
+				// (b - L̂)
+				Vector point_light_normal = point_light_location.normalize();
+				Vector c = new Vector(b.x - point_light_normal.x, b.y - point_light_normal.y, b.z - point_light_normal.z);
 
 
-				// scanline(scan, finalc);
-				scanline(scan, color);
-				color.randomize();
+				// (2N̂(N̂ • L̂) - L̂) • V̂
+				// c • V̂
+				double d = Vector.dotproduct(c, Vector.VIEW_VECTOR.normalize());
+
+				// P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂
+				// P * Ks * c
+				specular0.scale(d);
+
+				// // (P * Ks * (2N̂(N̂ • L̂) - L̂) • V̂) ^ n
+				Pixel specular = specular0.pow(1);
+
+				Pixel finalc = Pixel.lightingsum(ambient, diffuse, specular);
+				// Pixel finalc = Pixel.debuglightingsum(ambient, diffuse);
+				finalc.normalize();
+
+
+				scanline(scan, diffuse);
+				// System.out.println(ambient);
+			
+				// System.out.println();
+				// System.out.println();
+				// scanline(scan, color);
+				// color.randomize();
+				// displayDebug();
 			}
 		}
 
@@ -387,15 +395,15 @@ public class Image {
 		// randc = new Pixel(rand.nextInt(), rand.nextInt(), rand.nextInt());
 		// Pixel randc = new Pixel(10, 10, 10);
 
-		for (int x = 0; x < 3; x++) {
-			for (int y = 0; y < 3; y++) {
-				System.out.print(points[x][y]);
-				System.out.print(", ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		System.out.println();
+		// for (int x = 0; x < 3; x++) {
+		// 	for (int y = 0; y < 3; y++) {
+		// 		System.out.print(points[x][y]);
+		// 		System.out.print(", ");
+		// 	}
+		// 	System.out.println();
+		// }
+		// System.out.println();
+		// System.out.println();
 
 		double x0 = points[BOT][0];
 		double z0 = points[BOT][2];
@@ -473,7 +481,9 @@ class Pixel {
 	}
 
 	public Pixel(double r, double g, double b){
-
+		this.red = r;
+		this.green = g;
+		this.blue = b;
 	}
 
 
@@ -505,7 +515,7 @@ class Pixel {
 	public String toString() {
 		String out = "";
 
-		out += this.red + " " + this.green + " " + this.blue + " ";
+		out += (int)this.red + " " + (int)this.green + " " + (int)this.blue + " ";
 		return out;
 	}
 
@@ -528,9 +538,23 @@ class Pixel {
 	}
 
 	public static Pixel lightingsum(Pixel a, Pixel b, Pixel c){
+		a.normalize();
+		b.normalize();
+		c.normalize();
 		double rsum = a.red + b.red + c.red;
 		double gsum = a.green + b.green + c.green;
 		double bsum = a.blue + b.blue + c.blue;
+		Pixel out = new Pixel(rsum, gsum, bsum);
+		out.normalize();
+		return out;
+	}
+
+	public static Pixel debuglightingsum(Pixel a, Pixel b) {
+		a.normalize();
+		b.normalize();
+		double rsum = a.red + b.red;
+		double gsum = a.green + b.green;
+		double bsum = a.blue + b.blue;
 		Pixel out = new Pixel(rsum, gsum, bsum);
 		out.normalize();
 		return out;

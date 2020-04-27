@@ -70,31 +70,33 @@ class Vector extends Point{
 		this.z = b.z - a.z;
 		this.magnitude = Math.sqrt(x * x + y * y + z * z);
 	}
-
+	
 	public Vector(double[] a, double[] b){
 		this.x = b[0] - a[0];
 		this.y = b[1] - a[1];
 		this.z = b[2] - a[0];
+		this.magnitude = Math.sqrt(x * x + y * y + z * z);
 	}
-
+	
 	public Vector(double dx, double dy, double dz){
 		this.x = dx;
 		this.y = dy;
 		this.z = dz;
+		this.magnitude = Math.sqrt(x * x + y * y + z * z);
 	}
-
+	
 	public static Vector crossproduct(Vector a, Vector b){
 		return new Vector(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x*b.y - a.y * b.x);
 	}
-
+	
 	public static double dotproduct(Vector a, Vector b){
 		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
-
+	
 	public Vector normalize(){
 		return new Vector(this.x/magnitude, this.y/magnitude, this.z/magnitude);
 	}
-
+	
 	public Vector scale(double factor){
 		return new Vector(this.x*factor, this.y*factor, this.z*factor);
 	}

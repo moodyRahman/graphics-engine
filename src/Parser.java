@@ -104,7 +104,7 @@ public class Parser {
 	private ArrayList<Command> tokens = new ArrayList<Command>();
 	ProcessBuilder processBuilder = new ProcessBuilder(); // enables shell command execution
 	Pixel linecolor = new Pixel(0, 0, 0);
-	Pixel bgcolor = new Pixel(200, 200, 200);
+	Pixel bgcolor = new Pixel(0, 0, 0);
 
 	/**
 	 * makes a new Parser and processes all of it's tokens
@@ -311,7 +311,7 @@ public class Parser {
 				case "sphere":
 					params = argstoarray(currtoken.getParameters());
 					double xsp = params[0], ysp = params[1], zsp = params[2], radiussp = params[3];
-					DoubleMatrix sph = EdgeGenerator.sphereGenerator(xsp, ysp, zsp, radiussp, 20, 20);
+					DoubleMatrix sph = EdgeGenerator.sphereGenerator(xsp, ysp, zsp, radiussp, 100, 100);
 					top = coorstack.peek();
 					polygon.addMatrixEdge(DoubleMatrix.multiply(top, sph));
 					break;
@@ -340,7 +340,7 @@ public class Parser {
 					params = argstoarray(currtoken.getParameters());
 					double torx = params[0], tory = params[1], torz = params[2];
 					double torin = params[3], torout = params[4];
-					DoubleMatrix tor = EdgeGenerator.torusGenerator(torx, tory, torz, torin, torout, 26, 26);
+					DoubleMatrix tor = EdgeGenerator.torusGenerator(torx, tory, torz, torin, torout, 100, 100);
 					top = coorstack.peek();
 					polygon.addMatrixEdge(DoubleMatrix.multiply(top, tor));
 					break;

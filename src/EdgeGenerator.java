@@ -158,10 +158,14 @@ public class EdgeGenerator {
 
 			if (!Point.isDegenerate(p3, p1, p2)) {
 				out.addPolygon(p3, p1, p2);
+				// out.addPolygon(p3, p2, p1);
+
 			}
 
 			if (!Point.isDegenerate(p2, p4, p3)) {
 				out.addPolygon(p2, p4, p3);
+				// out.addPolygon(p2, p3, p4);
+
 			}
 		}
 		return out;
@@ -212,8 +216,8 @@ public class EdgeGenerator {
 		edge.addPoint(x, y, z - depth);
 
 		edge.addPoint(x + width, y, z - depth);
-		edge.addPoint(x, y, z - depth);
 		edge.addPoint(x + width, y, z);
+		edge.addPoint(x, y, z - depth);
 
 
 		// draw the bottom face
@@ -297,9 +301,13 @@ public class EdgeGenerator {
 			}
 		}
 
-		for (int i = 0; i < toruspoints.size() - total_step_circle - 1; i++) {
+		for (int i = 0; i < toruspoints.size() - total_step_circle - 2; i++) {
 			out.addPoint(toruspoints.get(i));
 			out.addPoint(toruspoints.get(i + 1));
+			out.addPoint(toruspoints.get(i + 1 + total_step_circle));
+
+			out.addPoint(toruspoints.get(i + 1));
+			out.addPoint(toruspoints.get(i + 2 + total_step_circle));
 			out.addPoint(toruspoints.get(i + 1 + total_step_circle));
 		}
 		return out;
