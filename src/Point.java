@@ -75,12 +75,14 @@ class Vector extends Point {
 		this.x = b[0] - a[0];
 		this.y = b[1] - a[1];
 		this.z = b[2] - a[0];
+		this.magnitude = Math.sqrt(x * x + y * y + z * z);
 	}
 
 	public Vector(double dx, double dy, double dz) {
 		this.x = dx;
 		this.y = dy;
 		this.z = dz;
+		this.magnitude = Math.sqrt(x * x + y * y + z * z);
 	}
 
 	public static Vector crossproduct(Vector a, Vector b) {
@@ -90,13 +92,13 @@ class Vector extends Point {
 	public static double dotproduct(Vector a, Vector b) {
 		return a.x * b.x + a.y * b.y + a.z * b.z;
 	}
+	
+	public Vector scale(double factor){
+		return new Vector(this.x*factor, this.y*factor, this.z*factor);
+	}
 
 	public Vector normalize() {
 		return new Vector(this.x / magnitude, this.y / magnitude, this.z / magnitude);
-	}
-
-	public Vector scale(double factor) {
-		return new Vector(this.x * factor, this.y * factor, this.z * factor);
 	}
 
 	public String toString() {
