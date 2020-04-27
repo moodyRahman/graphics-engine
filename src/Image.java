@@ -340,6 +340,7 @@ public class Image {
 				// finalc.normalize();
 
 				scanline(scan, color);
+				color.randomize();
 			}
 		}
 
