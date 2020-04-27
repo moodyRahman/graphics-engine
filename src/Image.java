@@ -286,6 +286,7 @@ public class Image {
 	 */
 	public void matrixLinePolygon(DoubleMatrix m, Pixel c) {
 		double[][] array = m.getArray();
+		Pixel color  = new Pixel(0, 0, 0);
 		for (int x = 0; x < array.length; x += 3) {
 			double[] p0 = array[x];
 			double[] p1 = array[x + 1];
@@ -298,11 +299,8 @@ public class Image {
 			double[][] scan = { p0, p1, p2 };
 
 			if (Vector.dotproduct(normal, Vector.VIEW_VECTOR) > 0) {
-				// line(p0[0], p0[1], p0[2], p1[0], p1[1], p1[2], c);
-				// line(p1[0], p1[1], p1[2], p2[0], p2[1], p2[2], c);
-				// line(p2[0], p2[1], p2[2], p0[0], p0[1], p0[2], c);
-				scanline(scan);
-				// displayDebug();
+
+				scanline(scan, color);
 			}
 		}
 
@@ -315,13 +313,11 @@ public class Image {
 	 * @param p2
 	 * @param p3
 	 */
-	public void scanline(double[][] points) {
+	public void scanline(double[][] points, Pixel color) {
 		boolean flip = false;
 		int BOT = 0;
 		int TOP = 2;
 		int MID = 1;
-
-		Pixel randc = new Pixel(0, 0, 0);
 
 		// sorts according to height, shorttest to tallest
 
@@ -373,7 +369,7 @@ public class Image {
 
 			}
 
-			line((int) x0, y, z0, (int) x1, y, z1, randc);
+			line((int) x0, y, z0, (int) x1, y, z1, color);
 			x0 += dx0;
 			z0 += dz0;
 			x1 += dx1;
@@ -429,6 +425,12 @@ class Pixel {
 
 	public static Pixel randomColor() {
 		return new Pixel(rand.nextInt(), rand.nextInt(), rand.nextInt());
+	}
+
+	public void randomize(){
+		red = Math.abs(rand.nextInt()) % 256;
+		green = Math.abs(rand.nextInt()) % 256;
+		blue = Math.abs(rand.nextInt()) % 256;
 	}
 
 	public String toString() {
